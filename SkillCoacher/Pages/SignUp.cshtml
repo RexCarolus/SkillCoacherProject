@@ -1,0 +1,28 @@
+﻿@page
+@model SignUpModel
+@{
+    ViewData["Title"] = "Sign up page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <form method="post">
+        
+
+            <label>login</label>
+            <br />
+            <input asp-for="NewUser.Login" class="form-control" />
+            <br />
+            <label>password</label>
+            <br />
+            <input asp-for="NewUser.Password" class="form-control" />
+            <br />
+            <label>repeat password</label>
+            <br />
+            <input class="form-control" />
+            <br />
+            <button type="submit">Зарегистрироваться</button>
+        
+    </form>
+</div>
