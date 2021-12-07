@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="~/css/site.css" />
 
 
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
     <!-- Custom styles for this template -->
     <link href="~/lib/dashboard.css" rel="stylesheet">
     <link href="~/lib/blog.css" rel="stylesheet">
@@ -17,19 +20,19 @@
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" asp-area="" asp-page="/Index">SkillCoacher</a>
         <input class="form-control form-control-dark w-50" type="text" placeholder="Поиск по SkillCoacher" aria-label="Search">
         <ul class="navbar-nav px-3">
-            <div class="dropdown show">
+            <li class="dropdown show">
                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Профиль
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="#">Войти</a>
+                    <a class="dropdown-item" href="/SignUp">Войти</a>
                     <a class="dropdown-item" asp-area="" asp-page="/SignUp">Регистрация</a>
                 </div>
-            </div>
+            </li>
             @*<li class="nav-item text-nowrap">
             <a class="nav-link" href="#">Войти</a>
             <a class="nav-link" asp-area="" asp-page="/SignUp">Регистрация</a>
-        </li>*@
+        </li>lol*@
         </ul>
     </nav>
 
@@ -45,19 +48,19 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/Favorites">
                                 <span data-feather="file"></span>
                                 Избранные курсы
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/Library">
                                 <span data-feather="shopping-cart"></span>
                                 Подписки на курсы
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="\History">
                                 <span data-feather="users"></span>
                                 История
                             </a>
