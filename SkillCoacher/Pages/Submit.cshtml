@@ -1,0 +1,27 @@
+﻿@page
+@model SkillCoacher.Pages.SubmitModel
+@{
+}
+<script src="https://cdn.ckeditor.com/ckeditor5/30.0.0/classic/ckeditor.js"></script>
+
+<div class="col-md-8 blog-main">
+    <h2 class="blog-post-title">Опубликовать курс</h2>
+    <hr />
+    <h4>Название курса</h4>
+    <input id="Text1" type="text" />
+    <h4>Содержание курса</h4>
+    <div id="editor"></div>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <h4>Добавьте теги</h4>
+    <input id="Text2" type="text" data-role="tagsinput" />
+</div>
+<hr />
+<div class="col-md-2 ml-md-auto">
+    <button type="button" class="btn btn-primary btn-lg">Опубликовать </button>
+</div>

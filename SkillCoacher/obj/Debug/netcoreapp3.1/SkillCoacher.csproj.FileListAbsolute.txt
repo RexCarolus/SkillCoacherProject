@@ -309,3 +309,4 @@ C:\Users\VLZ-J\Source\Repos\SkillCoacherProject\SkillCoacher\obj\Debug\netcoreap
 C:\Users\VLZ-J\Source\Repos\SkillCoacherProject\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\Favorites.cshtml.g.cs
 C:\Users\VLZ-J\Source\Repos\SkillCoacherProject\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\Library.cshtml.g.cs
 C:\Users\VLZ-J\Source\Repos\SkillCoacherProject\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\History.cshtml.g.cs
+C:\Users\VLZ-J\Source\Repos\SkillCoacherProject\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\Submit.cshtml.g.cs
