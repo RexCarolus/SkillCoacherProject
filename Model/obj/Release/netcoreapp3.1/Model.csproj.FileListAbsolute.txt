@@ -1,0 +1,10 @@
+C:\Users\Dimab\Desktop\CourseProject\rr\Model\bin\Release\netcoreapp3.1\Model.deps.json
+C:\Users\Dimab\Desktop\CourseProject\rr\Model\bin\Release\netcoreapp3.1\Model.dll
+C:\Users\Dimab\Desktop\CourseProject\rr\Model\bin\Release\netcoreapp3.1\Model.pdb
+C:\Users\Dimab\Desktop\CourseProject\rr\Model\obj\Release\netcoreapp3.1\Model.csproj.AssemblyReference.cache
+C:\Users\Dimab\Desktop\CourseProject\rr\Model\obj\Release\netcoreapp3.1\Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dimab\Desktop\CourseProject\rr\Model\obj\Release\netcoreapp3.1\Model.AssemblyInfoInputs.cache
+C:\Users\Dimab\Desktop\CourseProject\rr\Model\obj\Release\netcoreapp3.1\Model.AssemblyInfo.cs
+C:\Users\Dimab\Desktop\CourseProject\rr\Model\obj\Release\netcoreapp3.1\Model.csproj.CoreCompileInputs.cache
+C:\Users\Dimab\Desktop\CourseProject\rr\Model\obj\Release\netcoreapp3.1\Model.dll
+C:\Users\Dimab\Desktop\CourseProject\rr\Model\obj\Release\netcoreapp3.1\Model.pdb

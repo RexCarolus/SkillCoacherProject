@@ -27,4 +27,10 @@
     <Folder Include="wwwroot\lib\bootstrap\dist\scss\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Properties\launchSettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
