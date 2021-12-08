@@ -157,3 +157,5 @@ C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Release\netcoreapp3.1\S
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Release\netcoreapp3.1\SkillCoacher.dll
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Release\netcoreapp3.1\SkillCoacher.pdb
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Release\netcoreapp3.1\SkillCoacher.genruntimeconfig.cache
+C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\bin\Release\netcoreapp3.1\Properties\launchSettings.json
+C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Release\netcoreapp3.1\Razor\Pages\LogIn.cshtml.g.cs

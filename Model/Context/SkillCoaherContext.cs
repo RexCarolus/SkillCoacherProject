@@ -10,10 +10,9 @@ namespace Model.Context
     {
         public SkillCoacherContext()
         {
-           
-          
-            Database.EnsureCreated();
+            Database.EnsureCreated(); 
         }
+        public DbSet<Tag> Tags { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<User> Users { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder builder)

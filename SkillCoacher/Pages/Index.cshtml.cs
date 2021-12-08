@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Model.Context;
 using Model.Models;
@@ -24,7 +25,9 @@ namespace SkillCoacher.Pages
 
             using (SkillCoacherContext db = new SkillCoacherContext())
             {
-                CoursesList = db.Courses.ToList<Course>();
+                CoursesList = db.Courses.Include(t => t.Tags).ToList();
+
+                
             }
             
         }

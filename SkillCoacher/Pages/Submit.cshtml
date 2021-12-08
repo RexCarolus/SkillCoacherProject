@@ -4,6 +4,7 @@
 }
 <script src="https://cdn.ckeditor.com/ckeditor5/30.0.0/classic/ckeditor.js"></script>
 <div class="col-md-8 blog-main">
+    <form method="post">
     <h2 class="blog-post-title">Опубликовать курс</h2>
     <hr />
     <h4>Название курса</h4>
@@ -27,9 +28,8 @@
             });
     </script>
     <h4>Добавьте теги</h4>
-    <form method="post">
-        <input id="Text2" type="text" data-role="tagsinput" />
-        </form>
+        <input id="TagsInput" type="text" data-role="tagsinput" />
+     </form>
 </div>
     <hr />
     <div class="col-md-2 ml-md-auto">
@@ -47,7 +47,8 @@
             data: {
                 name: $('#Name').val(),
                 description: $('#Description').val(),
-                content: editor.getData()
+                content: editor.getData(),
+                addTags: $("#TagsInput").tagsinput('items')
             },
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("XSRF-TOKEN",

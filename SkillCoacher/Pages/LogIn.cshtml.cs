@@ -9,34 +9,33 @@ using Model.Models;
 using Model.Context;
 namespace SkillCoacher.Pages
 {
-    public class SignUpModel : PageModel
+    public class LogInModel : PageModel
     {
         private readonly ILogger<SignUpModel> _logger;
 
-        public SignUpModel(ILogger<SignUpModel> logger)
+        public LogInModel(ILogger<SignUpModel> logger)
         {
             _logger = logger;
-            NewUser = new User();
+            LogInUser = new User();
         }
-        public User NewUser { get;  set; }
+        public User LogInUser { get;  set; }
         public void OnGet()
         {
    
         }
-        public IActionResult OnPost(User newUser)
+        public IActionResult OnPost(User logInUser)
         {
             using(var db = new SkillCoacherContext())
             {
                 
-                newUser.Role = UserRoles.BasicUser;
-                int a = db.Users.Count<User>(user => (user.Login == newUser.Login));
-                if (a>0)
+                if (db.Users.Count<User>(user => (user.Login == logInUser.Login))<1)
                 {
                     return Page();
                 }
-                else
-                db.Users.Add(newUser);
-                db.SaveChanges();
+                else if(db.Users.First<User>(user => (user.Login == logInUser.Login)).Password != logInUser.Password)
+                {
+                    return Page();
+                }
                 return RedirectToPage("/Index");
             }
         }

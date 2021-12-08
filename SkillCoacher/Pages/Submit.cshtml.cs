@@ -11,20 +11,30 @@ namespace SkillCoacher.Pages
 {
     public class SubmitModel : PageModel
     {
-        string s;
+       
         public void OnGet()
         {
       
         }
-        public void Add()
-        {
-            int a = 5;
-        }
-        public void OnPost(string name, string description, string content, string imageName = "aaa.jpg")
+    
+        public void OnPost(string name, string description, string content, string[] addTags, string imageName = "aaa.jpg")
         {
             using(var db = new SkillCoacherContext())
             {
-                db.Courses.Add(new Course { Name = name, Description = description, Content = content, TitleImagePath = imageName });
+                var tagsList = new List<Tag>();
+                foreach(var addTagName in addTags)
+                {
+                    if(db.Tags.Count<Tag>(tag => tag.Name == addTagName)==0)
+                    {
+                        tagsList.Add(db.Tags.Add(new Tag { Name = addTagName }).Entity);
+                    }
+                    else 
+                    {
+                        tagsList.Add(db.Tags.First<Tag>(tag => tag.Name == addTagName));
+                    }
+
+                }
+                db.Courses.Add(new Course { Name = name, Description = description, Content = content, TitleImagePath = imageName, Tags = tagsList });
                 db.SaveChanges();
             }
         }

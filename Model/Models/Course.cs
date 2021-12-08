@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Model.Models
 {
@@ -9,5 +10,6 @@ namespace Model.Models
         public string Description { get; set; }
         public string Content { get; set; }
         public string TitleImagePath { get; set; }
+        public List<Tag> Tags { get; set; }
     }
 }

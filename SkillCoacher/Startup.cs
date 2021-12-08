@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Model.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace SkillCoacher
 {
@@ -52,6 +54,7 @@ namespace SkillCoacher
             {
                 endpoints.MapRazorPages();
             });
+           
         }
     }
 }
