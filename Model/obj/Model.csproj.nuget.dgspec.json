@@ -1,25 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dimab\\Desktop\\CourseProject\\rr\\Model\\Model.csproj": {}
+    "C:\\Users\\VLZ-J\\source\\repos\\SkillCoacherProject\\Model\\Model.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dimab\\Desktop\\CourseProject\\rr\\Model\\Model.csproj": {
+    "C:\\Users\\VLZ-J\\source\\repos\\SkillCoacherProject\\Model\\Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dimab\\Desktop\\CourseProject\\rr\\Model\\Model.csproj",
+        "projectUniqueName": "C:\\Users\\VLZ-J\\source\\repos\\SkillCoacherProject\\Model\\Model.csproj",
         "projectName": "Model",
-        "projectPath": "C:\\Users\\Dimab\\Desktop\\CourseProject\\rr\\Model\\Model.csproj",
-        "packagesPath": "C:\\Users\\Dimab\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dimab\\Desktop\\CourseProject\\rr\\Model\\obj\\",
+        "projectPath": "C:\\Users\\VLZ-J\\source\\repos\\SkillCoacherProject\\Model\\Model.csproj",
+        "packagesPath": "C:\\Users\\VLZ-J\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\VLZ-J\\source\\repos\\SkillCoacherProject\\Model\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Dimab\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\VLZ-J\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -64,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

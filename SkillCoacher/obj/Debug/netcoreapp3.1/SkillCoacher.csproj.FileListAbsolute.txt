@@ -472,3 +472,6 @@ C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Ski
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\SkillCoacher.genruntimeconfig.cache
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\LogIn.cshtml.g.cs
+C:\Users\VLZ-J\source\repos\SkillCoacherProject\SkillCoacher\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+C:\Users\VLZ-J\source\repos\SkillCoacherProject\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\AddCourse.cshtml.g.cs
+C:\Users\VLZ-J\source\repos\SkillCoacherProject\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\LogIn.cshtml.g.cs
