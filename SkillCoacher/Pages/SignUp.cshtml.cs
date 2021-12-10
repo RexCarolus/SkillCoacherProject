@@ -16,20 +16,17 @@ namespace SkillCoacher.Pages
         public SignUpModel(ILogger<SignUpModel> logger)
         {
             _logger = logger;
-            NewUser = new User();
         }
-        public User NewUser { get;  set; }
+        public BaseUser NewUser { get;  set; }
         public void OnGet()
         {
    
         }
-        public IActionResult OnPost(User newUser)
+        public IActionResult OnPost(CommonUser newUser)
         {
             using(var db = new SkillCoacherContext())
-            {
-                
-                newUser.Role = UserRoles.BasicUser;
-                int a = db.Users.Count<User>(user => (user.Login == newUser.Login));
+            {                               
+                int a = db.Users.Count<BaseUser>(user => (user.Login == newUser.Login));
                 if (a>0)
                 {
                     return Page();

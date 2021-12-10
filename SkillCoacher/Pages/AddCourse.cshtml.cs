@@ -9,7 +9,7 @@ using Model.Context;
 using Model.Models;
 namespace SkillCoacher.Pages
 {
-    public class SubmitModel : PageModel
+    public class AddCourse : PageModel
     {
        
         public void OnGet()

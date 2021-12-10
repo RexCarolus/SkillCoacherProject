@@ -4,12 +4,10 @@ using System.Text;
 
 namespace Model.Models
 {
-    public class User
+    public  class BaseUser
     {
         public int Id { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
-        public UserRoles Role { get; set; }
-
     }
 }

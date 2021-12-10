@@ -15,24 +15,23 @@ namespace SkillCoacher.Pages
 
         public LogInModel(ILogger<SignUpModel> logger)
         {
-            _logger = logger;
-            LogInUser = new User();
+            _logger = logger;        
         }
-        public User LogInUser { get;  set; }
+        public BaseUser LogInUser { get;  set; }
         public void OnGet()
         {
    
         }
-        public IActionResult OnPost(User logInUser)
+        public IActionResult OnPost(BaseUser logInUser)
         {
             using(var db = new SkillCoacherContext())
             {
                 
-                if (db.Users.Count<User>(user => (user.Login == logInUser.Login))<1)
+                if (db.Users.Count<BaseUser>(user => (user.Login == logInUser.Login))<1)
                 {
                     return Page();
                 }
-                else if(db.Users.First<User>(user => (user.Login == logInUser.Login)).Password != logInUser.Password)
+                else if(db.Users.First<BaseUser>(user => (user.Login == logInUser.Login)).Password != logInUser.Password)
                 {
                     return Page();
                 }

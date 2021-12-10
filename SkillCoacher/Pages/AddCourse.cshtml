@@ -1,0 +1,64 @@
+﻿@page
+@model SkillCoacher.Pages.AddCourse
+@{
+}
+<script src="https://cdn.ckeditor.com/ckeditor5/30.0.0/classic/ckeditor.js"></script>
+<div class="col-md-8 blog-main">
+    <form method="post">
+    <h2 class="blog-post-title">Опубликовать курс</h2>
+    <hr />
+    <h4>Название курса</h4>
+    <input id="Name" type="text" />
+    <h4>Описание курса</h4>
+    <input id="Description" type="text" />
+    <h4>Содержание курса</h4>
+    <div id="editor">
+        <h2>faas</h2>
+    </div>
+    <script>
+        let editor;
+
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .then(newEditor => {
+                editor = newEditor;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <h4>Добавьте теги</h4>
+        <input id="TagsInput" type="text" data-role="tagsinput" />
+     </form>
+</div>
+    <hr />
+    <div class="col-md-2 ml-md-auto">
+
+        <button type="button" class="btn btn-primary btn-lg" onclick="ajaxTest();">Добавить курс </button>
+        <button type="button" class="btn btn-primary btn-lg" onclick="AddNewCourse();">Сохранить </button>
+    </div>
+
+<script type="text/javascript">
+    function ajaxTest() {
+        console.log("Entered method");
+        $.ajax({
+            type: "POST",
+            url: 'Submit', // Replace YOUR_CUSTOM_HANDLER with your handler.
+
+            data: {
+                name: $('#Name').val(),
+                description: $('#Description').val(),
+                content: editor.getData(),
+                addTags: $("#TagsInput").tagsinput('items')
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+
+            dataType: "text"
+        }).done(function (data) {
+            console.log(data.result);
+        })
+    }
+</script>
