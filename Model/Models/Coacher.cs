@@ -7,6 +7,6 @@ namespace Model.Models
     public class Coacher : CommonUser
     {
         public int Rating { get; set; }
-        public IEnumerable<Course> OwnnedCourses { get; set; }
+        public List<Course> OwnnedCourses { get; set; }
     }
 }

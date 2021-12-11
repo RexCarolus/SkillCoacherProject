@@ -26,13 +26,13 @@ namespace SkillCoacher.Pages
         {
             using(var db = new SkillCoacherContext())
             {                               
-                int a = db.Users.Count<BaseUser>(user => (user.Login == newUser.Login));
+                int a = db.CommonUsers.Count<BaseUser>(user => (user.Login == newUser.Login));
                 if (a>0)
                 {
                     return Page();
                 }
                 else
-                db.Users.Add(newUser);
+                db.CommonUsers.Add(newUser);
                 db.SaveChanges();
                 return RedirectToPage("/Index");
             }

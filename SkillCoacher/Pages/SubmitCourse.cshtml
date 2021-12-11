@@ -1,0 +1,178 @@
+﻿@page
+@model SkillCoacher.Pages.SubmitCourseModel
+@{
+}
+@*<div class="col-md-8 blog-main">
+
+            <h2 class="blog-post-title">Опубликовать курс</h2>
+            <hr />
+            <h4>Название курса</h4>
+            <input id="Name" type="text" />
+            <h4>Описание курса</h4>
+            <input id="Description" type="text" />
+            <h4>Содержание курса</h4>
+           @for(int i =0; i < Model.CurrentCourse.Components.Count(); i++)
+           {
+
+               var item = Model.CurrentCourse.Components[i];
+                <input asp-for="CurrentCourse.Components[i].Name" placeholder="@item.Name"></input>
+            }
+
+            <h4>Добавьте теги</h4>
+            <input id="TagsInput" type="text" data-role="tagsinput" />
+
+    </div>
+    <hr />*@
+
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/lib/dragndrop.css"></script>
+<link rel="stylesheet" href="~/lib/dragndrop.css" />
+<script>
+    $(function () {
+        $("#sortable").sortable();
+        $("#sortable").disableSelection();
+    });
+</script>
+<div class="col-md-8 blog-main">
+    <form method="post">
+        <h2 class="blog-post-title">Опубликовать курс</h2>
+        <hr />
+        <input id="dbId" type="hidden" value="@Model.DbId" />
+        <input  type="hidden" asp-for="CurrentCourse.Id" />
+        <h4>Название курса</h4>
+        <input id="Name" type="text" asp-for="CurrentCourse.Name" />
+        <h4>Описание курса</h4>
+        <input id="Description" type="text" asp-for="CurrentCourse.Description" />
+        <h4>Содержание курса</h4>
+        <div class="list list-row card" id="sortable" data-sortable-id="0" aria-dropeffect="move">
+            @for (int i = 0; i < Model.CurrentCourse.Components?.Count(); i++)
+            {
+
+                var item = Model.CurrentCourse.Components[i];
+            <div id="componentItem" class="list-item" data-id="@item.Sort" data-item-sortable-id="@item.Sort" draggable="true" role="option" aria-grabbed="false" style="">
+                <input asp-for="CurrentCourse.Components[i].Id" type="hidden"></input>
+                <input asp-for="CurrentCourse.Components[i].Discriminator" type="hidden"></input>
+                <div class="flex">
+                    <input id="Name" asp-for="CurrentCourse.Components[i].Name" placeholder="@item.Name"></input>
+                </div>
+                <div class="no-wrap">
+                    <div class="item-date text-muted text-sm d-none d-md-block">3 weeks ago</div>
+                </div>
+                <div>
+                    <div class="item-action dropdown">
+                        <a href="#" data-toggle="dropdown" class="text-muted" data-abc="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical">
+                                <circle cx="12" cy="12" r="1"></circle>
+                                <circle cx="12" cy="5" r="1"></circle>
+                                <circle cx="12" cy="19" r="1"></circle>
+                            </svg>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right bg-black" role="menu">
+                            <a class="dropdown-item edit" data-abc="true">Edit</a>
+                            <div class="dropdown-divider"></div> <a class="dropdown-item trash" onclick="Delete(@Model.CurrentCourse.Components[i].Id);" data-abc="true">Delete item</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+        <h4>Добавьте теги</h4>
+        <input id="TagsInput" type="text" data-role="tagsinput" />
+
+        <div class="col-md-2 ml-md-auto">
+
+            <button type="submit" class="btn btn-primary btn-lg" asp-page-handler="AddComponent";">Добавить раздел </button>
+            <button type="submit"  class="btn btn-primary btn-lg" asp-page-handler="Save">Сохранить </button>
+
+        </div>
+    </form>
+</div>
+<hr />
+
+
+<script type="text/javascript">
+   
+            function Delete($deleteId) {
+                console.log("Entered method");
+                var $mas = new Array();
+                var $ls = $("#componentItem > #Id").each((el) => {
+                    var $el = $(el);
+                    $mas.push({ Id: 1, Name: "suka", Sort: 0 });
+                });
+                var $final = JSON.stringify($mas);
+                $.ajax({
+                    type: "POST",
+                    url: 'SubmitCourse?handler=Delete',
+                   
+                    data: {
+                        id: $("#CurrentCourse_Id").val(),
+                        deleteId: $deleteId
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+
+                    dataType: "text"
+                }).done(function (data) {
+                    console.log(data.result);
+                })
+            };
+    
+  
+
+    function SaveChanges() {
+        console.log("Entered method");
+        var $mas = new Array();
+        var $ls = $("#componentItem > #Id").each((el) => {
+            var $el = $(el);
+            $mas.push({Id:1, Name: "suka", Sort: 0});
+        });
+        var $final = JSON.stringify($mas);
+        $.ajax({
+            type: "POST",
+            url: 'SubmitCourse?handler=Save',
+            contentType: "application/json; charset=utf-8",
+            data: {
+                id: $('#dbId').val(),
+                name: $('#Name').val(),
+                description: $('#Description').val(),
+                components: $final,
+                tagsStrings: $("#TagsInput").tagsinput('items')
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+
+            dataType: "text"
+        }).done(function (data) {
+            console.log(data.result);
+        })
+    };
+
+    function AddNewComponent() {
+        console.log("Entered methodAdd");
+
+
+        $.ajax({
+            type: "POST",
+            url: 'SubmitCourse?handler=AddComponent&id=' + $("#CurrentCourse_Id").val(),
+
+            data: {
+                Id: $("#dbId").val(),
+                Name: "New chapter",
+
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+
+            dataType: "text"
+        }).done(function (data) {
+            console.log(data.result);
+        })
+    }
+</script>

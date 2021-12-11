@@ -12,18 +12,24 @@ namespace Model.Context
         {
             Database.EnsureCreated(); 
         }
+        public SkillCoacherContext(DbContextOptions options) : base(options)
+        {
+           
+        }
         public DbSet<Tag> Tags { get; set; }
-        public DbSet<CommonUser> Users { get; set; }
+        public DbSet<CommonUser> CommonUsers { get; set; }
         public DbSet<Coacher> Coachers { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Test> Tests { get; set; }
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<BaseUser> AllUsers { get; set; }
+        public DbSet<CourseComponent> CourseComponents { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer("Server=localhost;Database=SkillCoacher1;Trusted_Connection=True;");
+            builder.UseSqlServer("Server=localhost;Database=SkillCoacher9;Trusted_Connection=True;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

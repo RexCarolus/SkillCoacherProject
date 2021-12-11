@@ -27,11 +27,11 @@ namespace SkillCoacher.Pages
             using(var db = new SkillCoacherContext())
             {
                 
-                if (db.Users.Count<BaseUser>(user => (user.Login == logInUser.Login))<1)
+                if (db.CommonUsers.Count<BaseUser>(user => (user.Login == logInUser.Login))<1)
                 {
                     return Page();
                 }
-                else if(db.Users.First<BaseUser>(user => (user.Login == logInUser.Login)).Password != logInUser.Password)
+                else if(db.CommonUsers.First<BaseUser>(user => (user.Login == logInUser.Login)).Password != logInUser.Password)
                 {
                     return Page();
                 }
