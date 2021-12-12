@@ -69,7 +69,7 @@
                             </svg>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right bg-black" role="menu">
-                            <a class="dropdown-item edit" data-abc="true">Edit</a>
+                            <a class="dropdown-item edit" asp-page="/SubmitChapter" asp-route-id="@Model.CurrentCourse.Components[i].Id" data-abc="true">Edit</a>
                             <div class="dropdown-divider"></div> <a class="dropdown-item trash" onclick="Delete(@Model.CurrentCourse.Components[i].Id);" data-abc="true">Delete item</a>
                         </div>
                     </div>

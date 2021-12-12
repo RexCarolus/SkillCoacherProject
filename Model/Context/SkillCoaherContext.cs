@@ -29,7 +29,7 @@ namespace Model.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer("Server=localhost;Database=SkillCoacher9;Trusted_Connection=True;");
+            builder.UseSqlServer("Server=localhost;Database=SkillCoacher2;Trusted_Connection=True;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -7,13 +7,12 @@
     <form method="post">
         <h2 class="blog-post-title">Опубликовать курс</h2>
         <hr />
-        <h4>Название курса</h4>
-        <input id="Name" type="text" />
-        <h4>Описание курса</h4>
-        <input id="Description" type="text" />
-        <h4>Содержание курса</h4>
-        <div id="editor">
-            <h2>faas</h2>
+        <input asp-for="CurrentChapter.Id" type="hidden" />
+        <h4>Название Раздела</h4>
+        <input asp-for="CurrentChapter.Name" type="text" />
+        <h4>Содержание Раздела</h4>
+        <div id="editor"> 
+            @Html.Raw(Model.CurrentChapter.HtmlContent)
         </div>
         <script>
             let editor;
@@ -38,17 +37,18 @@
 </div>
 
 <script type="text/javascript">
+    
     function ajaxTest() {
         console.log("Entered method");
         $.ajax({
             type: "POST",
-            url: 'Submit',
+            url: 'SubmitChapter',
 
             data: {
-                name: $('#Name').val(),
-                description: $('#Description').val(),
-                content: editor.getData(),
-                addTags: $("#TagsInput").tagsinput('items')
+                id: $("#CurrentChapter_Id"),
+                name: $('#CurrentChapter_Name').val(),
+                content: editor.getData()
+                
             },
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("XSRF-TOKEN",

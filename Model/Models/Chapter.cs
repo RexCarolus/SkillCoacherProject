@@ -6,6 +6,6 @@ namespace Model.Models
 {
     public class Chapter : CourseComponent
     {
-        public string Contetnt { get; set; }
+        public string HtmlContent { get; set; }
     }
 }
