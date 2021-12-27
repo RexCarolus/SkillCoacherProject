@@ -17,7 +17,7 @@ namespace SkillCoacher.Pages
     {
         [BindProperty]
         public Course CurrentCourse { get; set; }
-        public int DbId { get; set; } = -1;
+
 
         public void OnGet(int id)
         {
@@ -36,8 +36,9 @@ namespace SkillCoacher.Pages
             }
             else
             {
-                   CurrentCourse = db.Courses.Where(c => c.Id == id).Include(c=>c.Components).ToList().First();
-            }
+                    CurrentCourse = db.Courses.Where(c => c.Id == id).Include(c=>c.Components).ToList().First();
+                    ModelState.Clear();
+                }
         }
 
 
@@ -55,14 +56,31 @@ namespace SkillCoacher.Pages
 
                 db.SaveChanges();
             }
+            
+
             return Redirect($"SubmitCourse?id={id}");
+        }
+        public IActionResult OnPostDeleteAjax(int id, int deleteId)
+        {
+            if (id < 0)
+                return Page();
+            using (var db = new SkillCoacherContext())
+            {
+
+                var courseComp = new CourseComponent { Id = deleteId };
+                db.CourseComponents.Attach(courseComp);
+                db.CourseComponents.Remove(courseComp);
+
+                db.SaveChanges();
+            }
+
+
+            return new JsonResult(new { id =  deleteId});
         }
         public IActionResult OnPostAddComponent(Course currentCourse)
         {
             if (CurrentCourse.Id < 0)
                 return Page();
-            if (CurrentCourse.Components is null)
-                CurrentCourse.Components = new List<CourseComponent>();
             using (var db = new SkillCoacherContext())
             {
             

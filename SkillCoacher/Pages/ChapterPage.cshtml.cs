@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Model.Context;
 using Model.Models;
@@ -11,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace SkillCoacher.Pages
 {
-    public class CourseModel : PageModel
+    public class ChapterPageModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
 
-        public CourseModel(ILogger<IndexModel> logger)
+        public ChapterPageModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
         }
@@ -26,7 +25,7 @@ namespace SkillCoacher.Pages
             {
                 if (db.Courses.Count(course => course.Id == id) == 1)
                 {
-                    SelectedCourse = db.Courses.Where(course => course.Id == id).Include((comp)=> comp.Components).First<Course>(course => course.Id == id);
+                    SelectedCourse = db.Courses.First<Course>(course => course.Id == id);
                     return Page();
                 }
                 else

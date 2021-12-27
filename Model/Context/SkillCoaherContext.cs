@@ -29,7 +29,10 @@ namespace Model.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
+
             builder.UseSqlServer("Server=localhost;Database=SkillCoacher2;Trusted_Connection=True;");
+            
+          
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -53,6 +56,7 @@ namespace Model.Context
                     j.HasKey(t => new { t.CommonUserId, t.TestId });
                     j.ToTable("TestsUsers");
                 });
+           
         }
     }
   

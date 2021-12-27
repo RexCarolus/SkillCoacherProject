@@ -1,0 +1,41 @@
+﻿@page
+@model SkillCoacher.Pages.TestCourseModel
+@{
+    ViewData["Title"] = "Home page";
+}
+       
+<h2>Ajax</h2>
+<form method="post">
+
+<p><button type="button" class="btn btn-primary" id="load"  onclick="Show(5);">Load</button></p>
+</form>
+<div id="grid"></div>
+<input id="c_id" />
+
+<script>
+    function Show($deleteId) {
+        console.log("Entered method");
+
+
+        $.ajax({
+            type: "POST",
+            url: 'TestCourse?handler=CoursePartial',
+            data: { id: $deleteId },
+           
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            success(data) {
+               
+                $("#grid").html(data);
+
+            },
+            dataType: "html"
+        }).done(function (data) {
+            console.log(data.result);
+        })
+       
+    };
+    
+    </script>

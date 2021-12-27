@@ -11,7 +11,8 @@
         <h4>Название Раздела</h4>
         <input asp-for="CurrentChapter.Name" type="text" />
         <h4>Содержание Раздела</h4>
-        <div id="editor"> 
+ 
+        <div id="editor">
             @Html.Raw(Model.CurrentChapter.HtmlContent)
         </div>
         <script>
@@ -21,8 +22,7 @@
                 .create(document.querySelector('#editor'))
                 .then(newEditor => {
                     editor = newEditor;
-                })
-                .catch(error => {
+                }).catch(error => {
                     console.error(error);
                 });
         </script>
@@ -37,7 +37,7 @@
 </div>
 
 <script type="text/javascript">
-    
+   
     function ajaxTest() {
         console.log("Entered method");
         $.ajax({
@@ -45,17 +45,17 @@
             url: 'SubmitChapter',
 
             data: {
-                id: $("#CurrentChapter_Id"),
+                id: $("#CurrentChapter_Id").val(),
                 name: $('#CurrentChapter_Name').val(),
                 content: editor.getData()
                 
             },
+            dataType: "json",
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("XSRF-TOKEN",
                     $('input:hidden[name="__RequestVerificationToken"]').val());
-            },
+            }
 
-            dataType: "text"
         }).done(function (data) {
             console.log(data.result);
         })

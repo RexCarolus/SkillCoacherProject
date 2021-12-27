@@ -1,0 +1,42 @@
+﻿@using Model.Models;
+@model Course
+<table class="table table-striped">
+    <div class="list list-row card" id="sortable" data-sortable-id="0" aria-dropeffect="move">
+        <h4>Название курса</h4>
+        <input id="Name" type="text" asp-for="Name" />
+        <h4>Описание курса</h4>
+        <input id="Description" type="text" asp-for="Description" />
+        <h4>Содержание курса</h4>
+        <div class="list list-row card" id="sortable" data-sortable-id="0" aria-dropeffect="move">
+            @for (int i = 0; i < Model.Components?.Count(); i++)
+            {
+
+                var item = Model.Components[i];
+                <div id="componentItem" class="list-item" data-id="@item.Sort" data-item-sortable-id="@item.Sort" draggable="true" role="option" aria-grabbed="false" style="">
+                    <input asp-for="@Model.Components[i].Id" type="hidden"></input>
+                    <input asp-for="@Model.Components[i].Discriminator" type="hidden"></input>
+                    <div class="flex">
+                        <input id="Name" asp-for="@Model.Components[i].Name" placeholder="@item.Name"></input>
+                    </div>
+                    <div class="no-wrap">
+                        <div class="item-date text-muted text-sm d-none d-md-block">3 weeks ago</div>
+                    </div>
+                    <div>
+                        <div class="item-action dropdown">
+                            <a href="#" data-toggle="dropdown" class="text-muted" data-abc="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical">
+                                    <circle cx="12" cy="12" r="1"></circle>
+                                    <circle cx="12" cy="5" r="1"></circle>
+                                    <circle cx="12" cy="19" r="1"></circle>
+                                </svg>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right bg-black" role="menu">
+                                <a class="dropdown-item edit" asp-page="/SubmitChapter" asp-route-id="@Model.Components[i].Id" data-abc="true">Edit</a>
+                                <div class="dropdown-divider"></div> <a class="dropdown-item trash" onclick="Delete(@Model.Components[i].Id);" data-abc="true">Delete item</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+</table>

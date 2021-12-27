@@ -1,0 +1,26 @@
+﻿@page
+@model SkillCoacher.Pages.AjaxRazorModel
+@{
+}
+<div class="text-center">
+    <form method="post">
+        <input class="display-4" asp-for="@Model.Title"></input>
+        <input type="submit" value="Bind" />
+    </form>
+    <p id="info">Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <button id="btn" asp-page-handler="Add" onclick="test();">Send</button>
+</div>
+<script>
+    function test() {
+        $.ajax({
+            url: $("#btn").attr("formaction"),
+            type: 'POST',
+            data: { info: JSON.stringify($("#info").text()) },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            dataType: "json"
+        });
+    }
+</script>

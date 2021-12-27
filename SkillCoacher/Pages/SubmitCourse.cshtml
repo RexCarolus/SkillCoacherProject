@@ -38,7 +38,7 @@
     <form method="post">
         <h2 class="blog-post-title">Опубликовать курс</h2>
         <hr />
-        <input id="dbId" type="hidden" value="@Model.DbId" />
+       
         <input  type="hidden" asp-for="CurrentCourse.Id" />
         <h4>Название курса</h4>
         <input id="Name" type="text" asp-for="CurrentCourse.Name" />
@@ -50,7 +50,7 @@
             {
 
                 var item = Model.CurrentCourse.Components[i];
-            <div id="componentItem" class="list-item" data-id="@item.Sort" data-item-sortable-id="@item.Sort" draggable="true" role="option" aria-grabbed="false" style="">
+            <div id='@Model.CurrentCourse.Components[i].Id' class="list-item" data-id="@item.Sort"  data-item-sortable-id="@item.Sort" draggable="true" role="option" aria-grabbed="false" style="">
                 <input asp-for="CurrentCourse.Components[i].Id" type="hidden"></input>
                 <input asp-for="CurrentCourse.Components[i].Discriminator" type="hidden"></input>
                 <div class="flex">
@@ -71,6 +71,7 @@
                         <div class="dropdown-menu dropdown-menu-right bg-black" role="menu">
                             <a class="dropdown-item edit" asp-page="/SubmitChapter" asp-route-id="@Model.CurrentCourse.Components[i].Id" data-abc="true">Edit</a>
                             <div class="dropdown-divider"></div> <a class="dropdown-item trash" onclick="Delete(@Model.CurrentCourse.Components[i].Id);" data-abc="true">Delete item</a>
+                            <div class="dropdown-divider"></div> <a class="dropdown-item trash" onclick="DeleteAjax(@Model.CurrentCourse.Components[i].Id);" data-abc="true">Delete itemAkj</a>
                         </div>
                     </div>
                 </div>
@@ -86,6 +87,7 @@
             <button type="submit"  class="btn btn-primary btn-lg" asp-page-handler="Save">Сохранить </button>
 
         </div>
+        <h1 id='ska'>Skaa</h1>
     </form>
 </div>
 <hr />
@@ -114,13 +116,39 @@
                             $('input:hidden[name="__RequestVerificationToken"]').val());
                     },
 
-                    dataType: "text"
+                    dataType: "json"
                 }).done(function (data) {
                     console.log(data.result);
                 })
             };
     
+    function DeleteAjax($deleteId) {
+        console.log("Entered method");
   
+       
+        $.ajax({
+            type: "POST",
+            url: 'SubmitCourse?handler=DeleteAjax',
+
+            data: {
+                id: $("#CurrentCourse_Id").val(),
+                deleteId: $deleteId
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            success() {
+                console.log($('#component/' + $deleteId));
+           
+        
+            },
+            dataType: "json"
+        }).done(function (data) {
+            console.log(data.result);
+        })
+        $('#sortable > #'+ $deleteId).remove();
+    };
 
     function SaveChanges() {
         console.log("Entered method");

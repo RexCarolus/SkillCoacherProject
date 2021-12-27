@@ -9,12 +9,18 @@
         <h2 class="blog-post-title">@Model.SelectedCourse.Name</h2>
         <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
         <hr>
-        <div>@Html.Raw(Model.SelectedCourse.Content)</div>
+        @if (Model.SelectedCourse.Components != null && Model.SelectedCourse.Components.Count > 0)
+            foreach (var item in Model.SelectedCourse.Components)
+            {
+                <h1>@item.Name</h1>
+                <a asp-page="/ChapterPage" asp-route-Id="@item.Id" class="stretched-link">Continue reading</a>
+            }
+
         <hr>
-        
 
 
-        </div>
+
+    </div>
 </div>
 
 

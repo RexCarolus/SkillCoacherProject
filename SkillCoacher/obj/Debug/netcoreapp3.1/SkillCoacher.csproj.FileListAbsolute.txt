@@ -473,3 +473,7 @@ C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\bin\Debug\netcoreapp3.1\Pro
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\LogIn.cshtml.g.cs
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\SubmitChapter.cshtml.g.cs
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\SubmitCourse.cshtml.g.cs
+C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\ChapterPage.cshtml.g.cs
+C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\AjaxRazor.cshtml.g.cs
+C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_PartialCourse.cshtml.g.cs
+C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\TestCourse.cshtml.g.cs
