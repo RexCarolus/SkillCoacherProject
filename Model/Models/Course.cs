@@ -14,5 +14,7 @@ namespace Model.Models
         public int OwnerUserId { get; set; }
         public List<Tag> Tags { get; set; }
         public int Progress { get; set; }
+        public List<CommonUser> CommonUsers { get; set; }
+        public List<CommonUsersFavoriteCourses> CommonUsersFavoriteCourses { get; set; } = new List<CommonUsersFavoriteCourses>();
     }
 }

@@ -15,16 +15,18 @@ namespace SkillCoacher.Pages
 {
     public class SubmitCourseModel : PageModel
     {
+        public SubmitCourseModel(SkillCoacherContext context)
+        {
+            db = context;
+        }
+        private SkillCoacherContext db;
         [BindProperty]
         public Course CurrentCourse { get; set; }
 
 
         public void OnGet(int id)
         {
-            using (var db = new SkillCoacherContext())
-            {
-                
-                if (id == 0|| db.Courses.Count(c=> c.Id ==id)==0)
+            if (id == 0|| db.Courses.Count(c=> c.Id ==id)==0)
             {
                 CurrentCourse = new Course
                 {
@@ -38,42 +40,18 @@ namespace SkillCoacher.Pages
             {
                     CurrentCourse = db.Courses.Where(c => c.Id == id).Include(c=>c.Components).ToList().First();
                     ModelState.Clear();
-                }
-        }
-
-
-        }
-        public IActionResult OnPostDelete(int id, int deleteId)
-        {
-            if (id < 0)
-                return Page();
-            using (var db = new SkillCoacherContext())
-            {
-
-                var courseComp = new CourseComponent { Id = deleteId };
-                db.CourseComponents.Attach(courseComp);
-                db.CourseComponents.Remove(courseComp);
-
-                db.SaveChanges();
             }
-            
-
-            return Redirect($"SubmitCourse?id={id}");
         }
+     
         public IActionResult OnPostDeleteAjax(int id, int deleteId)
         {
             if (id < 0)
                 return Page();
-            using (var db = new SkillCoacherContext())
-            {
-
-                var courseComp = new CourseComponent { Id = deleteId };
-                db.CourseComponents.Attach(courseComp);
-                db.CourseComponents.Remove(courseComp);
-
-                db.SaveChanges();
-            }
-
+            var courseComp = new CourseComponent { Id = deleteId };
+            db.CourseComponents.Attach(courseComp);
+            db.CourseComponents.Remove(courseComp);
+            
+            db.SaveChanges();
 
             return new JsonResult(new { id =  deleteId});
         }
@@ -81,30 +59,25 @@ namespace SkillCoacher.Pages
         {
             if (CurrentCourse.Id < 0)
                 return Page();
-            using (var db = new SkillCoacherContext())
-            {
-            
-                CurrentCourse = db.Courses.Where(c => c.Id == CurrentCourse.Id).Include(ch=> ch.Components).First(c => c.Id == CurrentCourse.Id);
                 
-                CurrentCourse.Components.Add(new Chapter { Name = "New chapter" });
-                db.SaveChanges();
-
-            }
+            CurrentCourse = db.Courses.Where(c => c.Id == CurrentCourse.Id).Include(ch=> ch.Components).First();
+            CurrentCourse.Name = currentCourse.Name;
+            CurrentCourse.Tags = currentCourse.Tags;
+            CurrentCourse.Description = currentCourse.Description;
+            CurrentCourse.Components.Add(new Chapter { Name = "New chapter" });
+            db.SaveChanges();
             return Redirect($"SubmitCourse?id={CurrentCourse.Id}");
         }
         
 
         public IActionResult OnPostSave(string[] tagsStrings, string imageName = "aaa.jpg")
         {
-            
-            
-                TagFactory tagFactory = new TagFactory();
+                TagFactory tagFactory = new TagFactory(db);
                 var addTags = tagFactory.GetTagList(tagsStrings).ToList();
                 if (CurrentCourse.Id < 0)
                 {
                 Course newCourse;
-                using (var db = new SkillCoacherContext())
-                {
+              
                     newCourse = new Course
                     {
                         Name = CurrentCourse.Name,
@@ -115,17 +88,10 @@ namespace SkillCoacher.Pages
                     };
                     newCourse.Id = db.Courses.Add(newCourse).Entity.Id;
                     db.SaveChanges();
-                }
                     return Redirect($"SubmitCourse?id={newCourse.Id}");
-                
                 }
                 else
                 {
-                    DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder();
-                    optionsBuilder.EnableSensitiveDataLogging(true);
-                using (var db = new SkillCoacherContext(optionsBuilder.Options))
-                {
-                   
                     var updatedCourse = db.Courses.Where(c => c.Id == CurrentCourse.Id).Include(ch => ch.Components).First(c => c.Id == CurrentCourse.Id); ;
                     updatedCourse.Name = CurrentCourse.Name;
                     updatedCourse.Description = CurrentCourse.Description;
@@ -135,22 +101,10 @@ namespace SkillCoacher.Pages
                         updatedCourse.Components[i].Sort = CurrentCourse.Components[i].Sort;
                         updatedCourse.Components[i].Discriminator = CurrentCourse.Components[i].Discriminator;
                     }
-                    
                     updatedCourse.Tags = addTags;
-
-                    // CurrentCourse = updatedCourse;
                     db.SaveChanges();
                 }
                     return Redirect($"SubmitCourse?id={CurrentCourse.Id}");
-                }
             }
-        
-    }
-    
-    public class Person
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public int Age { get; set; }
     }
 }

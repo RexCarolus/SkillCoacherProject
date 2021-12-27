@@ -7,36 +7,49 @@ using System.Linq;
 using System.Threading.Tasks;
 using Model.Models;
 using Model.Context;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
+
 namespace SkillCoacher.Pages
 {
     public class LogInModel : PageModel
     {
-        private readonly ILogger<SignUpModel> _logger;
-
-        public LogInModel(ILogger<SignUpModel> logger)
+        public LogInModel(SkillCoacherContext context)
         {
-            _logger = logger;        
+            db = context;
         }
+        private SkillCoacherContext db;
         public BaseUser LogInUser { get;  set; }
         public void OnGet()
         {
    
         }
-        public IActionResult OnPost(BaseUser logInUser)
+        public async Task<IActionResult> OnPost(BaseUser logInUser)
         {
-            using(var db = new SkillCoacherContext())
+            CommonUser user = await db.CommonUsers.FirstOrDefaultAsync(user => (user.Login == logInUser.Login));
+            if (user == null)
             {
-                
-                if (db.CommonUsers.Count<BaseUser>(user => (user.Login == logInUser.Login))<1)
-                {
-                    return Page();
-                }
-                else if(db.CommonUsers.First<BaseUser>(user => (user.Login == logInUser.Login)).Password != logInUser.Password)
-                {
-                    return Page();
-                }
-                return RedirectToPage("/Index");
+                return Page();
             }
+            else if(user.Password == logInUser.Password)
+            {
+                await Authenticate(logInUser.Login);
+            }
+            return RedirectToPage("/Index");
+        }
+        private async Task Authenticate(string userName)
+        {
+            // создаем один claim
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+            };
+            // создаем объект ClaimsIdentity
+            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+            // установка аутентификационных куки
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
     }
 }

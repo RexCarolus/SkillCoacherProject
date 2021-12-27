@@ -17,6 +17,7 @@ namespace SkillCoacher.Pages
 {
     public class TestCourseModel : PageModel
     {
+       
         private ICourseService _courseService;
         public Course Course { get; set; }
         public TestCourseModel(ICourseService courseService)
@@ -28,8 +29,7 @@ namespace SkillCoacher.Pages
         }
         public PartialViewResult OnPostCoursePartial(int id)
         {
-            Course = _courseService.GetCourse(55);
-            var h = Partial("_PartialCourse", Course);
+            Course = _courseService.GetCourse(1);
             return Partial("_PartialCourse", Course);
         }
 

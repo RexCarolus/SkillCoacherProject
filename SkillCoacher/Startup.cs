@@ -32,11 +32,14 @@ namespace SkillCoacher
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => //CookieAuthenticationOptions
                 {
-                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Login");
                 });
-            services.AddRazorPages();
-            services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
+            services.AddRazorPages(options=>
+            {
+                options.Conventions.AuthorizePage("/SubmitCourse");
+            });
             services.AddTransient<ICourseService, CourseService>();
+            services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,9 +60,9 @@ namespace SkillCoacher
             app.UseStaticFiles();
 
             app.UseRouting();
-            
+            app.UseAuthentication();
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

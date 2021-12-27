@@ -23,6 +23,6 @@ namespace Model.Models
             return sum;
         }
         public List<CommonUser> Users { get; set; } = new List<CommonUser>();
-        public List<TestsBaseUser> TestsBaseUsers { get; set; } = new List<TestsBaseUser>();
+        public List<TestsCommonUsers> TestsBaseUsers { get; set; } = new List<TestsCommonUsers>();
     }
 }

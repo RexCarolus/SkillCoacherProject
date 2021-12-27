@@ -14,13 +14,15 @@ namespace SkillCoacher.Services
     }
     public class CourseService : ICourseService
     {
+        public CourseService(SkillCoacherContext context)
+        {
+            db = context;
+        }
+        private SkillCoacherContext db;
         public Course GetCourse(int id)
         {
             Course course;
-            using (var db = new SkillCoacherContext())
-            {
                 course = db.Courses.Where(c => c.Id == id).Include(c => c.Components).ToList().First();
-            }
             
             return course;
         }

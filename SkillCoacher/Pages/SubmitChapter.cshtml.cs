@@ -11,31 +11,27 @@ namespace SkillCoacher.Pages
 {
     public class SubmitChapterModel : PageModel
     {
+        public SubmitChapterModel(SkillCoacherContext context)
+        {
+            db = context;
+        }
+        private SkillCoacherContext db;
        [BindProperty]
-       public Chapter CurrentChapter { get; set; }
+        public Chapter CurrentChapter { get; set; }
         public void OnGet(int id)
         {
-            using(var db = new SkillCoacherContext())
+            if(db.Chapters.Count(c=> c.Id == id) == 0)
             {
-                if(db.Chapters.Count(c=> c.Id == id) == 0)
-                {
-                    
-                }
-                else
-                {
-                    CurrentChapter = db.Chapters.First(c => c.Id == id);
-                }
-
-
+                
+            }
+            else
+            {
+                CurrentChapter = db.Chapters.First(c => c.Id == id);
             }
         }
 
         public IActionResult OnPost(int id, string name, string content,  string imageName = "aaa.jpg")
         {
-           
-         
-            using (var db = new SkillCoacherContext())
-            {
                 //var tagsList = new List<Tag>();
                 //foreach (var addTagName in addTags)
                 //{
@@ -53,7 +49,6 @@ namespace SkillCoacher.Pages
                 updatedChapter.Name = name;
                 updatedChapter.HtmlContent =content;
                 db.SaveChanges();
-            }
             return Redirect($"SubmitChapter?id={CurrentChapter.Id}");
         }
     }

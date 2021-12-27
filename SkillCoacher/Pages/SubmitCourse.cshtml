@@ -69,9 +69,8 @@
                             </svg>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right bg-black" role="menu">
-                            <a class="dropdown-item edit" asp-page="/SubmitChapter" asp-route-id="@Model.CurrentCourse.Components[i].Id" data-abc="true">Edit</a>
-                            <div class="dropdown-divider"></div> <a class="dropdown-item trash" onclick="Delete(@Model.CurrentCourse.Components[i].Id);" data-abc="true">Delete item</a>
-                            <div class="dropdown-divider"></div> <a class="dropdown-item trash" onclick="DeleteAjax(@Model.CurrentCourse.Components[i].Id);" data-abc="true">Delete itemAkj</a>
+                            <a class="dropdown-item edit" asp-page="/SubmitChapter" asp-route-id="@Model.CurrentCourse.Components[i].Id" data-abc="true">Изменить</a>
+                            <div class="dropdown-divider"></div> <a class="dropdown-item trash" onclick="DeleteAjax(@Model.CurrentCourse.Components[i].Id);" data-abc="true">Удалить</a>
                         </div>
                     </div>
                 </div>
@@ -82,50 +81,20 @@
         <input id="TagsInput" type="text" data-role="tagsinput" />
 
         <div class="col-md-2 ml-md-auto">
-
             <button type="submit" class="btn btn-primary btn-lg" asp-page-handler="AddComponent";">Добавить раздел </button>
             <button type="submit"  class="btn btn-primary btn-lg" asp-page-handler="Save">Сохранить </button>
-
         </div>
-        <h1 id='ska'>Skaa</h1>
     </form>
 </div>
 <hr />
 
 
 <script type="text/javascript">
-   
-            function Delete($deleteId) {
-                console.log("Entered method");
-                var $mas = new Array();
-                var $ls = $("#componentItem > #Id").each((el) => {
-                    var $el = $(el);
-                    $mas.push({ Id: 1, Name: "suka", Sort: 0 });
-                });
-                var $final = JSON.stringify($mas);
-                $.ajax({
-                    type: "POST",
-                    url: 'SubmitCourse?handler=Delete',
-                   
-                    data: {
-                        id: $("#CurrentCourse_Id").val(),
-                        deleteId: $deleteId
-                    },
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader("XSRF-TOKEN",
-                            $('input:hidden[name="__RequestVerificationToken"]').val());
-                    },
 
-                    dataType: "json"
-                }).done(function (data) {
-                    console.log(data.result);
-                })
-            };
-    
     function DeleteAjax($deleteId) {
         console.log("Entered method");
-  
-       
+
+
         $.ajax({
             type: "POST",
             url: 'SubmitCourse?handler=DeleteAjax',
@@ -140,8 +109,8 @@
             },
             success() {
                 console.log($('#component/' + $deleteId));
-           
-        
+
+
             },
             dataType: "json"
         }).done(function (data) {
@@ -163,10 +132,6 @@
             url: 'SubmitCourse?handler=Save',
             contentType: "application/json; charset=utf-8",
             data: {
-                id: $('#dbId').val(),
-                name: $('#Name').val(),
-                description: $('#Description').val(),
-                components: $final,
                 tagsStrings: $("#TagsInput").tagsinput('items')
             },
             beforeSend: function (xhr) {

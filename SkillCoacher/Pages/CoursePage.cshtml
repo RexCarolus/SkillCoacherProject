@@ -13,14 +13,38 @@
             foreach (var item in Model.SelectedCourse.Components)
             {
                 <h1>@item.Name</h1>
-                <a asp-page="/ChapterPage" asp-route-Id="@item.Id" class="stretched-link">Continue reading</a>
+                <a asp-page="/ChapterPage" asp-route-Id="@item.Id">Continue reading</a>
             }
 
         <hr>
 
 
-
     </div>
+         <button type="button" onclick="AddToFavorite(@Model.SelectedCourse.Id);">Подписаться</button>
 </div>
 
+<script>
+    function AddToFavorite($Id) {
+        console.log("Entered method");
+        $.ajax({
+            type: "POST",
+            url: 'CoursePage?handler=AddToFavorite',
 
+            data: {
+                id: $("#CurrentCourse_Id").val(),
+                courseId: $Id
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            success() {
+
+            },
+            dataType: "json"
+        }).done(function (data) {
+            console.log(data.result);
+        })
+        $('#sortable > #' + $deleteId).remove();
+    };
+</script>

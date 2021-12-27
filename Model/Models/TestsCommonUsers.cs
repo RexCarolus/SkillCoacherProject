@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Model.Models
 {
-    public class TestsBaseUser
+    public class TestsCommonUsers
     {
         public int TestId { get; set; }
         public Test Test { get; set; }

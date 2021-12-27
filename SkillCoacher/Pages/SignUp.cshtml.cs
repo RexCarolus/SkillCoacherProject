@@ -7,35 +7,48 @@ using System.Linq;
 using System.Threading.Tasks;
 using Model.Models;
 using Model.Context;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+
 namespace SkillCoacher.Pages
 {
     public class SignUpModel : PageModel
     {
-        private readonly ILogger<SignUpModel> _logger;
-
-        public SignUpModel(ILogger<SignUpModel> logger)
+        public SignUpModel(SkillCoacherContext context)
         {
-            _logger = logger;
+            db = context;
         }
+        private SkillCoacherContext db;
         public BaseUser NewUser { get;  set; }
         public void OnGet()
         {
    
         }
-        public IActionResult OnPost(CommonUser newUser)
+        public async Task<IActionResult> OnPost(CommonUser newUser)
         {
-            using(var db = new SkillCoacherContext())
-            {                               
-                int a = db.CommonUsers.Count<BaseUser>(user => (user.Login == newUser.Login));
-                if (a>0)
-                {
-                    return Page();
-                }
-                else
-                db.CommonUsers.Add(newUser);
-                db.SaveChanges();
-                return RedirectToPage("/Index");
+            var user = db.CommonUsers.Where(user => (user.Login == newUser.Login));
+            if (user == null)
+            {
+                return Page();
             }
+            else
+            db.CommonUsers.Add(newUser);
+            db.SaveChanges();
+            await Authenticate(newUser.Login);
+            return RedirectToPage("/Index");
+        }
+        private async Task Authenticate(string userName)
+        {
+            // создаем один claim
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+            };
+            // создаем объект ClaimsIdentity
+            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+            // установка аутентификационных куки
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
     }
 }

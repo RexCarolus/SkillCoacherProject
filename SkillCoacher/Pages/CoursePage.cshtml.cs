@@ -13,26 +13,27 @@ namespace SkillCoacher.Pages
 {
     public class CourseModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
-
-        public CourseModel(ILogger<IndexModel> logger)
+        public CourseModel(SkillCoacherContext context)
         {
-            _logger = logger;
+            db = context;
         }
-      public Course SelectedCourse { get; private set; }
+        private SkillCoacherContext db;
+        public Course SelectedCourse { get; private set; }
         public IActionResult OnGet(int id)
         {
-            using (SkillCoacherContext db = new SkillCoacherContext())
+            if (db.Courses.Count(course => course.Id == id) == 1)
             {
-                if (db.Courses.Count(course => course.Id == id) == 1)
-                {
-                    SelectedCourse = db.Courses.Where(course => course.Id == id).Include((comp)=> comp.Components).First<Course>(course => course.Id == id);
-                    return Page();
-                }
-                else
-                    return RedirectToPage("/Index");
-
+                SelectedCourse = db.Courses.Where(course => course.Id == id).Include((comp) => comp.Components).First<Course>(course => course.Id == id);
+                return Page();
             }
+            else
+                return RedirectToPage("/Index");
+
+        }
+        public void OnPostAddToFavorite(int courseId)
+        {
+            var user = db.CommonUsers.First((user) => user.Login == User.Claims.First().Value);
+
         }
     }
 }
