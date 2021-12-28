@@ -25,15 +25,13 @@ namespace Model.Context
         public DbSet<Test> Tests { get; set; }
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<Course> Courses { get; set; }
-       // public DbSet<BaseUser> AllUsers { get; set; }
         public DbSet<CourseComponent> CourseComponents { get; set; }
+        public DbSet<CommonUsersFavoriteCourses> UsersFavoriteCourses { get; set; }
+        public DbSet<CourseGrade> CourseGrades { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
 
-            //builder.UseSqlServer("Server=localhost;Database=SkillCoacher2;Trusted_Connection=True;");
-            
-          
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -76,6 +74,25 @@ namespace Model.Context
                    j.HasKey(t => new { t.UserId, t.FavoriteCourseId });
                    j.ToTable("CommonUsersFavoriteCourses");
                });
+            modelBuilder
+              .Entity<Course>()
+              .HasMany(c => c.GradeUsers)
+              .WithMany(u => u.GradeCourses)
+              .UsingEntity<CourseGrade>(
+                 j => j
+                  .HasOne(pt => pt.User)
+                  .WithMany(t => t.CourseGrades)
+                  .HasForeignKey(pt => pt.UserId),
+              j => j
+                  .HasOne(cg => cg.Course)
+                  .WithMany(p => p.CourseGrades)
+                  .HasForeignKey(cg => cg.CourserId),
+              j =>
+              {
+                  j.HasKey(t => new { t.UserId, t.CourserId });
+                  j.Property(pt => pt.Grade);
+                  j.ToTable("CourseGrades");
+              });
         }
     }
   

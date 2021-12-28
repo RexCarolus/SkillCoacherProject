@@ -23,9 +23,11 @@ namespace SkillCoacher.Pages
         private SkillCoacherContext db;
         [BindProperty]
         public List<Course> CoursesList { get; set; }
-
+        public CommonUser CurrentUser { get; set; }
         public void OnGet()
         {
+            CurrentUser = db.CommonUsers?.Where(u => u.Login == User.Claims.ToList()[0].Value)?.Include(u => u.FavoriteCourses).FirstOrDefault();
+           
             CoursesList = db.Courses.Include(t => t.Tags).ToList();
         }
 
@@ -38,8 +40,10 @@ namespace SkillCoacher.Pages
         public void OnPostAddToFavorite(int userId,int courseId)
         {
             var user = db.CommonUsers.Where((user) => user.Login == User.Claims.First().Value).Include((u)=>u.FavoriteCourses).First();
-            var cr = db.Courses.First((c) => c.Id == courseId);
-            user.FavoriteCourses.Add(db.Courses.First((c) => c.Id == courseId));
+            if (user.FavoriteCourses.Count(c => c.Id == courseId) > 0)
+                user.FavoriteCourses.RemoveAll(c => c.Id == courseId);
+            else 
+                user.FavoriteCourses.Add(db.Courses.First((c) => c.Id == courseId));
             db.SaveChanges();
         }
     }

@@ -14,5 +14,7 @@ namespace Model.Models
         public List<CommonUsersFavoriteCourses> CommonUsersFavoriteCourses { get; set; } = new List<CommonUsersFavoriteCourses>();
         public List<TestsCommonUsers> TestsBaseUsers { get; set; } = new List<TestsCommonUsers>();
         public List<Test> Tests { get; set; } = new List<Test>();
+        public List<Course> GradeCourses { get; set; }
+        public List<CourseGrade> CourseGrades { get; set; } = new List<CourseGrade>();
     }
 }

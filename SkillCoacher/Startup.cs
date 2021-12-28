@@ -24,7 +24,6 @@ namespace SkillCoacher
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
@@ -36,7 +35,9 @@ namespace SkillCoacher
                 });
             services.AddRazorPages(options=>
             {
+                options.Conventions.AuthorizePage("/Index");
                 options.Conventions.AuthorizePage("/SubmitCourse");
+                options.Conventions.AuthorizeFolder("/Pages");
             });
             services.AddTransient<ICourseService, CourseService>();
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");

@@ -4,8 +4,12 @@
     ViewData["Title"] = "Course page";
 }
 
+<form method="post">
+
+</form>
 <div class="col-md-8 blog-main">
     <div class="blog-post">
+        <input type="hidden" asp-for="@Model.SelectedCourse.Id"/>
         <h2 class="blog-post-title">@Model.SelectedCourse.Name</h2>
         <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
         <hr>
@@ -20,10 +24,55 @@
 
 
     </div>
-         <button type="button" onclick="AddToFavorite(@Model.SelectedCourse.Id);">Подписаться</button>
+    <div id="buttons">
+
+    @{
+    if (Model.Grade == 1)
+    {
+        <button onclick="ChangeGrade(0);" class="btn btn-success" >нравится</button>
+        <button onclick="ChangeGrade(-1)" class="btn btn-outline-danger">не нравится</button>
+    }
+    else if (Model.Grade == -1)
+    {
+        <button onclick="ChangeGrade(1);" class="btn btn-outline-success">нравится</button>
+        <button onclick="ChangeGrade(0)" class="btn btn-danger">не нравится</button>
+    }
+    else
+    {
+        <button onclick="ChangeGrade(1);" class="btn btn-outline-success">нравится</button>
+        <button onclick="ChangeGrade(-1)" class="btn btn-outline-danger">не нравится</button>
+    }
+    }
+    </div>
+
+    <button type="button" onclick="AddToFavorite(@Model.SelectedCourse.Id);">Подписаться</button>
 </div>
 
 <script>
+    function ChangeGrade($Grade) {
+        let $course = { Id: $("#SelectedCourse_Id").val() };
+        $.ajax({
+            type: "POST",
+            url: 'CoursePage?handler=ChangeGrade',
+            
+            data: {
+                courseId: $("#SelectedCourse_Id").val(),
+                Grade: $Grade
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            success(data) {
+                $("#buttons").html('');
+                $("#buttons").html(data);
+            },
+            dataType: "html"
+        }).done(function (data) {
+           
+        })
+       
+    };
     function AddToFavorite($Id) {
         console.log("Entered method");
         $.ajax({

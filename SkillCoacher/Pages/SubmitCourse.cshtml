@@ -41,9 +41,9 @@
        
         <input  type="hidden" asp-for="CurrentCourse.Id" />
         <h4>Название курса</h4>
-        <input id="Name" type="text" asp-for="CurrentCourse.Name" />
+        <input id="CurrentCourse_Name" type="text" asp-for="CurrentCourse.Name" />
         <h4>Описание курса</h4>
-        <input id="Description" type="text" asp-for="CurrentCourse.Description" />
+        <input id="CurrentCourse_Description" type="text" asp-for="CurrentCourse.Description" />
         <h4>Содержание курса</h4>
         <div class="list list-row card" id="sortable" data-sortable-id="0" aria-dropeffect="move">
             @for (int i = 0; i < Model.CurrentCourse.Components?.Count(); i++)
@@ -54,7 +54,7 @@
                 <input asp-for="CurrentCourse.Components[i].Id" type="hidden"></input>
                 <input asp-for="CurrentCourse.Components[i].Discriminator" type="hidden"></input>
                 <div class="flex">
-                    <input id="Name" asp-for="CurrentCourse.Components[i].Name" placeholder="@item.Name"></input>
+                    <input  asp-for="CurrentCourse.Components[i].Name" placeholder="@item.Name"></input>
                 </div>
                 <div class="no-wrap">
                     <div class="item-date text-muted text-sm d-none d-md-block">3 weeks ago</div>
@@ -69,8 +69,8 @@
                             </svg>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right bg-black" role="menu">
-                            <a class="dropdown-item edit" asp-page="/SubmitChapter" asp-route-id="@Model.CurrentCourse.Components[i].Id" data-abc="true">Изменить</a>
-                            <div class="dropdown-divider"></div> <a class="dropdown-item trash" onclick="DeleteAjax(@Model.CurrentCourse.Components[i].Id);" data-abc="true">Удалить</a>
+                            <a  class="dropdown-item edit" asp-page="/SubmitChapter" asp-route-id="@Model.CurrentCourse.Components[i].Id" data-abc="true">Изменить</a>
+                            <div class="dropdown-divider"></div> <a  class="dropdown-item trash" onclick="DeleteAjax(@Model.CurrentCourse.Components[i].Id);" data-abc="true">Удалить</a>
                         </div>
                     </div>
                 </div>
@@ -81,8 +81,8 @@
         <input id="TagsInput" type="text" data-role="tagsinput" />
 
         <div class="col-md-2 ml-md-auto">
-            <button type="submit" class="btn btn-primary btn-lg" asp-page-handler="AddComponent";">Добавить раздел </button>
-            <button type="submit"  class="btn btn-primary btn-lg" asp-page-handler="Save">Сохранить </button>
+            <button type="submit" id="addComp" class="btn btn-primary btn-lg" asp-page-handler="AddComponent" ;">Добавить раздел </button>
+            <button type="button" class="btn btn-primary btn-lg" onclick="SaveChanges();">Сохранить</button>
         </div>
     </form>
 </div>
@@ -90,10 +90,17 @@
 
 
 <script type="text/javascript">
-
+    $(document).ready(function () {
+        if ($("#CurrentCourse_Id").val() == -1) {
+            $(document).on("click", ".dropdown-item.trash, .dropdown-item.edit, #addComp", function (event) {
+            event.preventDefault();
+            alert("Сначала сохраните курс!");
+        });
+        }
+    });
     function DeleteAjax($deleteId) {
         console.log("Entered method");
-
+       
 
         $.ajax({
             type: "POST",
@@ -110,7 +117,6 @@
             success() {
                 console.log($('#component/' + $deleteId));
 
-
             },
             dataType: "json"
         }).done(function (data) {
@@ -121,28 +127,45 @@
 
     function SaveChanges() {
         console.log("Entered method");
-        var $mas = new Array();
-        var $ls = $("#componentItem > #Id").each((el) => {
-            var $el = $(el);
-            $mas.push({Id:1, Name: "suka", Sort: 0});
+        let $tags = $("#TagsInput").tagsinput('items');
+        let $content = new Array();
+        $("#sortable > .list-item").each(function () {
+            console.log($(this).children("input").eq(0).attr("id"));
+            console.log($(this).children("input").eq(1).attr("id"));
+            console.log($(this).find(".flex").find(":first-child").val());
+
+            $content.push( {
+                Id: $(this).children("input").eq(0).val(), Descriminator: $(this).children("input").eq(1).val(),
+                Name: $(this).find(".flex").find(":first-child").val(),
+            });
         });
-        var $final = JSON.stringify($mas);
+        let $CurrentCourse =
+            {
+                Id: $("#CurrentCourse_Id").val(),
+                Name: $("#CurrentCourse_Name").val(),
+                Description: $("#CurrentCourse_Description").val(),
+                Components: $content
+            }
         $.ajax({
             type: "POST",
-            url: 'SubmitCourse?handler=Save',
-            contentType: "application/json; charset=utf-8",
+            url: 'SubmitCourse?handler=SaveAjx',
+
             data: {
-                tagsStrings: $("#TagsInput").tagsinput('items')
+                CurrentCourse: $CurrentCourse,
+                TagsStrings: $tags
             },
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("XSRF-TOKEN",
                     $('input:hidden[name="__RequestVerificationToken"]').val());
             },
+            success: function (data) {
+               // const $result = JSON.parse(data);
+                if (data.isNew)
+                window.location.replace(document.documentURI + "?Id=" + data.id);
 
-            dataType: "text"
-        }).done(function (data) {
-            console.log(data.result);
-        })
+            },
+            dataType: "json"
+        });
     };
 
     function AddNewComponent() {
@@ -162,10 +185,11 @@
                 xhr.setRequestHeader("XSRF-TOKEN",
                     $('input:hidden[name="__RequestVerificationToken"]').val());
             },
-
+            
             dataType: "text"
         }).done(function (data) {
             console.log(data.result);
         })
     }
+
 </script>
