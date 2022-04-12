@@ -11,38 +11,39 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System.Runtime.Serialization.Json;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace SkillCoacher.Pages
 {
     public class SubmitCourseModel : PageModel
     {
-        public SubmitCourseModel(SkillCoacherContext context)
-        {
-            db = context;
-        }
-        private SkillCoacherContext db;
+        private SkillCoacherContext _db;
         [BindProperty]
         public Course CurrentCourse { get; set; }
-        [BindProperty]
-        public string TestString { get; set; }
+
+        public SubmitCourseModel(SkillCoacherContext context)
+        {
+            _db = context;
+        }
 
         public void OnGet(int id)
         {
-            if (id == 0|| db.Courses.Count(c=> c.Id ==id)==0)
+            if (id == 0|| _db.Courses.Count(c=> c.Id ==id)==0)
             {
                 CurrentCourse = new Course
                 {
                     Id = -1,
                     Name = "Name",
                     Description = "Some decription",
+                    Tags = new List<Tag> { new Tag { Name = "Tag"}, new Tag { Name = "Tag1" } },
                     Components = new List<CourseComponent> { new Chapter { Name = "Chapter 1", Sort = 1, Discriminator="Chapter" },
                         new Chapter { Name = "Chapter 2", Sort = 0, Discriminator = "Chapter" } }
                 };
             }
             else
             {
-                    CurrentCourse = db.Courses.Where(c => c.Id == id).Include(c=>c.Components).ToList().First();
-                    ModelState.Clear();
+                CurrentCourse = _db.Courses.Where(c => c.Id == id).Include(c=>c.Components).Include(t => t.Tags).ToList().First();
+                ModelState.Clear();
             }
         }
      
@@ -51,31 +52,31 @@ namespace SkillCoacher.Pages
             if (id < 0)
                 return Page();
             var courseComp = new CourseComponent { Id = deleteId };
-            db.CourseComponents.Attach(courseComp);
-            db.CourseComponents.Remove(courseComp);
+            _db.CourseComponents.Attach(courseComp);
+            _db.CourseComponents.Remove(courseComp);
             
-            db.SaveChanges();
+            _db.SaveChanges();
 
             return new JsonResult(new { id =  deleteId});
         }
+
         public IActionResult OnPostAddComponent(Course currentCourse)
         {
             if (CurrentCourse.Id < 0)
                 return Page();
                 
-            CurrentCourse = db.Courses.Where(c => c.Id == CurrentCourse.Id).Include(ch=> ch.Components).First();
+            CurrentCourse = _db.Courses.Where(c => c.Id == CurrentCourse.Id).Include(ch=> ch.Components).First();
             CurrentCourse.Name = currentCourse.Name;
             CurrentCourse.Tags = currentCourse.Tags;
             CurrentCourse.Description = currentCourse.Description;
             CurrentCourse.Components.Add(new Chapter { Name = "New chapter" });
-            db.SaveChanges();
+            _db.SaveChanges();
             return Redirect($"SubmitCourse?id={CurrentCourse.Id}");
         }
-        
 
         public IActionResult OnPostSave(string[] tagsStrings, string imageName = "aaa.jpg")
         {
-                TagFactory tagFactory = new TagFactory(db);
+                TagFactory tagFactory = new TagFactory(_db);
                 var addTags = tagFactory.GetTagList(tagsStrings).ToList();
                 if (CurrentCourse.Id < 0)
                 {
@@ -89,13 +90,13 @@ namespace SkillCoacher.Pages
                         Tags = addTags,
                         TitleImagePath = imageName
                     };
-                    newCourse.Id = db.Courses.Add(newCourse).Entity.Id;
-                    db.SaveChanges();
+                    newCourse.Id = _db.Courses.Add(newCourse).Entity.Id;
+                    _db.SaveChanges();
                     return Redirect($"SubmitCourse?id={newCourse.Id}");
                 }
                 else
                 {
-                    var updatedCourse = db.Courses.Where(c => c.Id == CurrentCourse.Id).Include(ch => ch.Components).
+                    var updatedCourse = _db.Courses.Where(c => c.Id == CurrentCourse.Id).Include(ch => ch.Components).
                     First(c => c.Id == CurrentCourse.Id); 
                     updatedCourse.Name = CurrentCourse.Name;
                     updatedCourse.Description = CurrentCourse.Description;
@@ -106,14 +107,14 @@ namespace SkillCoacher.Pages
                         updatedCourse.Components[i].Discriminator = "Chapter";
                     }
                     updatedCourse.Tags = addTags;
-                    db.SaveChanges();
-            return new JsonResult(JsonConvert.SerializeObject(updatedCourse));
+                    _db.SaveChanges();
+                    return new JsonResult(JsonConvert.SerializeObject(updatedCourse));
                 }
-                    //return Redirect($"SubmitCourse?id={CurrentCourse.Id}");
             }
-        public IActionResult OnPostSaveAjx(string[] tagsStrings, string imageName = "aaa.jpg")
+
+        public IActionResult OnPostSaveChanges(string[] tagsStrings, string imageName = "aaa.jpg")
         {
-            TagFactory tagFactory = new TagFactory(db);
+            TagFactory tagFactory = new TagFactory(_db);
             var addTags = tagFactory.GetTagList(tagsStrings).ToList();
             if (CurrentCourse.Id < 0)
             {
@@ -127,14 +128,13 @@ namespace SkillCoacher.Pages
                     Tags = addTags,
                     TitleImagePath = imageName
                 };
-                newCourse.Id = db.Courses.Add(newCourse).Entity.Id;
-                db.SaveChanges();
+                newCourse.Id = _db.Courses.Add(newCourse).Entity.Id;
+                _db.SaveChanges();
                 return new JsonResult(new {IsNew = true, Id = newCourse.Id });
-                return Redirect($"SubmitCourse?id={newCourse.Id}");
             }
             else
             {
-                var updatedCourse = db.Courses.Where(c => c.Id == CurrentCourse.Id).Include(ch => ch.Components).
+                var updatedCourse = _db.Courses.Where(c => c.Id == CurrentCourse.Id).Include(ch => ch.Components).
                     Include(ch=>ch.Tags).First(c => c.Id == CurrentCourse.Id); ;
                 updatedCourse.Name = CurrentCourse.Name;
                 updatedCourse.Description = CurrentCourse.Description;
@@ -144,13 +144,13 @@ namespace SkillCoacher.Pages
                     updatedCourse.Components[i].Sort = CurrentCourse.Components[i].Sort;
                     updatedCourse.Components[i].Discriminator = "Chapter";
                 }
-                var newTags = addTags.Except(updatedCourse.Tags);
-                updatedCourse.Tags.AddRange(newTags);
                 
-                db.SaveChanges();
+                updatedCourse.Tags.Clear();
+                updatedCourse.Tags.AddRange(addTags);
+                
+                _db.SaveChanges();
                 return new JsonResult(new {IsNew = false });
             }
-            //return Redirect($"SubmitCourse?id={CurrentCourse.Id}");
         }
     }
 }

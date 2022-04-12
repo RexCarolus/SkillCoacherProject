@@ -11,44 +11,33 @@ namespace SkillCoacher.Pages
 {
     public class SubmitChapterModel : PageModel
     {
-        public SubmitChapterModel(SkillCoacherContext context)
-        {
-            db = context;
-        }
-        private SkillCoacherContext db;
+        private SkillCoacherContext _db;
        [BindProperty]
         public Chapter CurrentChapter { get; set; }
+
+        public SubmitChapterModel(SkillCoacherContext context)
+        {
+            _db = context;
+        }
+
         public void OnGet(int id)
         {
-            if(db.Chapters.Count(c=> c.Id == id) == 0)
+            if(_db.Chapters.Count(c=> c.Id == id) == 0)
             {
                 
             }
             else
             {
-                CurrentChapter = db.Chapters.First(c => c.Id == id);
+                CurrentChapter = _db.Chapters.First(c => c.Id == id);
             }
         }
 
         public IActionResult OnPost(int id, string name, string content,  string imageName = "aaa.jpg")
         {
-                //var tagsList = new List<Tag>();
-                //foreach (var addTagName in addTags)
-                //{
-                //    var forametedAddTagName = addTagName.Replace(" ", "").ToLower();
-                //    if (db.Tags.Count<Tag>(tag => tag.Name == forametedAddTagName) == 0)
-                //    {
-                //        tagsList.Add(db.Tags.Add(new Tag { Name = forametedAddTagName }).Entity);
-                //    }
-                //    else
-                //    {
-                //        tagsList.Add(db.Tags.First<Tag>(tag => tag.Name == forametedAddTagName));
-                //    }
-                //}
-                var updatedChapter = db.Chapters.First(c=>c.Id == id);
+                var updatedChapter = _db.Chapters.First(c=>c.Id == id);
                 updatedChapter.Name = name;
                 updatedChapter.HtmlContent =content;
-                db.SaveChanges();
+                _db.SaveChanges();
             return Redirect($"SubmitChapter?id={CurrentChapter.Id}");
         }
     }

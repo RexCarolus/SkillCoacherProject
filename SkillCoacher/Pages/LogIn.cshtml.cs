@@ -16,19 +16,22 @@ namespace SkillCoacher.Pages
 {
     public class LogInModel : PageModel
     {
+        private SkillCoacherContext _db;
+        public BaseUser LogInUser { get;  set; }
+
         public LogInModel(SkillCoacherContext context)
         {
-            db = context;
+            _db = context;
         }
-        private SkillCoacherContext db;
-        public BaseUser LogInUser { get;  set; }
+
         public void OnGet()
         {
    
         }
+
         public async Task<IActionResult> OnPost(BaseUser logInUser)
         {
-            CommonUser user = await db.CommonUsers.FirstOrDefaultAsync(user => (user.Login == logInUser.Login));
+            CommonUser user = await _db.CommonUsers.FirstOrDefaultAsync(user => (user.Login == logInUser.Login));
             if (user == null)
             {
                 return Page();
@@ -39,16 +42,14 @@ namespace SkillCoacher.Pages
             }
             return RedirectToPage("/Index");
         }
+
         private async Task Authenticate(string userName)
         {
-            // создаем один claim
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
             };
-            // создаем объект ClaimsIdentity
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
     }

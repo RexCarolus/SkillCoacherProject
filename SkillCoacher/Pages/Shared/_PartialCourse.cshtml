@@ -13,10 +13,10 @@
 
                 var item = Model.Components[i];
                 <div id="componentItem" class="list-item" data-id="@item.Sort" data-item-sortable-id="@item.Sort" draggable="true" role="option" aria-grabbed="false" style="">
-                    <input asp-for="@Model.Components[i].Id" type="hidden"></input>
-                    <input asp-for="@Model.Components[i].Discriminator" type="hidden"></input>
+                    <input asp-for="@Model.Components[i].Id" type="hidden"/>
+                    <input asp-for="@Model.Components[i].Discriminator" type="hidden"/>
                     <div class="flex">
-                        <input id="Name" asp-for="@Model.Components[i].Name" placeholder="@item.Name"></input>
+                        <input id="Name" asp-for="@Model.Components[i].Name" placeholder="@item.Name"/>
                     </div>
                     <div class="no-wrap">
                         <div class="item-date text-muted text-sm d-none d-md-block">3 weeks ago</div>

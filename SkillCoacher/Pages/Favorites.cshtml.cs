@@ -12,16 +12,18 @@ namespace SkillCoacher.Pages
 {
     public class FavoritesModel : PageModel
     {
+        private SkillCoacherContext _db;
+        public List<Course> FavoriteCourses { get; set; }
+
         public FavoritesModel(SkillCoacherContext context)
         {
             FavoriteCourses = new List<Course>();
-            db = context;
+            _db = context;
         }
-        private SkillCoacherContext db;
-        public List<Course> FavoriteCourses { get; set; }
+
         public void OnGet()
         {
-            var user = db.CommonUsers.Where(u => u.Login == User.Claims.ToList()[0].Value).Include(u => u.FavoriteCourses).FirstOrDefault();
+            var user = _db.CommonUsers.Where(u => u.Login == User.Claims.ToList()[0].Value).Include(u => u.FavoriteCourses).FirstOrDefault();
             FavoriteCourses = user.FavoriteCourses;
         }
     }

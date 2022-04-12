@@ -1,20 +1,29 @@
-﻿
-@model int
+﻿@using SkillCoacher.Pages.Shared
+@model CoursePageDataModel
 @{
 
-    if (Model == 1)
+    if (Model.Grade == 1)
     {
         <button onclick="ChangeGrade(0);" class="btn btn-success">нравится</button>
         <button onclick="ChangeGrade(-1)" class="btn btn-outline-danger">не нравится</button>
+        <div>
+            <p>@Model.Rating</p>
+        </div>
     }
-    else if (Model == -1)
+    else if (Model.Grade == -1)
     {
         <button onclick="ChangeGrade(1);" class="btn btn-outline-success">нравится</button>
         <button onclick="ChangeGrade(0)" class="btn btn-danger">не нравится</button>
+        <div>
+            <p>@Model.Rating</p>
+        </div>
     }
     else
     {
         <button onclick="ChangeGrade(1);" class="btn btn-outline-success">нравится</button>
         <button onclick="ChangeGrade(-1)" class="btn btn-outline-danger">не нравится</button>
+        <div>
+            <p>@Model.Rating</p>
+        </div>
     }
 }

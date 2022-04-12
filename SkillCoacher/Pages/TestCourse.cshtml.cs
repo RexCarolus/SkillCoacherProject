@@ -17,22 +17,22 @@ namespace SkillCoacher.Pages
 {
     public class TestCourseModel : PageModel
     {
-       
         private ICourseService _courseService;
         public Course Course { get; set; }
+
         public TestCourseModel(ICourseService courseService)
         {
             _courseService = courseService;
         }
+
         public void OnGet()
         {
         }
+
         public PartialViewResult OnPostCoursePartial(int id)
         {
             Course = _courseService.GetCourse(1);
             return Partial("_PartialCourse", Course);
         }
-
-
     }
 }

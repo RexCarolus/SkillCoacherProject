@@ -12,22 +12,23 @@ namespace SkillCoacher.Pages
 {
     public class ChapterPageModel : PageModel
     {
+        private SkillCoacherContext _db;
+        public Chapter SelectedChapter { get; private set; }
+
         public ChapterPageModel(SkillCoacherContext context)
         {
-            db = context;
+            _db = context;
         }
-        private SkillCoacherContext db;
-        public Chapter SelectedChapter { get; private set; }
+
         public IActionResult OnGet(int id)
         {
-                if (db.Chapters.Count(chapter => chapter.Id == id) == 1)
+                if (_db.Chapters.Count(chapter => chapter.Id == id) == 1)
                 {
-                    SelectedChapter = db.Chapters.First(course => course.Id == id);
+                    SelectedChapter = _db.Chapters.First(course => course.Id == id);
                     return Page();
                 }
                 else
                     return RedirectToPage("/Index");
-
         }
     }
 }

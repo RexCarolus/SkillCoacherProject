@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/lib/tagsinput.css" />
+    <link rel="stylesheet" href="~/lib/ratingstars.css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="~/lib/dragndrop.css" />
     <script src="~/lib/dragndrop.css"></script>
-   
+
     <script src="https://code.jquery.com/jquery-3.3.1.js"
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
             crossorigin="anonymous"></script>
@@ -24,7 +26,7 @@
 <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" asp-area="" asp-page="/Index">SkillCoacher</a>
-        <input class="form-control form-control-dark w-50" type="text" placeholder="Поиск по SkillCoacher" aria-label="Search">
+        <input class="form-control form-control-dark w-50" id="searchInput" type="text" placeholder="Поиск по SkillCoacher" aria-label="Search">
         <ul class="navbar-nav px-3">
             <li class="dropdown show">
                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -37,8 +39,8 @@
             </li>
         </ul>
     </nav>
-            <div class="container-fluid">
-                <div class="row">
+    <div class="container-fluid">
+        <div class="row">
             <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
@@ -95,7 +97,46 @@
                 </div>
             </main>
         </div>
-        </div>
+    </div>
+    <script>
+    $(document).ready(() => {
+    $("#searchInput").keyup((event) => {
+        if (event.keyCode == 13) {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            urlParams.set('query', $("#searchInput").val());
+          
+                console.log("Entered method");
+
+
+                $.ajax({
+                    type: "POST",
+                    url: 'Index?handler=UpdateQuery',
+
+                    data: {
+                        query: $("#searchInput").val()
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    success() {
+                        console.log($("#searchInput").val());
+                        $("#courses").html('');
+                        $("#courses").html(data);
+                    },
+                    dataType: "json"
+                }).done(function (data) {
+                    console.log(data.result);
+                })
+               
+            
+            window.location.search = urlParams;
+    alert("Search!");
+    }
+    })
+    });
+    </script>
 </body>
 </html>
 

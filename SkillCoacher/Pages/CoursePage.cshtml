@@ -9,7 +9,7 @@
 </form>
 <div class="col-md-8 blog-main">
     <div class="blog-post">
-        <input type="hidden" asp-for="@Model.SelectedCourse.Id"/>
+        <input type="hidden" asp-for="@Model.SelectedCourse.Id" />
         <h2 class="blog-post-title">@Model.SelectedCourse.Name</h2>
         <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
         <hr>
@@ -19,61 +19,83 @@
                 <h1>@item.Name</h1>
                 <a asp-page="/ChapterPage" asp-route-Id="@item.Id">Continue reading</a>
             }
-
         <hr>
-
-
     </div>
-    <div id="buttons">
-
-    @{
-    if (Model.Grade == 1)
+    <input id="rating" type="hidden" asp-for="Grade" />
+    <div id="full-stars-example-two">
+        <div class="rating-group">
+            <input disabled class="rating__input rating__input--none" name="rating3" id="rating3-0" value="0" type="radio">
+            <label aria-label="1 star" class="rating__label" for="rating3-1"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+            <input class="rating__input" name="rating3" id="rating3-1" value="1" type="radio">
+            <label aria-label="2 stars" class="rating__label" for="rating3-2"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+            <input class="rating__input" name="rating3" id="rating3-2" value="2" type="radio">
+            <label aria-label="3 stars" class="rating__label" for="rating3-3"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+            <input class="rating__input" name="rating3" id="rating3-3" value="3" type="radio">
+            <label aria-label="4 stars" class="rating__label" for="rating3-4"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+            <input class="rating__input" name="rating3" id="rating3-4" value="4" type="radio">
+            <label aria-label="5 stars" class="rating__label" for="rating3-5"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+            <input class="rating__input" name="rating3" id="rating3-5" value="5" type="radio">
+        </div>
+    </div>
+    @if (double.IsNaN(Model.Rating))
     {
-        <button onclick="ChangeGrade(0);" class="btn btn-success" >нравится</button>
-        <button onclick="ChangeGrade(-1)" class="btn btn-outline-danger">не нравится</button>
-    }
-    else if (Model.Grade == -1)
-    {
-        <button onclick="ChangeGrade(1);" class="btn btn-outline-success">нравится</button>
-        <button onclick="ChangeGrade(0)" class="btn btn-danger">не нравится</button>
+        <p id="visibleRating">У курса еще нет рейтинга</p>
     }
     else
     {
-        <button onclick="ChangeGrade(1);" class="btn btn-outline-success">нравится</button>
-        <button onclick="ChangeGrade(-1)" class="btn btn-outline-danger">не нравится</button>
+        <p id="visibleRating">Рейтинг курса @Model.Rating</p>
     }
-    }
-    </div>
 
-    <button type="button" onclick="AddToFavorite(@Model.SelectedCourse.Id);">Подписаться</button>
+    @if (Model.CurrentUser != null)
+    {
+        if (Model.CurrentUser.FavoriteCourses.Count(c => c.Id == Model.SelectedCourse.Id) > 0)
+        {
+            <button id="subscribeButton" onclick="AddToFavorite(@Model.SelectedCourse.Id);">Отписаться</button>
+        }
+        else
+        {
+            <button id="subscribeButton" onclick="AddToFavorite(@Model.SelectedCourse.Id);">Подписаться</button>
+        }
+    }
+
 </div>
 
 <script>
-    function ChangeGrade($Grade) {
-        let $course = { Id: $("#SelectedCourse_Id").val() };
-        $.ajax({
-            type: "POST",
-            url: 'CoursePage?handler=ChangeGrade',
-            
-            data: {
-                courseId: $("#SelectedCourse_Id").val(),
-                Grade: $Grade
-            },
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("XSRF-TOKEN",
-                    $('input:hidden[name="__RequestVerificationToken"]').val());
-            },
-            success(data) {
-                $("#buttons").html('');
-                $("#buttons").html(data);
-            },
-            dataType: "html"
-        }).done(function (data) {
-           
-        })
-       
-    };
+    $(document).ready(() => {
+        $('#rating3-' + $('#rating').val()).prop('checked', true);
+        $(".rating-group > input").change((e) => {
+            $grade = e.target.value;
+            $.ajax({
+                type: "POST",
+                url: 'CoursePage?handler=ChangeGrade',
+
+                data: {
+                    courseId: $("#SelectedCourse_Id").val(),
+                    Grade: $grade
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                success(data) {
+                    console.log(data.rating);
+                    $("#visibleRating").text("Рейтинг курса " + data.rating);
+                },
+                dataType: "json"
+            }).done(function (data) {
+
+
+            });
+        });
+    });
     function AddToFavorite($Id) {
+        let $button = $("#subscribeButton");
+        console.log($button.text());
+        if ($button.text() == "Подписаться") {
+            $button.text("Отписаться");
+        } else {
+            $button.text("Подписаться");
+        }
         console.log("Entered method");
         $.ajax({
             type: "POST",
@@ -94,6 +116,5 @@
         }).done(function (data) {
             console.log(data.result);
         })
-        $('#sortable > #' + $deleteId).remove();
     };
 </script>
