@@ -28,3 +28,13 @@ C:\Users\Dimab\Desktop\CourseProject\rr\Model\obj\Debug\netcoreapp3.1\Model.cspr
 C:\Users\Dimab\Desktop\CourseProject\rr\Model\obj\Debug\netcoreapp3.1\Model.dll
 C:\Users\Dimab\Desktop\CourseProject\rr\Model\obj\Debug\netcoreapp3.1\Model.pdb
 C:\Users\Dimab\Desktop\CourseProject\rr\Model\obj\Debug\netcoreapp3.1\Model.csproj.AssemblyReference.cache
+C:\Users\VLZ-J\source\new\Model\bin\Debug\netcoreapp3.1\Model.deps.json
+C:\Users\VLZ-J\source\new\Model\bin\Debug\netcoreapp3.1\Model.dll
+C:\Users\VLZ-J\source\new\Model\bin\Debug\netcoreapp3.1\Model.pdb
+C:\Users\VLZ-J\source\new\Model\obj\Debug\netcoreapp3.1\Model.csproj.AssemblyReference.cache
+C:\Users\VLZ-J\source\new\Model\obj\Debug\netcoreapp3.1\Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\VLZ-J\source\new\Model\obj\Debug\netcoreapp3.1\Model.AssemblyInfoInputs.cache
+C:\Users\VLZ-J\source\new\Model\obj\Debug\netcoreapp3.1\Model.AssemblyInfo.cs
+C:\Users\VLZ-J\source\new\Model\obj\Debug\netcoreapp3.1\Model.csproj.CoreCompileInputs.cache
+C:\Users\VLZ-J\source\new\Model\obj\Debug\netcoreapp3.1\Model.dll
+C:\Users\VLZ-J\source\new\Model\obj\Debug\netcoreapp3.1\Model.pdb
