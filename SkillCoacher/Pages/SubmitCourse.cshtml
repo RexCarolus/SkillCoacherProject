@@ -20,24 +20,23 @@
         <hr />
 
         <input type="hidden" asp-for="CurrentCourse.Id" />
-        <h4>Название курса</h4>
-        <input id="CurrentCourse_Name" type="text" asp-for="CurrentCourse.Name" />
-        <h4>Описание курса</h4>
-        <input id="CurrentCourse_Description" type="text" asp-for="CurrentCourse.Description" />
-        <h4>Содержание курса</h4>
+        <h4 class="pt-lg-3">Название курса</h4>
+        <input class="form-control" id="Name" type="text" value="Название" asp-for="CurrentCourse.Name" />
+        <h4 class="pt-lg-3">Описание курса</h4>
+        <input class="form-control" id="Description" type="text" value="Описание" asp-for="CurrentCourse.Description" />
+        <h4 class="pt-lg-3">Добавить раздел</h4>
         <div class="list list-row card" id="sortable" data-sortable-id="0" aria-dropeffect="move">
             @for (int i = 0; i < Model.CurrentCourse.Components?.Count(); i++)
             {
 
                 var item = Model.CurrentCourse.Components[i];
                 <div id='@Model.CurrentCourse.Components[i].Id' class="list-item" data-id="@item.Sort" data-item-sortable-id="@item.Sort" draggable="true" role="option" aria-grabbed="false" style="">
-                    <input asp-for="CurrentCourse.Components[i].Id" type="hidden" />
-                    <input asp-for="CurrentCourse.Components[i].Discriminator" type="hidden" />
+                    <input class="form-control" asp-for="CurrentCourse.Components[i].Id" type="hidden"></input>
+                    <input class="form-control" asp-for="CurrentCourse.Components[i].Discriminator" type="hidden"></input>
                     <div class="flex">
-                        <input asp-for="CurrentCourse.Components[i].Name" placeholder="@item.Name" />
+                        <input id="Name" asp-for="CurrentCourse.Components[i].Name" placeholder="@item.Name"></input>
                     </div>
                     <div class="no-wrap">
-                        <div class="item-date text-muted text-sm d-none d-md-block">3 weeks ago</div>
                     </div>
                     <div>
                         <div class="item-action dropdown">
@@ -50,19 +49,20 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right bg-black" role="menu">
                                 <a class="dropdown-item edit" asp-page="/SubmitChapter" asp-route-id="@Model.CurrentCourse.Components[i].Id" data-abc="true">Изменить</a>
-                                <div class="dropdown-divider"></div> <a class="dropdown-item trash" onclick="DeleteChapterAjax(@Model.CurrentCourse.Components[i].Id);" data-abc="true">Удалить</a>
+                                <div class="dropdown-divider"></div> <a class="dropdown-item trash" onclick="DeleteAjax(@Model.CurrentCourse.Components[i].Id);" data-abc="true">Удалить</a>
                             </div>
                         </div>
                     </div>
                 </div>
             }
         </div>
-        <h4>Добавьте теги</h4>
+        <button type="submit" class="btn btn-primary pt-lg-2" asp-page-handler="AddComponent" ;">Добавить</button>
+        <h4 class="pt-lg-5">Добавьте теги</h4>
         <input id="TagsInput" type="text" data-role="tagsinput" />
-        <div class="col-md-2 ml-md-auto">
-            <button type="submit" id="addComp" class="btn btn-primary btn-lg" asp-page-handler="AddComponent">Добавить раздел </button>
+
+        <div class="col-md-4 ml-md-auto pt-lg-4">
             <button type="button" class="btn btn-primary btn-lg" onclick="SaveChanges();">Сохранить</button>
-            <button type="submit" class="btn btn-primary btn-lg"  asp-page-handler="DeleteCourse">Удалить</button>
+            <button type="submit" class="btn btn-primary btn-lg" asp-page-handler="DeleteCourse">Удалить</button>
         </div>
     </form>
 </div>

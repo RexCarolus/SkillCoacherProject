@@ -11,13 +11,13 @@
     <div class="blog-post">
         <input type="hidden" asp-for="@Model.SelectedCourse.Id" />
         <h2 class="blog-post-title">@Model.SelectedCourse.Name</h2>
-        <p class="blog-post-meta">@Model.SelectedCourse.DateOfPublication.ToShortDateString() by <a href="#">@Model.SelectedCourse.OwnerCoacher.Login</a></p>
+        <p class="blog-post-meta">@Model.SelectedCourse.DateOfPublication.ToShortDateString() автор: <a href="#">@Model.SelectedCourse.OwnerCoacher.Login</a></p>
         <hr>
         @if (Model.SelectedCourse.Components != null && Model.SelectedCourse.Components.Count > 0)
             foreach (var item in Model.SelectedCourse.Components)
             {
-                <h1>@item.Name</h1>
-                <a asp-page="/ChapterPage" asp-route-Id="@item.Id">Continue reading</a>
+                <h2>@item.Name</h2>
+                <a asp-page="/ChapterPage" asp-route-Id="@item.Id">Читать далее</a>
             }
         <hr>
     </div>

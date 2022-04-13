@@ -36,8 +36,8 @@ namespace SkillCoacher.Pages
                     Name = "Name",
                     Description = "Some decription",
                     Tags = new List<Tag> { new Tag { Name = "Tag"}, new Tag { Name = "Tag1" } },
-                    Components = new List<CourseComponent> { new Chapter { Name = "Chapter 1", Sort = 1, Discriminator="Chapter" },
-                        new Chapter { Name = "Chapter 2", Sort = 0, Discriminator = "Chapter" }}
+                    Components = new List<CourseComponent> { new Chapter { Name = "Часть 1", Sort = 1, Discriminator="Chapter" },
+                        new Chapter { Name = "Часть 2", Sort = 0, Discriminator = "Chapter" }}
                 };
             }
             else
