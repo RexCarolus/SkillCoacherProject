@@ -651,3 +651,4 @@ C:\Users\VLZ-J\source\new\SkillCoacher\obj\Debug\netcoreapp3.1\SkillCoacher.cspr
 C:\Users\VLZ-J\source\new\SkillCoacher\obj\Debug\netcoreapp3.1\SkillCoacher.dll
 C:\Users\VLZ-J\source\new\SkillCoacher\obj\Debug\netcoreapp3.1\SkillCoacher.pdb
 C:\Users\VLZ-J\source\new\SkillCoacher\obj\Debug\netcoreapp3.1\SkillCoacher.genruntimeconfig.cache
+C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_PartialFavoriteCourseList.cshtml.g.cs

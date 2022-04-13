@@ -27,7 +27,6 @@ C:\Users\Dimab\Desktop\CourseProject\rr\Model\obj\Debug\netcoreapp3.1\Model.Asse
 C:\Users\Dimab\Desktop\CourseProject\rr\Model\obj\Debug\netcoreapp3.1\Model.csproj.CoreCompileInputs.cache
 C:\Users\Dimab\Desktop\CourseProject\rr\Model\obj\Debug\netcoreapp3.1\Model.dll
 C:\Users\Dimab\Desktop\CourseProject\rr\Model\obj\Debug\netcoreapp3.1\Model.pdb
-C:\Users\Dimab\Desktop\CourseProject\rr\Model\obj\Debug\netcoreapp3.1\Model.csproj.AssemblyReference.cache
 C:\Users\VLZ-J\source\new\Model\bin\Debug\netcoreapp3.1\Model.deps.json
 C:\Users\VLZ-J\source\new\Model\bin\Debug\netcoreapp3.1\Model.dll
 C:\Users\VLZ-J\source\new\Model\bin\Debug\netcoreapp3.1\Model.pdb

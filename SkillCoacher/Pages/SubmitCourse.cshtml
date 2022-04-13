@@ -19,11 +19,11 @@
         <h2 class="blog-post-title">Опубликовать курс</h2>
         <hr />
 
-        <input type="hidden" asp-for="CurrentCourse.Id" />
+        <input id="CurrentCourse_Id"type="hidden" asp-for="CurrentCourse.Id" />
         <h4 class="pt-lg-3">Название курса</h4>
-        <input class="form-control" id="Name" type="text" value="Название" asp-for="CurrentCourse.Name" />
+        <input class="form-control" id="CurrentCourse_Name" type="text" value="Название" asp-for="CurrentCourse.Name" />
         <h4 class="pt-lg-3">Описание курса</h4>
-        <input class="form-control" id="Description" type="text" value="Описание" asp-for="CurrentCourse.Description" />
+        <input class="form-control" id="CurrentCourse_Description" type="text" value="Описание" asp-for="CurrentCourse.Description" />
         <h4 class="pt-lg-3">Добавить раздел</h4>
         <div class="list list-row card" id="sortable" data-sortable-id="0" aria-dropeffect="move">
             @for (int i = 0; i < Model.CurrentCourse.Components?.Count(); i++)
@@ -49,20 +49,20 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right bg-black" role="menu">
                                 <a class="dropdown-item edit" asp-page="/SubmitChapter" asp-route-id="@Model.CurrentCourse.Components[i].Id" data-abc="true">Изменить</a>
-                                <div class="dropdown-divider"></div> <a class="dropdown-item trash" onclick="DeleteAjax(@Model.CurrentCourse.Components[i].Id);" data-abc="true">Удалить</a>
+                                <div class="dropdown-divider"></div> <a class="dropdown-item trash" onclick="DeleteChapterAjax(@Model.CurrentCourse.Components[i].Id);" data-abc="true">Удалить</a>
                             </div>
                         </div>
                     </div>
                 </div>
             }
         </div>
-        <button type="submit" class="btn btn-primary pt-lg-2" asp-page-handler="AddComponent" ;">Добавить</button>
+        <button type="submit" class="btn btn-primary pt-lg-2" id="addComp" asp-page-handler="AddComponent" ;">Добавить</button>
         <h4 class="pt-lg-5">Добавьте теги</h4>
         <input id="TagsInput" type="text" data-role="tagsinput" />
 
         <div class="col-md-4 ml-md-auto pt-lg-4">
             <button type="button" class="btn btn-primary btn-lg" onclick="SaveChanges();">Сохранить</button>
-            <button type="submit" class="btn btn-primary btn-lg" asp-page-handler="DeleteCourse">Удалить</button>
+            <button type="submit" class="btn btn-primary btn-lg" id='deleteButton'asp-page-handler="DeleteCourse">Удалить</button>
         </div>
     </form>
 </div>
@@ -70,8 +70,13 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        if ($("#CurrentCourse_Id").val() == -1) {
+            $(document).on("click", ".dropdown-item.trash, .dropdown-item.edit, .dropdown-divider, #addComp, #deleteButton", function (event) {
+                event.preventDefault();
+                alert("Сначала сохраните курс!");
+            });
+        }
         var tagsArray = [];
-        
         @foreach(var tag in Model.CurrentCourse.Tags)
             {
               @:tagsArray.push("@Html.Raw(HttpUtility.JavaScriptStringEncode(String.Format(tag.Name, Encoding.UTF8)))");
@@ -82,16 +87,9 @@
             $("#TagsInput").tagsinput("add", tag);
             console.log(tag);
         })
-        if ($("#CurrentCourse_Id").val() == -1) {
-            $(document).on("click", ".dropdown-item.trash, .dropdown-item.edit, #addComp", function (event) {
-                event.preventDefault();
-                alert("Сначала сохраните курс!");
-            });
-        }
     });
     function DeleteChapterAjax($deleteId) {
         console.log("Entered method");
-
 
         $.ajax({
             type: "POST",
@@ -164,7 +162,7 @@
 
     function AddNewComponent() {
         console.log("Entered methodAdd");
-
+       
         $.ajax({
             type: "POST",
             url: 'SubmitCourse?handler=AddComponent&id=' + $("#CurrentCourse_Id").val(),

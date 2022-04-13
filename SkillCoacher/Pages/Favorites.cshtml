@@ -2,8 +2,9 @@
 @model SkillCoacher.Pages.FavoritesModel
 @{
 }
-
-<div class="row mb-2">
+<form method="post">
+</form>
+<div id="courseList" class="row mb-2">
     @if(Model.FavoriteCourses == null || Model.FavoriteCourses.Count == 0 )
     {
         <h4>Вы еще не подписаны на курсы</h4>
@@ -18,10 +19,11 @@
 
             <h3 class="mb-0">@item.Name</h3>
             <div class="mb-1 text-muted">@item.DateOfPublication.ToShortDateString()</div>
-            <p class="mb-auto">@item.Description.</p>
             <p class="mb-auto">@item.Description.<a asp-page="/CoursePage" asp-route-Id="@item.Id"> Читать далее.</a></p>
             <div class="col pt-lg-2">
-                <button id="subscribe" type="button" class="btn btn-dark" onclick="AddToFavorite(@item.Id);">Отписаться</button>
+                <button id="subscribe" class="btn btn-dark" onclick="DeleteFromFavorites(@item.Id);">Отписаться</button>
+                    
+                
                 @foreach (var tag in item?.Tags)
                 {
                     <span class="badge badge-info" style="margin-block: 80px;">@tag.Name</span>
@@ -30,7 +32,6 @@
         </div>
         <div class="col-auto d-none d-lg-block">
             <img class="img-thumbnail" width="200" height="250" src="images/@item.TitleImagePath" />
-            @*<svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>*@
         </div>
     </div>
 </div>
@@ -38,3 +39,37 @@
     }
 
 </div>
+
+<script>
+    function DeleteFromFavorites($Id) {
+        let $button = $("#" + $Id + " > div > #subscribe");
+        console.log($Id)
+        console.log($button.attr("text"));
+        if ($button.text() == "Подписаться") {
+            $button.text("Отписаться");
+        } else {
+            $button.text("Подписаться");
+        }
+        console.log("Entered method");
+        $.ajax({
+            type: "POST",
+            url: 'Favorites?handler=DeleteFromFavorite',
+
+            data: {
+                id: $("#CurrentCourse_Id").val(),
+                courseId: $Id
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            success(data) {
+                $('#courseList').html(data);
+            },
+            dataType: "text"
+        }).done(function (data) {
+           
+        })
+
+    };
+</script>

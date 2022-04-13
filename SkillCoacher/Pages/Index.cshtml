@@ -21,18 +21,17 @@
 
                     <h3 class="mb-0">@item.Name</h3>
                     <div class="mb-1 text-muted">@item.DateOfPublication.ToShortDateString()</div>
-                    <p class="mb-auto">@item.Description.</p>
                     <p class="mb-auto">@item.Description.<a asp-page="/CoursePage" asp-route-Id="@item.Id"> Читать далее.</a></p>
                     <div class="col pt-lg-2">
                         @if (Model.CurrentUser != null)
                         {
                             if (Model.CurrentUser.FavoriteCourses.Count(c => c.Id == item.Id) > 0)
                             {
-                                <button id="subscribe" type="button" class="btn btn-dark" onclick="AddToFavorite(@item.Id);">Отписаться</button>
+                                <button id="subscribe" class="btn btn-dark" onclick="AddToFavorite(@item.Id);">Отписаться</button>
                             }
                             else
                             {
-                                <button id="subscribe" type="button" class="btn btn-dark" onclick="AddToFavorite(@item.Id);">Подписаться</button>
+                                <button id="subscribe"  class="btn btn-dark" onclick="AddToFavorite(@item.Id);">Подписаться</button>
                             }
                         }
                         @foreach (var tag in item?.Tags)
@@ -51,8 +50,9 @@
     
 <script>
     function AddToFavorite($Id) {
-        let $button = $("#" + $Id + " > #subscribe");
-        console.log($button.text());
+        let $button = $("#" + $Id + " > div > #subscribe");
+        console.log($Id)
+        console.log($button.attr("text"));
         if ($button.text() == "Подписаться") {
             $button.text("Отписаться");
         } else {

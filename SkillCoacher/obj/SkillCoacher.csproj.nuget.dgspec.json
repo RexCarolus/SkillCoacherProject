@@ -1,26 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\VLZ-J\\source\\new\\SkillCoacher\\SkillCoacher.csproj": {}
+    "C:\\Users\\Dimab\\Desktop\\CourseProject\\rr\\SkillCoacher\\SkillCoacher.csproj": {}
   },
   "projects": {
-    "C:\\Users\\VLZ-J\\source\\new\\Model\\Model.csproj": {
+    "C:\\Users\\Dimab\\Desktop\\CourseProject\\rr\\Model\\Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\VLZ-J\\source\\new\\Model\\Model.csproj",
+        "projectUniqueName": "C:\\Users\\Dimab\\Desktop\\CourseProject\\rr\\Model\\Model.csproj",
         "projectName": "Model",
-        "projectPath": "C:\\Users\\VLZ-J\\source\\new\\Model\\Model.csproj",
-        "packagesPath": "C:\\Users\\VLZ-J\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\VLZ-J\\source\\new\\Model\\obj\\",
+        "projectPath": "C:\\Users\\Dimab\\Desktop\\CourseProject\\rr\\Model\\Model.csproj",
+        "packagesPath": "C:\\Users\\Dimab\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Dimab\\Desktop\\CourseProject\\rr\\Model\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\VLZ-J\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Dimab\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -65,27 +64,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\VLZ-J\\source\\new\\SkillCoacher\\SkillCoacher.csproj": {
+    "C:\\Users\\Dimab\\Desktop\\CourseProject\\rr\\SkillCoacher\\SkillCoacher.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\VLZ-J\\source\\new\\SkillCoacher\\SkillCoacher.csproj",
+        "projectUniqueName": "C:\\Users\\Dimab\\Desktop\\CourseProject\\rr\\SkillCoacher\\SkillCoacher.csproj",
         "projectName": "SkillCoacher",
-        "projectPath": "C:\\Users\\VLZ-J\\source\\new\\SkillCoacher\\SkillCoacher.csproj",
-        "packagesPath": "C:\\Users\\VLZ-J\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\VLZ-J\\source\\new\\SkillCoacher\\obj\\",
+        "projectPath": "C:\\Users\\Dimab\\Desktop\\CourseProject\\rr\\SkillCoacher\\SkillCoacher.csproj",
+        "packagesPath": "C:\\Users\\Dimab\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Dimab\\Desktop\\CourseProject\\rr\\SkillCoacher\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\VLZ-J\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Dimab\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -98,8 +96,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\VLZ-J\\source\\new\\Model\\Model.csproj": {
-                "projectPath": "C:\\Users\\VLZ-J\\source\\new\\Model\\Model.csproj"
+              "C:\\Users\\Dimab\\Desktop\\CourseProject\\rr\\Model\\Model.csproj": {
+                "projectPath": "C:\\Users\\Dimab\\Desktop\\CourseProject\\rr\\Model\\Model.csproj"
               }
             }
           }
@@ -141,7 +139,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }

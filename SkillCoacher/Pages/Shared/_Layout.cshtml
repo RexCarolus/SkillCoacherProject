@@ -77,7 +77,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-page-handler="LogOut">
+                            <a class="nav-link" asp-page="Index" asp-page-handler="LogOut">
                                 <span data-feather="users"></span>
                                 Выйти
                             </a>
@@ -119,10 +119,7 @@
                 }).done(function (data) {
                     console.log(data.result);
                 })
-               
-            
             window.location.search = urlParams;
-    alert("Search!");
     }
     })
     });

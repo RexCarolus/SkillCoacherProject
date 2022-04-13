@@ -33,9 +33,9 @@ namespace SkillCoacher.Pages
                 CurrentCourse = new Course
                 {
                     Id = -1,
-                    Name = "Name",
-                    Description = "Some decription",
-                    Tags = new List<Tag> { new Tag { Name = "Tag"}, new Tag { Name = "Tag1" } },
+                    Name = "Имя",
+                    Description = "Описание",
+                    Tags = new List<Tag> { new Tag { Name = "Тэг1"}, new Tag { Name = "Тэг2" } },
                     Components = new List<CourseComponent> { new Chapter { Name = "Часть 1", Sort = 1, Discriminator="Chapter" },
                         new Chapter { Name = "Часть 2", Sort = 0, Discriminator = "Chapter" }}
                 };
@@ -69,7 +69,7 @@ namespace SkillCoacher.Pages
             CurrentCourse.Name = currentCourse.Name;
             CurrentCourse.Tags = currentCourse.Tags;
             CurrentCourse.Description = currentCourse.Description;
-            CurrentCourse.Components.Add(new Chapter { Name = "New chapter" });
+            CurrentCourse.Components.Add(new Chapter { Name = "Новая часть" });
             _db.SaveChanges();
             return Redirect($"SubmitCourse?id={CurrentCourse.Id}");
         }
@@ -78,7 +78,7 @@ namespace SkillCoacher.Pages
         {
             TagFactory tagFactory = new TagFactory(_db);
             var addTags = tagFactory.GetTagList(tagsStrings).ToList();
-            if (CurrentCourse.Id < 0)
+            if (CurrentCourse.Id <= 0)
             {
                 Course newCourse;
                 CurrentCourse.Components.ForEach(c => c.Discriminator = "Chapter");
