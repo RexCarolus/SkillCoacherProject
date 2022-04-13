@@ -4,28 +4,6 @@
 @model SkillCoacher.Pages.SubmitCourseModel
 @{
 }
-@*<div class="col-md-8 blog-main">
-
-            <h2 class="blog-post-title">Опубликовать курс</h2>
-            <hr />
-            <h4>Название курса</h4>
-            <input id="Name" type="text" />
-            <h4>Описание курса</h4>
-            <input id="Description" type="text" />
-            <h4>Содержание курса</h4>
-           @for(int i =0; i < Model.CurrentCourse.Components.Count(); i++)
-           {
-
-               var item = Model.CurrentCourse.Components[i];
-                <input asp-for="CurrentCourse.Components[i].Name" placeholder="@item.Name"></input>
-            }
-
-            <h4>Добавьте теги</h4>
-            <input id="TagsInput" type="text" data-role="tagsinput" />
-
-    </div>
-    <hr />*@
-
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="~/lib/dragndrop.css"></script>
@@ -82,8 +60,9 @@
         <h4>Добавьте теги</h4>
         <input id="TagsInput" type="text" data-role="tagsinput" />
         <div class="col-md-2 ml-md-auto">
-            <button type="submit" id="addComp" class="btn btn-primary btn-lg" asp-page-handler="AddComponent" ;">Добавить раздел </button>
+            <button type="submit" id="addComp" class="btn btn-primary btn-lg" asp-page-handler="AddComponent">Добавить раздел </button>
             <button type="button" class="btn btn-primary btn-lg" onclick="SaveChanges();">Сохранить</button>
+            <button type="submit" class="btn btn-primary btn-lg"  asp-page-handler="DeleteCourse">Удалить</button>
         </div>
     </form>
 </div>
@@ -186,7 +165,6 @@
     function AddNewComponent() {
         console.log("Entered methodAdd");
 
-
         $.ajax({
             type: "POST",
             url: 'SubmitCourse?handler=AddComponent&id=' + $("#CurrentCourse_Id").val(),
@@ -207,4 +185,25 @@
         })
     }
 
+    function DeleteCourse()
+    {
+        $.ajax({
+            type: "POST",
+            url: 'SubmitCourse?handler=DeleteCourse&id=' + $("#CurrentCourse_Id").val(),
+
+            data: {
+                Id: $("#dbId").val(),
+                Name: "New chapter",
+
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+
+            dataType: "text"
+        }).done(function () {
+           
+        })
+    }
 </script>

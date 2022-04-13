@@ -35,7 +35,7 @@ namespace SkillCoacher.Pages
                     Include((f)=> f.FavoriteCourses).FirstOrDefault();
                 Grade = 0;
                 SelectedCourse = _db.Courses.Where(course => course.Id == id).Include((comp) => comp.Components).
-                    Include(grades => grades.CourseGrades).First<Course>(course => course.Id == id);
+                    Include(grades => grades.CourseGrades).Include(c=>c.OwnerCoacher).First<Course>(course => course.Id == id);
                 var courseGrade = CurrentUser.CourseGrades.FirstOrDefault(g => g.CourserId == SelectedCourse.Id);
                 if (courseGrade != null)
                     Grade = courseGrade.Grade;

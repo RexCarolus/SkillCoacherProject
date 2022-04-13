@@ -20,7 +20,7 @@
                 <div class="col p-4 d-flex flex-column position-static" id="@item.Id">
                    
                     <h3 class="mb-0">@item.Name</h3>
-                    <div class="mb-1 text-muted">Nov 11</div>
+                    <div class="mb-1 text-muted">@item.DateOfPublication.ToShortDateString()</div>
                     <p class="mb-auto">@item.Description.</p>
                     <a asp-page="/CoursePage" asp-route-Id="@item.Id">Продолжить чтение</a>
                     @if (Model.CurrentUser != null)

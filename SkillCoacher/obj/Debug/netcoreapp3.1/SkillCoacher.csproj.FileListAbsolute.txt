@@ -480,3 +480,4 @@ C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Raz
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_PartialGradeButtons.cshtml.g.cs
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_PartialCourseList.cshtml.g.cs
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_PartialGradeStars.cshtml.g.cs
+C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\OwnedCourses.cshtml.g.cs

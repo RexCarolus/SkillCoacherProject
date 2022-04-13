@@ -65,21 +65,15 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link active" href="/OwnedCourses">
+                                <span data-feather="home"></span>
+                                Мои курсы <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/Favorites">
                                 <span data-feather="file"></span>
-                                Избранные курсы
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Library">
-                                <span data-feather="shopping-cart"></span>
                                 Подписки на курсы
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="\History">
-                                <span data-feather="users"></span>
-                                История
                             </a>
                         </li>
                         <li class="nav-item">
@@ -103,12 +97,8 @@
     $("#searchInput").keyup((event) => {
         if (event.keyCode == 13) {
             const urlParams = new URLSearchParams(window.location.search);
-
             urlParams.set('query', $("#searchInput").val());
-          
                 console.log("Entered method");
-
-
                 $.ajax({
                     type: "POST",
                     url: 'Index?handler=UpdateQuery',

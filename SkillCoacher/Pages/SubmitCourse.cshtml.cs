@@ -37,7 +37,7 @@ namespace SkillCoacher.Pages
                     Description = "Some decription",
                     Tags = new List<Tag> { new Tag { Name = "Tag"}, new Tag { Name = "Tag1" } },
                     Components = new List<CourseComponent> { new Chapter { Name = "Chapter 1", Sort = 1, Discriminator="Chapter" },
-                        new Chapter { Name = "Chapter 2", Sort = 0, Discriminator = "Chapter" } }
+                        new Chapter { Name = "Chapter 2", Sort = 0, Discriminator = "Chapter" }}
                 };
             }
             else
@@ -74,45 +74,7 @@ namespace SkillCoacher.Pages
             return Redirect($"SubmitCourse?id={CurrentCourse.Id}");
         }
 
-        public IActionResult OnPostSave(string[] tagsStrings, string imageName = "aaa.jpg")
-        {
-                TagFactory tagFactory = new TagFactory(_db);
-                var addTags = tagFactory.GetTagList(tagsStrings).ToList();
-                if (CurrentCourse.Id < 0)
-                {
-                    Course newCourse;
-                    CurrentCourse.Components.ForEach(c => c.Id = null);
-                    newCourse = new Course
-                    {
-                        Name = CurrentCourse.Name,
-                        Description = CurrentCourse.Description,
-                        Components = CurrentCourse.Components.ToList(),
-                        Tags = addTags,
-                        TitleImagePath = imageName
-                    };
-                    newCourse.Id = _db.Courses.Add(newCourse).Entity.Id;
-                    _db.SaveChanges();
-                    return Redirect($"SubmitCourse?id={newCourse.Id}");
-                }
-                else
-                {
-                    var updatedCourse = _db.Courses.Where(c => c.Id == CurrentCourse.Id).Include(ch => ch.Components).
-                    First(c => c.Id == CurrentCourse.Id); 
-                    updatedCourse.Name = CurrentCourse.Name;
-                    updatedCourse.Description = CurrentCourse.Description;
-                    for (int i = 0; i < CurrentCourse.Components.Count; i++)
-                    {
-                        updatedCourse.Components[i].Name = CurrentCourse.Components[i].Name;
-                        updatedCourse.Components[i].Sort = CurrentCourse.Components[i].Sort;
-                        updatedCourse.Components[i].Discriminator = "Chapter";
-                    }
-                    updatedCourse.Tags = addTags;
-                    _db.SaveChanges();
-                    return new JsonResult(JsonConvert.SerializeObject(updatedCourse));
-                }
-            }
-
-        public IActionResult OnPostSaveChanges(string[] tagsStrings, string imageName = "aaa.jpg")
+        public IActionResult OnPostSaveChanges(string[] tagsStrings, string imageName = "aaa.png")
         {
             TagFactory tagFactory = new TagFactory(_db);
             var addTags = tagFactory.GetTagList(tagsStrings).ToList();
@@ -123,12 +85,14 @@ namespace SkillCoacher.Pages
                 newCourse = new Course
                 {
                     Name = CurrentCourse.Name,
+                    DateOfPublication = DateTime.UtcNow,
                     Description = CurrentCourse.Description,
                     Components = CurrentCourse.Components.ToList(),
                     Tags = addTags,
                     TitleImagePath = imageName
                 };
                 newCourse.Id = _db.Courses.Add(newCourse).Entity.Id;
+                newCourse.OwnerCoacher = _db.Coachers?.Where(u => u.Login == User.Claims.ToList()[0].Value).First();
                 _db.SaveChanges();
                 return new JsonResult(new {IsNew = true, Id = newCourse.Id });
             }
@@ -151,6 +115,13 @@ namespace SkillCoacher.Pages
                 _db.SaveChanges();
                 return new JsonResult(new {IsNew = false });
             }
+        }
+
+        public IActionResult OnPostDeleteCourse()
+        {
+            _db.Courses.Remove(CurrentCourse);
+            _db.SaveChanges();
+            return Redirect("Index"); 
         }
     }
 }

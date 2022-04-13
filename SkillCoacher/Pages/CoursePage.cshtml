@@ -11,7 +11,7 @@
     <div class="blog-post">
         <input type="hidden" asp-for="@Model.SelectedCourse.Id" />
         <h2 class="blog-post-title">@Model.SelectedCourse.Name</h2>
-        <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
+        <p class="blog-post-meta">@Model.SelectedCourse.DateOfPublication.ToShortDateString() by <a href="#">@Model.SelectedCourse.OwnerCoacher.Login</a></p>
         <hr>
         @if (Model.SelectedCourse.Components != null && Model.SelectedCourse.Components.Count > 0)
             foreach (var item in Model.SelectedCourse.Components)

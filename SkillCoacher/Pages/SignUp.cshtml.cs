@@ -28,7 +28,7 @@ namespace SkillCoacher.Pages
    
         }
 
-        public async Task<IActionResult> OnPost(CommonUser newUser)
+        public async Task<IActionResult> OnPost(Coacher newUser)
         {
             var user = _db.CommonUsers.Where(user => (user.Login == newUser.Login));
             if (user == null)
@@ -36,7 +36,7 @@ namespace SkillCoacher.Pages
                 return Page();
             }
             else
-            _db.CommonUsers.Add(newUser);
+            _db.Coachers.Add(newUser);
             _db.SaveChanges();
             await Authenticate(newUser.Login);
             return RedirectToPage("/Index");

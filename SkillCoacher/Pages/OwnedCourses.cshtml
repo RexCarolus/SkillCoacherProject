@@ -1,16 +1,15 @@
 ﻿@page
-@model SkillCoacher.Pages.FavoritesModel
+@model SkillCoacher.Pages.OwnedCoursesModel
 @{
 }
 
 <div class="row mb-2">
-    @if(Model.FavoriteCourses == null || Model.FavoriteCourses.Count == 0 )
+    @if(Model.OwnedCourses == null || Model.OwnedCourses.Count == 0)
     {
-        <h4>Вы еще не подписаны на курсы</h4>
-    }
-    else
+        <h2>Вы еще не создали курсов.</h2>
+    }else
     {
-        @foreach (var item in Model.FavoriteCourses)
+        @foreach (var item in Model.OwnedCourses)
         {
             <div class="col-md-6">
                 <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -19,11 +18,10 @@
                         <h3 class="mb-0">@item.Name</h3>
                         <div class="mb-1 text-muted">Nov 11</div>
                         <p class="mb-auto">@item.Description.</p>
-                        <a asp-page="/CoursePage" asp-route-Id="@item.Id" class="stretched-link">Continue reading</a>
+                        <a asp-page="/SubmitCourse" asp-route-Id="@item.Id" class="stretched-link">Edit</a>
                     </div>
                     <div class="col-auto d-none d-lg-block">
                         <img class="img-thumbnail" width="200" height="250" src="images/@item.TitleImagePath" />
-                        <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
                     </div>
                 </div>
             </div>
