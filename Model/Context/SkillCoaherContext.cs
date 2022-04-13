@@ -93,6 +93,10 @@ namespace Model.Context
                   j.Property(pt => pt.Grade);
                   j.ToTable("CourseGrades");
               });
+            modelBuilder
+              .Entity<Coacher>()
+              .HasMany(c => c.OwnnedCourses)
+              .WithOne(u => u.OwnerCoacher);
         }
     }
   

@@ -36,17 +36,16 @@ namespace Model.Models
                 var tagsList = new List<Tag>();
             foreach (var addTagName in tagNames)
             {
-                var forametedAddTagName = addTagName.Replace(" ", "").ToLower();
+                var forametedAddTagName = String.Format(addTagName.Replace(" ", "").ToLower(), Encoding.UTF8);
                 if (db.Tags.Count<Tag>(tag => tag.Name == forametedAddTagName) == 0)
                 {
-                    tagsList.Add(db.Tags.Add(new Tag { Name = forametedAddTagName }).Entity);
+                    var newTag = new Tag { Name = forametedAddTagName };
+                    db.Tags.Add(newTag);
+                    db.SaveChanges();
                 }
-                else
-                {
                     tagsList.Add(db.Tags.First<Tag>(tag => tag.Name == forametedAddTagName));
-                }
             }
-
+            db.SaveChanges();
                 return tagsList;
             }
         

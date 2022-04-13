@@ -20,5 +20,6 @@ namespace Model.Models
         public List<CommonUsersFavoriteCourses> CommonUsersFavoriteCourses { get; set; } = new List<CommonUsersFavoriteCourses>();
         public List<CommonUser> GradeUsers { get; set; }
         public List<CourseGrade> CourseGrades { get; set; } = new List<CourseGrade>();
+        public DateTime DateOfPublication { get; set; }
     }
 }
