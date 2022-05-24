@@ -50,11 +50,11 @@
     {
         if (Model.CurrentUser.FavoriteCourses.Count(c => c.Id == Model.SelectedCourse.Id) > 0)
         {
-            <button id="subscribeButton" onclick="AddToFavorite(@Model.SelectedCourse.Id);">Отписаться</button>
+            <button id="subscribeButton" onclick="AddToFavorite(@Model.SelectedCourse.Id);" class="btn btn-primary">Отписаться</button>
         }
         else
         {
-            <button id="subscribeButton" onclick="AddToFavorite(@Model.SelectedCourse.Id);">Подписаться</button>
+            <button id="subscribeButton" onclick="AddToFavorite(@Model.SelectedCourse.Id);" class="btn btn-primary">Начать курс</button>
         }
     }
 
