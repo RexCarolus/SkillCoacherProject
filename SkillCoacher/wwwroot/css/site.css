@@ -10,8 +10,11 @@ a.navbar-brand {
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
-}
-
+} 
+a.disable {
+  pointer-events: none;
+  cursor: not-allowed;
+ }
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;

@@ -10,5 +10,6 @@ namespace Model.Models
         public string Name { get; set; }
         public int Sort { get; set; }
         public string Discriminator { get; set; }
+        public CommonUsersFavoriteCourses CommonUsersFavoriteCourse { get; set; } 
     }
 }

@@ -444,8 +444,6 @@ C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Ski
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\SkillCoacher.RazorAssemblyInfo.cache
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\SkillCoacher.RazorAssemblyInfo.cs
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\staticwebassets\SkillCoacher.StaticWebAssets.Manifest.cache
-C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\staticwebassets\SkillCoacher.StaticWebAssets.xml
-C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\scopedcss\bundle\SkillCoacher.styles.css
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\SkillCoacher.TagHelpers.input.cache
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\SkillCoacher.TagHelpers.output.cache
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\SkillCoacher.RazorCoreGenerate.cache
@@ -652,3 +650,6 @@ C:\Users\VLZ-J\source\new\SkillCoacher\obj\Debug\netcoreapp3.1\SkillCoacher.dll
 C:\Users\VLZ-J\source\new\SkillCoacher\obj\Debug\netcoreapp3.1\SkillCoacher.pdb
 C:\Users\VLZ-J\source\new\SkillCoacher\obj\Debug\netcoreapp3.1\SkillCoacher.genruntimeconfig.cache
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_PartialFavoriteCourseList.cshtml.g.cs
+C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\Test.cshtml.g.cs
+C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_PartialToggleFavoriteButton.cshtml.g.cs
+C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_PartialChapterList.cshtml.g.cs

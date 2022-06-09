@@ -10,5 +10,6 @@ namespace Model.Models
         public CommonUser User { get; set; }
         public int FavoriteCourseId { get; set; }
         public Course FavoriteCourse { get; set; }
+        public int LastComponentId { get; set; }
     }
 }

@@ -21,9 +21,9 @@
 
         <input id="CurrentCourse_Id"type="hidden" asp-for="CurrentCourse.Id" />
         <h4 class="pt-lg-3">Название курса</h4>
-        <input class="form-control" id="CurrentCourse_Name" type="text" value="Название" asp-for="CurrentCourse.Name" />
+        <input class="form-control" id="CurrentCourse_Name" type="text"  asp-for="CurrentCourse.Name" />
         <h4 class="pt-lg-3">Описание курса</h4>
-        <input class="form-control" id="CurrentCourse_Description" type="text" value="Описание" asp-for="CurrentCourse.Description" />
+        <input class="form-control" id="CurrentCourse_Description" type="text"  asp-for="CurrentCourse.Description" />
         <h4 class="pt-lg-3">Добавить раздел</h4>
         <div class="list list-row card" id="sortable" data-sortable-id="0" aria-dropeffect="move">
             @for (int i = 0; i < Model.CurrentCourse.Components?.Count(); i++)

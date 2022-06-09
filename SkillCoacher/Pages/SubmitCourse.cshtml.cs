@@ -33,7 +33,7 @@ namespace SkillCoacher.Pages
                 CurrentCourse = new Course
                 {
                     Id = -1,
-                    Name = "Имя",
+                    Name = "Название",
                     Description = "Описание",
                     Tags = new List<Tag> { new Tag { Name = "Тэг1"}, new Tag { Name = "Тэг2" } },
                     Components = new List<CourseComponent> { new Chapter { Name = "Часть 1", Sort = 1, Discriminator="Chapter" },
@@ -82,6 +82,8 @@ namespace SkillCoacher.Pages
             {
                 Course newCourse;
                 CurrentCourse.Components.ForEach(c => c.Discriminator = "Chapter");
+                int i = 0;
+                CurrentCourse.Components.ForEach(el => el.Sort = i++);
                 newCourse = new Course
                 {
                     Name = CurrentCourse.Name,
@@ -98,6 +100,7 @@ namespace SkillCoacher.Pages
             }
             else
             {
+                
                 var updatedCourse = _db.Courses.Where(c => c.Id == CurrentCourse.Id).Include(ch => ch.Components).
                     Include(ch=>ch.Tags).First(c => c.Id == CurrentCourse.Id); ;
                 updatedCourse.Name = CurrentCourse.Name;
@@ -105,10 +108,9 @@ namespace SkillCoacher.Pages
                 for (int i = 0; i < CurrentCourse.Components.Count; i++)
                 {
                     updatedCourse.Components[i].Name = CurrentCourse.Components[i].Name;
-                    updatedCourse.Components[i].Sort = CurrentCourse.Components[i].Sort;
                     updatedCourse.Components[i].Discriminator = "Chapter";
+                    updatedCourse.Components[i].Sort = i;
                 }
-                
                 updatedCourse.Tags.Clear();
                 updatedCourse.Tags.AddRange(addTags);
                 

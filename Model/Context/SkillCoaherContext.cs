@@ -15,7 +15,6 @@ namespace Model.Context
         public SkillCoacherContext(DbContextOptions options) : base(options)
         {
             Database.EnsureCreated();
-
         }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<CommonUser> CommonUsers { get; set; }
@@ -23,6 +22,7 @@ namespace Model.Context
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Test> Tests { get; set; }
+        public DbSet<CommonUsersFavoriteCourses> CommonUsersFavoriteCourses { get; set; }
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseComponent> CourseComponents { get; set; }
@@ -35,6 +35,18 @@ namespace Model.Context
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<CommonUsersFavoriteCourses>().Property(p => p.LastComponentId).HasDefaultValue(0);
+            modelBuilder.Entity<CommonUsersFavoriteCourses>()
+                .HasOne(p => p.FavoriteCourse)
+                .WithMany(p => p.CommonUsersFavoriteCourses)
+                .HasForeignKey(k => k.FavoriteCourseId);
+            modelBuilder.Entity<CommonUsersFavoriteCourses>()
+         .HasOne(p => p.User)
+         .WithMany(p => p.CommonUsersFavoriteCourses)
+         .HasForeignKey(k => k.UserId);
+
+            
+
             modelBuilder
                 .Entity<Test>()
                 .HasMany(t => t.Users)

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Model.Context;
 using Model.Models;
 using SkillCoacher.Pages.Shared;
+using SkillCoacher.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,7 +63,7 @@ namespace SkillCoacher.Pages
                 user.FavoriteCourses.RemoveAll(c => c.Id == courseId);
             else 
                 user.FavoriteCourses.Add(_db.Courses.First((c) => c.Id == courseId));
-            _db.SaveChanges();
+            int a = _db.SaveChanges();
         }
     }
 }

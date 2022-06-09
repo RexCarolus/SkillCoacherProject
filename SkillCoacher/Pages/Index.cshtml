@@ -27,11 +27,11 @@
                         {
                             if (Model.CurrentUser.FavoriteCourses.Count(c => c.Id == item.Id) > 0)
                             {
-                                <button id="subscribe" class="btn btn-dark" onclick="AddToFavorite(@item.Id);">Отписаться</button>
+                                <button id="subscribe" class="btn btn-dark" onclick="CourseToggleFavorite(@item.Id);">Отписаться</button>
                             }
                             else
                             {
-                                <button id="subscribe" class="btn btn-primary" onclick="AddToFavorite(@item.Id);">Начать курс</button>
+                                <button id="subscribe" class="btn btn-primary" onclick="CourseToggleFavorite(@item.Id);">Начать курс</button>
                             }
                         }
                         @foreach (var tag in item?.Tags)
@@ -49,14 +49,14 @@
 </div>
     
 <script>
-    function AddToFavorite($Id) {
+    function CourseToggleFavorite($Id) {
         let $button = $("#" + $Id + " > div > #subscribe");
         console.log($Id)
         console.log($button.attr("text"));
-        if ($button.text() == "Подписаться") {
+        if ($button.text() == "Начать курс") {
             $button.text("Отписаться");
         } else {
-            $button.text("Подписаться");
+            $button.text("Начать курс");
         }
         console.log("Entered method");
         $.ajax({

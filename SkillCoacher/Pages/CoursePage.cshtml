@@ -13,12 +13,10 @@
         <h2 class="blog-post-title">@Model.SelectedCourse.Name</h2>
         <p class="blog-post-meta">@Model.SelectedCourse.DateOfPublication.ToShortDateString() автор: <a href="#">@Model.SelectedCourse.OwnerCoacher.Login</a></p>
         <hr>
-        @if (Model.SelectedCourse.Components != null && Model.SelectedCourse.Components.Count > 0)
-            foreach (var item in Model.SelectedCourse.Components)
-            {
-                <h2>@item.Name</h2>
-                <a asp-page="/ChapterPage" asp-route-Id="@item.Id">Читать далее</a>
-            }
+       
+        <div id="partialChapterList">
+        <partial itemid="patialChapterList" name="_PartialChapterList", model="Model.PartialChapterList"/>
+        </div>
         <hr>
     </div>
     <input id="rating" type="hidden" asp-for="Grade" />
@@ -91,10 +89,10 @@
     function AddToFavorite($Id) {
         let $button = $("#subscribeButton");
         console.log($button.text());
-        if ($button.text() == "Подписаться") {
+        if ($button.text() == "Начать курс") {
             $button.text("Отписаться");
         } else {
-            $button.text("Подписаться");
+            $button.text("Начать курс");
         }
         console.log("Entered method");
         $.ajax({
@@ -109,10 +107,10 @@
                 xhr.setRequestHeader("XSRF-TOKEN",
                     $('input:hidden[name="__RequestVerificationToken"]').val());
             },
-            success() {
-
+            success(result) {
+                document.getElementById('partialChapterList').innerHTML = result;
             },
-            dataType: "json"
+            dataType: "html"
         }).done(function (data) {
             console.log(data.result);
         })

@@ -10,7 +10,19 @@
         <hr>
         <div>@Html.Raw(Model.SelectedChapter.HtmlContent)</div>
         <hr>
-        </div>
+        @if (Model.LeftChapterId >= 0)
+        {
+            <a asp-page="/ChapterPage" asp-route-Id="@Model.LeftChapterId">
+            <button>Назад</button>
+            </a>
+        }
+        @if (Model.RightChapterId >= 0)
+        {
+            <a asp-page="/ChapterPage" asp-route-Id="@Model.RightChapterId">
+            <button>Далее</button>
+            </a>
+        }
+    </div>
 </div>
 
 
