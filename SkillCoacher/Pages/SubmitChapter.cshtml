@@ -2,15 +2,21 @@
 @model SkillCoacher.Pages.SubmitChapterModel
 @{
 }
+<style>
+    .ck-editor__editable {
+        height: 252px;
+    }
+        
+</style>
 <script src="https://cdn.ckeditor.com/ckeditor5/30.0.0/classic/ckeditor.js"></script>
 <div class="col-md-8 blog-main">
     <form method="post">
         <h2 class="blog-post-title">Опубликовать курс</h2>
         <hr />
         <input asp-for="CurrentChapter.Id" type="hidden" />
-        <h4>Название Раздела</h4>
-        <input asp-for="CurrentChapter.Name" type="text" />
-        <h4>Содержание Раздела</h4>
+        <h4 >Название Раздела</h4>
+        <input class="form-control" asp-for="CurrentChapter.Name" type="text" />
+        <h4 style="margin-top: 40px;">Содержание Раздела</h4>
  
         <div id="editor">
             @Html.Raw(Model.CurrentChapter.HtmlContent)
@@ -28,10 +34,10 @@
         </script>
     </form>
 </div>
-<hr />
-<div class="col-md-2 ml-md-auto">
 
-    <button type="button" class="btn btn-primary btn-lg" onclick="ajaxTest();">Опубликовать </button>
+<div class="col-md-2 offset-md-6 pt-lg-4"">
+
+    <button type="button" class="btn btn-success" onclick="ajaxTest();">Добавить раздел</button>
 </div>
 
 <script type="text/javascript">

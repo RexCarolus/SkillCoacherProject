@@ -55,16 +55,21 @@
                     </div>
                 </div>
             }
+            <button type="submit" class="btn btn-primary pt-lg-2" id="addComp" asp-page-handler="AddComponent ;" style="width: 120px;padding-left: 12px;border-left-width: 1px;margin-left: 18px;margin-bottom: 14px;">Добавить</button>
         </div>
-        <button type="submit" class="btn btn-primary pt-lg-2" id="addComp" asp-page-handler="AddComponent" ;">Добавить</button>
+        
         <h4 class="pt-lg-5">Добавьте теги</h4>
         <input id="TagsInput" type="text" data-role="tagsinput" />
 
-        <div class="col-md-4 ml-md-auto pt-lg-4">
-            <button type="button" class="btn btn-primary btn-lg" onclick="SaveChanges();">Сохранить</button>
-            <button type="submit" class="btn btn-primary btn-lg" id='deleteButton'asp-page-handler="DeleteCourse">Удалить</button>
+        <div class="row mx-md-n5">
+            <div class="col col-sm-3 ml-lg-4 pt-lg-2">
+                <button type="button" class="btn btn-primary" onclick="SaveChanges();">Сохранить</button>
+            </div>
+            <div class="col col-sm-3 ml-lg-1 pt-lg-2">
+                <button type="submit" class="btn btn-danger" id='deleteButton' asp-page-handler="DeleteCourse">Удалить</button>
+            </div>
         </div>
-    </form>
+</form>
 </div>
 <hr />
 

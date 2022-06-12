@@ -4,72 +4,74 @@
 }
 <form method="post">
 </form>
-<div id="courseList" class="row mb-2">
-    @if(Model.FavoriteCourses == null || Model.FavoriteCourses.Count == 0 )
+<div id="courseList" class="row mb-2 align-items-center">
+    @if (Model.FavoriteCourses == null || Model.FavoriteCourses.Count == 0)
     {
-        <h4>Вы еще не подписаны на курсы</h4>
-    }
-    else
-    {
-        @foreach (var item in Model.FavoriteCourses)
-        {
-<div class="col-md-6" id="courses">
-    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static" id="@item.Id">
+ 
+            <h2>Вы еще не подписались на курсы</h2>
 
-            <h3 class="mb-0">@item.Name</h3>
-            <div class="mb-1 text-muted">@item.DateOfPublication.ToShortDateString()</div>
-            <p class="mb-auto">@item.Description.<a asp-page="/CoursePage" asp-route-Id="@item.Id"> Читать далее.</a></p>
-            <div class="col pt-lg-2">
-                <button id="subscribe" class="btn btn-dark" onclick="DeleteFromFavorites(@item.Id);">Отписаться</button>
-                    
-                
-                @foreach (var tag in item?.Tags)
-                {
-                    <span class="badge badge-info" style="margin-block: 80px;">@tag.Name</span>
+            }
+            else
+            {
+            @foreach (var item in Model.FavoriteCourses)
+            {
+                <div class="col-md-6" id="courses">
+                    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                        <div class="col p-4 d-flex flex-column position-static" id="@item.Id">
+
+                            <h3 class="mb-0">@item.Name</h3>
+                            <div class="mb-1 text-muted">@item.DateOfPublication.ToShortDateString()</div>
+                            <p class="mb-auto">@item.Description.<a asp-page="/CoursePage" asp-route-Id="@item.Id"> Читать далее.</a></p>
+                            <div class="col pt-lg-2">
+                                <button id="subscribe" class="btn btn-dark" onclick="DeleteFromFavorites(@item.Id);">Отписаться</button>
+
+
+                                @foreach (var tag in item?.Tags)
+                                {
+                                    <span class="badge badge-info" style="margin-block: 80px;">@tag.Name</span>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-auto d-none d-lg-block">
+                            <img class="img-thumbnail" width="200" height="250" src="images/@item.TitleImagePath" />
+                        </div>
+                    </div>
+                </div>
+            }
+            }
+
+        </div>
+
+        <script>
+            function DeleteFromFavorites($Id) {
+                let $button = $("#" + $Id + " > div > #subscribe");
+                console.log($Id)
+                console.log($button.attr("text"));
+                if ($button.text() == "Подписаться") {
+                    $button.text("Отписаться");
+                } else {
+                    $button.text("Подписаться");
                 }
-            </div>
-        </div>
-        <div class="col-auto d-none d-lg-block">
-            <img class="img-thumbnail" width="200" height="250" src="images/@item.TitleImagePath" />
-        </div>
-    </div>
-</div>
-        }
-    }
+                console.log("Entered method");
+                $.ajax({
+                    type: "POST",
+                    url: 'Favorites?handler=DeleteFromFavorite',
 
-</div>
+                    data: {
+                        id: $("#CurrentCourse_Id").val(),
+                        courseId: $Id
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    success(data) {
+                        $('#courseList').html(data);
+                    },
+                    dataType: "text"
+                }).done(function (data) {
 
-<script>
-    function DeleteFromFavorites($Id) {
-        let $button = $("#" + $Id + " > div > #subscribe");
-        console.log($Id)
-        console.log($button.attr("text"));
-        if ($button.text() == "Подписаться") {
-            $button.text("Отписаться");
-        } else {
-            $button.text("Подписаться");
-        }
-        console.log("Entered method");
-        $.ajax({
-            type: "POST",
-            url: 'Favorites?handler=DeleteFromFavorite',
+                })
 
-            data: {
-                id: $("#CurrentCourse_Id").val(),
-                courseId: $Id
-            },
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("XSRF-TOKEN",
-                    $('input:hidden[name="__RequestVerificationToken"]').val());
-            },
-            success(data) {
-                $('#courseList').html(data);
-            },
-            dataType: "text"
-        }).done(function (data) {
-           
-        })
-
-    };
-</script>
+            };
+        </script>
