@@ -50,6 +50,18 @@ namespace SkillCoacher.Pages
             return Partial("_PartialCourseList", new IndexDataModel { CoursesList = this.CoursesList, CurrentUser = this.CurrentUser});
         }
 
+        public IActionResult OnPostShowSuggestions(string query)
+        {
+            ModelState.Clear();
+            var suggestionList = new List<string>();
+            _db.Courses.Where((course) => course.Name.StartsWith(query)).Include((tag) => tag.Tags)
+                .ToList().ForEach((el)=>suggestionList.Add(el.Name));
+            if (suggestionList.Count == 0)
+                return  Content("");
+            else
+            return Partial("_PartialSearchBar", suggestionList);
+        }
+
         public async Task<IActionResult> OnGetLogOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

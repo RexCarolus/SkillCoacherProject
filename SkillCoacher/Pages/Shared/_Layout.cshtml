@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/quiz.css" />
+    <link rel="stylesheet" href="~/css/SearchBarSuggestions.css" />
     <link rel="stylesheet" href="~/lib/tagsinput.css" />
     <link rel="stylesheet" href="~/lib/ratingstars.css" />
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="~/lib/dragndrop.css" />
     <script src="~/lib/dragndrop.css"></script>
-
+    @*<script src="~/js/SearchBarSuggestions.js"></script>*@
     <script src="https://code.jquery.com/jquery-3.3.1.js"
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
             crossorigin="anonymous"></script>
@@ -28,7 +29,19 @@
 <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" asp-area="" asp-page="/Index">SkillCoacher</a>
-        <input class="form-control form-control-dark w-50" id="searchInput" type="text" placeholder="Поиск по SkillCoacher" aria-label="Search">
+
+        <div class="wrapper">
+            <div class="search-input">
+                <a href="" target="_blank" hidden></a>
+                <input id="searchInput" class="form-control form-control-dark w-50" type="text" placeholder="Поиск по SkillCoacher" aria-label="Search">
+                <div id="searchBarSuggestions" class="autocom-box"></div>
+                <div class="icon"><i class="fas fa-search"></i></div>
+            </div>
+        </div>
+       
+
+
+
         <ul class="navbar-nav px-3">
             <li class="dropdown show">
                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -96,10 +109,10 @@
     </div>
     <script>
     $(document).ready(() => {
-    $("#searchInput").keyup((event) => {
-        if (event.keyCode == 13) {
-            const urlParams = new URLSearchParams(window.location.search);
-            urlParams.set('query', $("#searchInput").val());
+        $("#searchInput").keyup((event) => {
+            if (event.keyCode == 13) {
+                const urlParams = new URLSearchParams(window.location.search);
+                urlParams.set('query', $("#searchInput").val());
                 console.log("Entered method");
                 $.ajax({
                     type: "POST",
@@ -121,9 +134,47 @@
                 }).done(function (data) {
                     console.log(data.result);
                 })
-            window.location.search = urlParams;
-    }
-    })
+                window.location.search = urlParams;
+            }
+        });
+        $("#searchInput").on('input', (event) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('query', $("#searchInput").val());
+            $.ajax({
+                type: "POST",
+                url: 'Index?handler=ShowSuggestions',
+
+                data: {
+                    query: $("#searchInput").val()
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                success(result) {
+                    console.log("success");
+
+                    if (result == "") {
+                        $(".search-input").removeClass("active");
+                    }
+                    else
+                        $(".search-input").addClass("active");
+
+                    $("#searchBarSuggestions").html(result);
+                    
+                    $("#searchBarSuggestions > li").click(function (e) {
+                        console.log($(this).text());
+
+                        $("#searchInput").val($(this).text());
+                        console.log($(this).text());
+                        const urlParams = new URLSearchParams(window.location.search);
+                        urlParams.set('query', $("#searchInput").val());
+                        window.location.search = urlParams;
+                    });
+                },
+                dataType: "html"
+            })
+        });
     });
     </script>
 </body>
