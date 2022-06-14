@@ -25,107 +25,82 @@
     <link href="~/lib/dashboard.css" rel="stylesheet">
     <link href="~/lib/blog.css" rel="stylesheet">
 </head>
-<body>
-    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" asp-area="" asp-page="/Index">SkillCoacher</a>
         <input class="form-control form-control-dark w-50" id="searchInput" type="text" placeholder="Поиск по SkillCoacher" aria-label="Search">
-        <ul class="navbar-nav px-3">
+        <ul class="navbar-nav px-3 offset-lg-3">
             <li class="dropdown show">
-                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
                     Профиль
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="/LogIn">Войти</a>
-                    <a class="dropdown-item" asp-area="" asp-page="/SignUp">Регистрация</a>
+                    <a class="dropdown-item" asp-page="Index" asp-page-handler="LogOut">Выйти</a>
                 </div>
             </li>
         </ul>
     </nav>
     <div class="container-fluid">
-        <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
+        <div class="row flex-xl-nowrap">
+            <div class="col-md-3 col-xl-2 bd-sidebar shadow" style="padding-bottom: 100%;">
+                <div class="sticky-top">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="/Submit">
-                                <span data-feather="home"></span>
-                                Опубликовать курс <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="/SubmitCourse">
-                                <span data-feather="home"></span>
-                                Опубликовать курс <span class="sr-only">(current)</span>
-                            </a>
+                            <a class="text-dark pl-xl-3" href="/Index">Главная</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/Index">
-                                <span data-feather="home"></span>
-                                Главная <span class="sr-only">(current)</span>
-                            </a>
+                            <a class="text-dark pl-xl-3" href="/OwnedCourses">Мои курсы</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/OwnedCourses">
-                                <span data-feather="home"></span>
-                                Мои курсы <span class="sr-only">(current)</span>
-                            </a>
+                            <a class="text-dark pl-xl-3" href="/Favorites">Подписки на курсы</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Favorites">
-                                <span data-feather="file"></span>
-                                Подписки на курсы
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="Index" asp-page-handler="LogOut">
-                                <span data-feather="users"></span>
-                                Выйти
-                            </a>
+                        <hr>
+                        <li class="list-group" id="list-tab" role="tablist">
+                            <a class="list-group-item text-secondary" href="/SubmitCourse" role="tab">Опубликовать курс</a>
                         </li>
                     </ul>
                 </div>
-            </nav>
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 pt-xl-5 mt-xl-5">
+            </div>
+            <main role="main" class="col-md-10 py-md-3 bd-content">
                 <div class="pl-xl-1">
                     @RenderBody()
                 </div>
             </main>
         </div>
     </div>
-    <script>
-    $(document).ready(() => {
-    $("#searchInput").keyup((event) => {
-        if (event.keyCode == 13) {
-            const urlParams = new URLSearchParams(window.location.search);
-            urlParams.set('query', $("#searchInput").val());
-                console.log("Entered method");
-                $.ajax({
-                    type: "POST",
-                    url: 'Index?handler=UpdateQuery',
+            
+    <body>
+        <script>
+            $(document).ready(() => {
+                $("#searchInput").keyup((event) => {
+                    if (event.keyCode == 13) {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        urlParams.set('query', $("#searchInput").val());
+                        console.log("Entered method");
+                        $.ajax({
+                            type: "POST",
+                            url: 'Index?handler=UpdateQuery',
 
-                    data: {
-                        query: $("#searchInput").val()
-                    },
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader("XSRF-TOKEN",
-                            $('input:hidden[name="__RequestVerificationToken"]').val());
-                    },
-                    success() {
-                        console.log($("#searchInput").val());
-                        $("#courses").html('');
-                        $("#courses").html(data);
-                    },
-                    dataType: "json"
-                }).done(function (data) {
-                    console.log(data.result);
+                            data: {
+                                query: $("#searchInput").val()
+                            },
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader("XSRF-TOKEN",
+                                    $('input:hidden[name="__RequestVerificationToken"]').val());
+                            },
+                            success() {
+                                console.log($("#searchInput").val());
+                                $("#courses").html('');
+                                $("#courses").html(data);
+                            },
+                            dataType: "json"
+                        }).done(function (data) {
+                            console.log(data.result);
+                        })
+                        window.location.search = urlParams;
+                    }
                 })
-            window.location.search = urlParams;
-    }
-    })
-    });
-    </script>
-</body>
+            });
+        </script>
+    </body>
 </html>
 
