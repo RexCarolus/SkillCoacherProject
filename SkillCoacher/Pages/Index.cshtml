@@ -10,12 +10,11 @@
 
 <div class="row mb-2">
     <form method="post">
-
     </form>
-   
+
     @foreach (var item in Model.CoursesList)
     {
-        <div class="col-md-6" id="courses">
+        <div class="col-md-3" id="courses" style="padding-right: 0px; padding-left: 10px;">
             <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static" id="@item.Id">
 
@@ -23,27 +22,27 @@
                     <div class="mb-1 text-muted">@item.DateOfPublication.ToShortDateString()</div>
                     <p class="mb-auto">@item.Description.<a asp-page="/CoursePage" asp-route-Id="@item.Id"> Читать далее.</a></p>
                     <div class="col pt-lg-2">
+                        @foreach (var tag in item?.Tags)
+                        {
+                            <span class="badge badge-info" style="margin-block: 10px;">@tag.Name</span>
+                        }
                         @if (Model.CurrentUser != null)
                         {
                             if (Model.CurrentUser.FavoriteCourses.Count(c => c.Id == item.Id) > 0)
                             {
-                                <button id="subscribe" class="btn btn-dark" onclick="CourseToggleFavorite(@item.Id);">Отписаться</button>
+                                <button id="subscribe" class="btn btn-primary" onclick="CourseToggleFavorite(@item.Id);" style="padding-left: 1px;padding-right: 1px;">Отписаться</button>
                             }
                             else
                             {
-                                <button id="subscribe" class="btn btn-primary" onclick="CourseToggleFavorite(@item.Id);">Начать курс</button>
+                                <button id="subscribe" class="btn btn-success" onclick="CourseToggleFavorite(@item.Id);" style="padding-left: 1px;padding-right: 1px;">Начать</button>
                             }
                         }
-                        @foreach (var tag in item?.Tags)
-                        {
-                            <span class="badge badge-info" style="margin-block: 80px;">@tag.Name</span>
-                        }
-                    </div>
-                    </div>
-                    <div class="col-auto d-none d-lg-block">
-                        <img class="img-thumbnail" width="200" height="250" src="images/@item.TitleImagePath" />
                     </div>
                 </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img class="img-thumbnail" width="200" height="250" src="images/@item.TitleImagePath" />
+                </div>
+            </div>
         </div>
     }
 </div>
@@ -53,10 +52,10 @@
         let $button = $("#" + $Id + " > div > #subscribe");
         console.log($Id)
         console.log($button.attr("text"));
-        if ($button.text() == "Начать курс") {
+        if ($button.text() == "Начать") {
             $button.text("Отписаться");
         } else {
-            $button.text("Начать курс");
+            $button.text("Начать");
         }
         console.log("Entered method");
         $.ajax({

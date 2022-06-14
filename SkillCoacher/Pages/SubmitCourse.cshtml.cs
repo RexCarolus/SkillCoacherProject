@@ -51,15 +51,14 @@ namespace SkillCoacher.Pages
         {
             if (id < 0)
                 return Page();
-            var courseComp = new CourseComponent { Id = deleteId };
-            _db.CourseComponents.Attach(courseComp);
-            _db.CourseComponents.Remove(courseComp);
-            
+           
+                _db.CourseComponents.Remove(new CourseComponent { Id = deleteId});
+         
             _db.SaveChanges();
 
             return new JsonResult(new { id =  deleteId});
         }
-
+      
         public IActionResult OnPostAddComponent(Course currentCourse)
         {
             if (CurrentCourse.Id < 0)
@@ -140,7 +139,6 @@ namespace SkillCoacher.Pages
                 for (int i = 0; i < CurrentCourse.Components.Count; i++)
                 {
                     updatedCourse.Components[i].Name = CurrentCourse.Components[i].Name;
-                    updatedCourse.Components[i].Discriminator = CurrentCourse.Components[i].Discriminator;
                     updatedCourse.Components[i].Sort = i;
                 }
                 updatedCourse.Tags.Clear();

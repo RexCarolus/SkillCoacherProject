@@ -27,7 +27,7 @@
     <link href="~/lib/blog.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <nav class="navbar navbar-dark fixed-top bg-dark navbar-expand-lg flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" asp-area="" asp-page="/Index">SkillCoacher</a>
 
         <div class="wrapper">
@@ -38,7 +38,7 @@
                 <div class="icon"><i class="fas fa-search"></i></div>
             </div>
         </div>
-       
+
 
 
 
@@ -55,52 +55,27 @@
         </ul>
     </nav>
     <div class="container-fluid">
-        <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
+        <div class="row flex-xl-nowrap">
+            <div class="col-md-3 col-xl-2 bd-sidebar shadow" style="padding-bottom: 100%;">
+                <div class="sticky-top">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="/Submit">
-                                <span data-feather="home"></span>
-                                Опубликовать курс <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="/SubmitCourse">
-                                <span data-feather="home"></span>
-                                Опубликовать курс <span class="sr-only">(current)</span>
-                            </a>
+                            <a class="text-dark pl-xl-3" href="/Index">Главная</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/Index">
-                                <span data-feather="home"></span>
-                                Главная <span class="sr-only">(current)</span>
-                            </a>
+                            <a class="text-dark pl-xl-3" href="/OwnedCourses">Мои курсы</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/OwnedCourses">
-                                <span data-feather="home"></span>
-                                Мои курсы <span class="sr-only">(current)</span>
-                            </a>
+                            <a class="text-dark pl-xl-3" href="/Favorites">Подписки на курсы</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Favorites">
-                                <span data-feather="file"></span>
-                                Подписки на курсы
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="Index" asp-page-handler="LogOut">
-                                <span data-feather="users"></span>
-                                Выйти
-                            </a>
+                        <hr>
+                        <li class="list-group" id="list-tab" role="tablist">
+                            <a class="list-group-item text-secondary" href="/SubmitCourse" role="tab">Опубликовать курс</a>
                         </li>
                     </ul>
                 </div>
-            </nav>
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 pt-xl-5">
+            </div>
+            <main role="main" class="col-md-10 py-md-3 bd-content">
                 <div class="pl-xl-1">
                     @RenderBody()
                 </div>
@@ -108,15 +83,45 @@
         </div>
     </div>
     <script>
-    $(document).ready(() => {
-        $("#searchInput").keyup((event) => {
-            if (event.keyCode == 13) {
+        $(document).ready(() => {
+            $("#searchInput").keyup((event) => {
+                if (event.keyCode == 13) {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    urlParams.set('query', $("#searchInput").val());
+                    console.log("Entered method");
+                    $.ajax({
+                        type: "POST",
+                        url: 'Index?handler=UpdateQuery',
+
+                        data: {
+                            query: $("#searchInput").val()
+                        },
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("XSRF-TOKEN",
+                                $('input:hidden[name="__RequestVerificationToken"]').val());
+                        },
+                        success() {
+                            console.log($("#searchInput").val());
+                            $("#courses").html('');
+                            $("#courses").html(data);
+                        },
+                        dataType: "json"
+                    }).done(function (data) {
+                        console.log(data.result);
+                    })
+                    window.location.search = urlParams;
+                }
+            });
+            $("#searchInput").on('input', (event) => {
+                if ($("#searchInput").val().length < 3) {
+                    $(".search-input").removeClass("active");
+                    return;
+                }
                 const urlParams = new URLSearchParams(window.location.search);
                 urlParams.set('query', $("#searchInput").val());
-                console.log("Entered method");
                 $.ajax({
                     type: "POST",
-                    url: 'Index?handler=UpdateQuery',
+                    url: 'Index?handler=ShowSuggestions',
 
                     data: {
                         query: $("#searchInput").val()
@@ -125,63 +130,33 @@
                         xhr.setRequestHeader("XSRF-TOKEN",
                             $('input:hidden[name="__RequestVerificationToken"]').val());
                     },
-                    success() {
-                        console.log($("#searchInput").val());
-                        $("#courses").html('');
-                        $("#courses").html(data);
+                    success(result) {
+                        console.log("success");
+
+                        if (result == "") {
+                            $(".search-input").removeClass("active");
+                        }
+                        else
+                            $(".search-input").addClass("active");
+
+                        $("#searchBarSuggestions").html(result);
+
+                        $("#searchBarSuggestions > li").click(function (e) {
+                            console.log($(this).text());
+
+                            $("#searchInput").val($(this).text());
+                            console.log($(this).text());
+                            const urlParams = new URLSearchParams(window.location.search);
+                            urlParams.set('query', $("#searchInput").val());
+                            window.location.search = urlParams;
+                        });
                     },
-                    dataType: "json"
-                }).done(function (data) {
-                    console.log(data.result);
+                    dataType: "html"
                 })
-                window.location.search = urlParams;
-            }
+            });
+
+
         });
-        $("#searchInput").on('input', (event) => {
-            if ($("#searchInput").val().length < 3) {
-                $(".search-input").removeClass("active");
-                return;
-            }
-            const urlParams = new URLSearchParams(window.location.search);
-            urlParams.set('query', $("#searchInput").val());
-            $.ajax({
-                type: "POST",
-                url: 'Index?handler=ShowSuggestions',
-
-                data: {
-                    query: $("#searchInput").val()
-                },
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("XSRF-TOKEN",
-                        $('input:hidden[name="__RequestVerificationToken"]').val());
-                },
-                success(result) {
-                    console.log("success");
-
-                    if (result == "") {
-                        $(".search-input").removeClass("active");
-                    }
-                    else
-                        $(".search-input").addClass("active");
-
-                    $("#searchBarSuggestions").html(result);
-                    
-                    $("#searchBarSuggestions > li").click(function (e) {
-                        console.log($(this).text());
-
-                        $("#searchInput").val($(this).text());
-                        console.log($(this).text());
-                        const urlParams = new URLSearchParams(window.location.search);
-                        urlParams.set('query', $("#searchInput").val());
-                        window.location.search = urlParams;
-                    });
-                },
-                dataType: "html"
-            })
-        });
-    
-
-    });
     </script>
 </body>
 </html>
