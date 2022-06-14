@@ -1,0 +1,11 @@
+﻿@using Model.Models;
+@model IEnumerable<Answer>
+
+
+
+@foreach(Answer answer in Model)
+           
+    {
+
+                < input asp-for= "@answer" />
+            }

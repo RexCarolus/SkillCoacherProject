@@ -37,4 +37,3 @@ C:\Users\VLZ-J\source\new\Model\obj\Debug\netcoreapp3.1\Model.AssemblyInfo.cs
 C:\Users\VLZ-J\source\new\Model\obj\Debug\netcoreapp3.1\Model.csproj.CoreCompileInputs.cache
 C:\Users\VLZ-J\source\new\Model\obj\Debug\netcoreapp3.1\Model.dll
 C:\Users\VLZ-J\source\new\Model\obj\Debug\netcoreapp3.1\Model.pdb
-C:\Users\Dimab\Desktop\CourseProject\rr\Model\obj\Debug\netcoreapp3.1\Model.csproj.AssemblyReference.cache

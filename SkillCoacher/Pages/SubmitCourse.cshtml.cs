@@ -69,11 +69,43 @@ namespace SkillCoacher.Pages
             CurrentCourse.Name = currentCourse.Name;
             CurrentCourse.Tags = currentCourse.Tags;
             CurrentCourse.Description = currentCourse.Description;
-            CurrentCourse.Components.Add(new Chapter { Name = "Новая часть" });
+            CurrentCourse.Components.Add(new Chapter { Name = "Новая часть",  });
             _db.SaveChanges();
             return Redirect($"SubmitCourse?id={CurrentCourse.Id}");
         }
+        public IActionResult OnPostAddTest(Course currentCourse)
+        {
+            if (CurrentCourse.Id < 0)
+                return Page();
 
+            CurrentCourse = _db.Courses.Where(c => c.Id == CurrentCourse.Id).Include(ch => ch.Components).First();
+            CurrentCourse.Name = currentCourse.Name;
+            CurrentCourse.Tags = currentCourse.Tags;
+            CurrentCourse.Description = currentCourse.Description;
+            CurrentCourse.Components.Add(new Test
+            {
+                Name = "Новый тест",
+                Questions = new List<Question> 
+                {
+                    new Question { Name = "вопрос 1",
+                        Answers = new List<Answer> 
+                        {
+                            new Answer { Content = "ответ 1"},
+                            new Answer { Content = "ответ 2" } 
+                        } 
+                    },
+                    new Question { Name = "вопрос 2",
+                        Answers = new List<Answer>
+                        {
+                            new Answer { Content = "ответ 1"},
+                            new Answer { Content = "ответ 2" }
+                        }
+                    }
+                }
+            });
+            _db.SaveChanges();
+            return Redirect($"SubmitCourse?id={CurrentCourse.Id}");
+        }
         public IActionResult OnPostSaveChanges(string[] tagsStrings, string imageName = "aaa.png")
         {
             TagFactory tagFactory = new TagFactory(_db);
@@ -108,7 +140,7 @@ namespace SkillCoacher.Pages
                 for (int i = 0; i < CurrentCourse.Components.Count; i++)
                 {
                     updatedCourse.Components[i].Name = CurrentCourse.Components[i].Name;
-                    updatedCourse.Components[i].Discriminator = "Chapter";
+                    updatedCourse.Components[i].Discriminator = CurrentCourse.Components[i].Discriminator;
                     updatedCourse.Components[i].Sort = i;
                 }
                 updatedCourse.Tags.Clear();

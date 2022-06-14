@@ -138,6 +138,10 @@
             }
         });
         $("#searchInput").on('input', (event) => {
+            if ($("#searchInput").val().length < 3) {
+                $(".search-input").removeClass("active");
+                return;
+            }
             const urlParams = new URLSearchParams(window.location.search);
             urlParams.set('query', $("#searchInput").val());
             $.ajax({
@@ -175,6 +179,8 @@
                 dataType: "html"
             })
         });
+    
+
     });
     </script>
 </body>

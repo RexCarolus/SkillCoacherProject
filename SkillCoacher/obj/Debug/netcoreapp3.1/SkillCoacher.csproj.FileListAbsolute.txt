@@ -654,3 +654,5 @@ C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Raz
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_PartialToggleFavoriteButton.cshtml.g.cs
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_PartialChapterList.cshtml.g.cs
 C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_PartialSearchBar.cshtml.g.cs
+C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\EditTest.cshtml.g.cs
+C:\Users\Dimab\Desktop\CourseProject\rr\SkillCoacher\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_PartialEditableAnswersList.cshtml.g.cs

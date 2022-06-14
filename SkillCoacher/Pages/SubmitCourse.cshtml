@@ -19,69 +19,101 @@
         <h2 class="blog-post-title">Опубликовать курс</h2>
         <hr />
 
-        <input id="CurrentCourse_Id"type="hidden" asp-for="CurrentCourse.Id" />
+        <input id="CurrentCourse_Id" type="hidden" asp-for="CurrentCourse.Id" />
         <h4 class="pt-lg-3">Название курса</h4>
-        <input class="form-control" id="CurrentCourse_Name" type="text"  asp-for="CurrentCourse.Name" />
+        <input class="form-control" id="CurrentCourse_Name" type="text" asp-for="CurrentCourse.Name" />
         <h4 class="pt-lg-3">Описание курса</h4>
-        <input class="form-control" id="CurrentCourse_Description" type="text"  asp-for="CurrentCourse.Description" />
+        <input class="form-control" id="CurrentCourse_Description" type="text" asp-for="CurrentCourse.Description" />
         <h4 class="pt-lg-3">Добавить раздел</h4>
         <div class="list list-row card" id="sortable" data-sortable-id="0" aria-dropeffect="move">
             @for (int i = 0; i < Model.CurrentCourse.Components?.Count(); i++)
             {
 
                 var item = Model.CurrentCourse.Components[i];
-                <div id='@Model.CurrentCourse.Components[i].Id' class="list-item" data-id="@item.Sort" data-item-sortable-id="@item.Sort" draggable="true" role="option" aria-grabbed="false" style="">
-                    <input class="form-control" asp-for="CurrentCourse.Components[i].Id" type="hidden"></input>
-                    <input class="form-control" asp-for="CurrentCourse.Components[i].Discriminator" type="hidden"></input>
-                    <div class="flex">
-                        <input id="Name" asp-for="CurrentCourse.Components[i].Name" placeholder="@item.Name"></input>
-                    </div>
-                    <div class="no-wrap">
-                    </div>
-                    <div>
-                        <div class="item-action dropdown">
-                            <a href="#" data-toggle="dropdown" class="text-muted" data-abc="true">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical">
-                                    <circle cx="12" cy="12" r="1"></circle>
-                                    <circle cx="12" cy="5" r="1"></circle>
-                                    <circle cx="12" cy="19" r="1"></circle>
-                                </svg>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right bg-black" role="menu">
-                                <a class="dropdown-item edit" asp-page="/SubmitChapter" asp-route-id="@Model.CurrentCourse.Components[i].Id" data-abc="true">Изменить</a>
-                                <div class="dropdown-divider"></div> <a class="dropdown-item trash" onclick="DeleteChapterAjax(@Model.CurrentCourse.Components[i].Id);" data-abc="true">Удалить</a>
+                if (item.Discriminator == "Test")
+                {
+                    <div id='@Model.CurrentCourse.Components[i].Id' class="list-item" data-id="@item.Sort" data-item-sortable-id="@item.Sort" draggable="true" role="option" aria-grabbed="false" style="">
+                        <input class="form-control" asp-for="CurrentCourse.Components[i].Id" type="hidden"/>
+                        <input class="form-control" asp-for="CurrentCourse.Components[i].Discriminator" type="hidden"/>
+                        <div class="flex">
+                            <input id="Name" asp-for="CurrentCourse.Components[i].Name" style="color : red; background-color: black" placeholder="@item.Name"/>
+                        </div>
+                        <div class="no-wrap">
+                        </div>
+                        <div>
+                            <div class="item-action dropdown">
+                                <a href="#" data-toggle="dropdown" class="text-muted" data-abc="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical">
+                                        <circle cx="12" cy="12" r="1"></circle>
+                                        <circle cx="12" cy="5" r="1"></circle>
+                                        <circle cx="12" cy="19" r="1"></circle>
+                                    </svg>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right bg-black" role="menu">
+                                    <a class="dropdown-item edit" asp-page="/EditTest" asp-route-id="@Model.CurrentCourse.Components[i].Id" data-abc="true">Изменить</a>
+                                    <div class="dropdown-divider"></div> <a class="dropdown-item trash" onclick="DeleteChapterAjax(@Model.CurrentCourse.Components[i].Id);" data-abc="true">Удалить</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    <div id='@Model.CurrentCourse.Components[i].Id' class="list-item" data-id="@item.Sort" data-item-sortable-id="@item.Sort" draggable="true" role="option" aria-grabbed="false" style="">
+                        <input class="form-control" asp-for="CurrentCourse.Components[i].Id" type="hidden"/>
+                        <input class="form-control" asp-for="CurrentCourse.Components[i].Discriminator" type="hidden"/>
+                        <div class="flex">
+                            <input id="Name" asp-for="CurrentCourse.Components[i].Name" placeholder="@item.Name"/>
+                        </div>
+                        <div class="no-wrap">
+                        </div>
+                        <div>
+                            <div class="item-action dropdown">
+                                <a href="#" data-toggle="dropdown" class="text-muted" data-abc="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical">
+                                        <circle cx="12" cy="12" r="1"></circle>
+                                        <circle cx="12" cy="5" r="1"></circle>
+                                        <circle cx="12" cy="19" r="1"></circle>
+                                    </svg>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right bg-black" role="menu">
+                                    <a class="dropdown-item edit" asp-page="/SubmitChapter" asp-route-id="@Model.CurrentCourse.Components[i].Id" data-abc="true">Изменить</a>
+                                    <div class="dropdown-divider"></div> <a class="dropdown-item trash" onclick="DeleteChapterAjax(@Model.CurrentCourse.Components[i].Id);" data-abc="true">Удалить</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
             }
         </div>
-        <button type="submit" class="btn btn-primary pt-lg-2" id="addComp" asp-page-handler="AddComponent" ;">Добавить</button>
-        <h4 class="pt-lg-5">Добавьте теги</h4>
-        <input id="TagsInput" type="text" data-role="tagsinput" />
+                    <button type="submit" class="btn btn-primary pt-lg-2" id="addComp" asp-page-handler="AddComponent" ;">Добавить</button>
+                    <button type="submit" class="btn btn-primary pt-lg-2" id="addTest" asp-page-handler="AddTest" ;">Добавить тест</button>
+                    <h4 class="pt-lg-5">Добавьте теги</h4>
+                    <input id="TagsInput" type="text" data-role="tagsinput" />
 
-        <div class="col-md-4 ml-md-auto pt-lg-4">
-            <button type="button" class="btn btn-primary btn-lg" onclick="SaveChanges();">Сохранить</button>
-            <button type="submit" class="btn btn-primary btn-lg" id='deleteButton'asp-page-handler="DeleteCourse">Удалить</button>
-        </div>
-    </form>
+                    <div class="col-md-4 ml-md-auto pt-lg-4">
+                        <button type="button" class="btn btn-primary btn-lg" onclick="SaveChanges();">Сохранить</button>
+                        <button type="submit" class="btn btn-primary btn-lg" id='deleteButton' asp-page-handler="DeleteCourse">Удалить</button>
+                    </div>
+</form>
 </div>
 <hr />
 
 <script type="text/javascript">
     $(document).ready(function () {
         if ($("#CurrentCourse_Id").val() == -1) {
-            $(document).on("click", ".dropdown-item.trash, .dropdown-item.edit, .dropdown-divider, #addComp, #deleteButton", function (event) {
+            $(document).on("click", ".dropdown-item.trash, .dropdown-item.edit, .dropdown-divider, #addComp, #deleteButton, #addTest", function (event) {
                 event.preventDefault();
                 alert("Сначала сохраните курс!");
             });
         }
         var tagsArray = [];
-        @foreach(var tag in Model.CurrentCourse.Tags)
-            {
+        @foreach (var tag in Model.CurrentCourse.Tags)
+        {
               @:tagsArray.push("@Html.Raw(HttpUtility.JavaScriptStringEncode(String.Format(tag.Name, Encoding.UTF8)))");
 
-            }
+        }
         tagsArray.forEach((tag) => {
 
             $("#TagsInput").tagsinput("add", tag);
@@ -93,7 +125,7 @@
 
         $.ajax({
             type: "POST",
-            url: 'SubmitCourse?handler=DeleteAjax',
+            url: '@ViewContext.RouteData.Values["page"]?handler=DeleteAjax',
 
             data: {
                 id: $("#CurrentCourse_Id").val(),
@@ -141,7 +173,7 @@
         }
         $.ajax({
             type: "POST",
-            url: 'SubmitCourse?handler=SaveChanges',
+            url: '@ViewContext.RouteData.Values["page"]?handler=SaveChanges',
 
             data: {
                 CurrentCourse: $CurrentCourse,
@@ -162,10 +194,10 @@
 
     function AddNewComponent() {
         console.log("Entered methodAdd");
-       
+
         $.ajax({
             type: "POST",
-            url: 'SubmitCourse?handler=AddComponent&id=' + $("#CurrentCourse_Id").val(),
+            url: '@ViewContext.RouteData.Values["page"]?handler=AddComponent&id=' + $("#CurrentCourse_Id").val(),
 
             data: {
                 Id: $("#dbId").val(),
@@ -187,7 +219,7 @@
     {
         $.ajax({
             type: "POST",
-            url: 'SubmitCourse?handler=DeleteCourse&id=' + $("#CurrentCourse_Id").val(),
+            url: '@ViewContext.RouteData.Values["page"]?handler=DeleteCourse&id=' + $("#CurrentCourse_Id").val(),
 
             data: {
                 Id: $("#dbId").val(),
@@ -201,7 +233,7 @@
 
             dataType: "text"
         }).done(function () {
-           
+
         })
     }
 </script>

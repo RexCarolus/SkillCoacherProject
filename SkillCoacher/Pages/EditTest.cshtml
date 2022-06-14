@@ -1,0 +1,41 @@
+﻿@page
+@model SkillCoacher.Pages.EditTestModel
+@{
+    <form method="post">
+        <input asp-for="@Model.CurrentTest.Id"  id="testId" type="hidden"/>
+        @for (int i = 0; i < Model.CurrentTest.Questions.Count(); i++)
+        {
+            <input asp-for="@Model.CurrentTest.Questions.ToList()[i].Name" />
+            <div id="question_@Model.CurrentTest.Questions.ToList()[i].Id">
+            @for (int j = 0; j < Model.CurrentTest.Questions.ToList()[i].Answers.Count(); j++)
+            {
+                <input asp-for="@Model.CurrentTest.Questions.ToList()[i].Answers.ToList()[j].Content" />
+            }
+            </div>
+            <button onclick="AddAnswer(@Model.CurrentTest.Questions.ToList()[i].Id)" type="button">Добавить ответ</button>
+        }
+        <button asp-page-handler="AddQuestion" type="submit">Добавить вопрос</button>
+    </form>
+}
+<script type="text/javascript">
+    function AddAnswer(QuestionId) {
+      
+        console.log("enter method");
+        $.ajax({
+            type: "POST",
+            url: '@ViewContext.RouteData.Values["page"]?handler=AddAnswer',
+            data: {
+                testId: $("#testId").val(),
+                questionId: QuestionId
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            success(result) {
+                location.reload();
+            },
+            dataType: "html"
+        })
+    }
+</script>

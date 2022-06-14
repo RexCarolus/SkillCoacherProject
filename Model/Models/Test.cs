@@ -8,9 +8,9 @@ namespace Model.Models
     public class Test : CourseComponent
     {
         public int ScoreToPass { get; set; }
-        public IEnumerable<Question> Questions { get; set; }
+        public List<Question> Questions { get; set; }
         [NotMapped]
-        public IEnumerable<Answer> ChoosenAnswers { get; set; }
+        public List<Answer> ChoosenAnswers { get; set; }
         public int TotalScoreSum()
         {
             var a = ChoosenAnswers as List<Answer>;
