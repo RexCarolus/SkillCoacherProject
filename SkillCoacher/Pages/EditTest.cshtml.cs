@@ -30,12 +30,33 @@ namespace SkillCoacher.Pages
                 CurrentTest = _db.Tests.Where(c => c.Id == id).Include(p=>p.Questions).ThenInclude(p=>p.Answers).First();
             }
         }
+     
         public IActionResult OnPostAddAnswer(int testId, int questionId)
         {
             var test = _db.Tests.Where(t => t.Id == testId).Include(t => t.Questions).ThenInclude(q=>q.Answers).First();
             _db.Tests.Attach(test);
             test.Questions.First(q=>q.Id == questionId).Answers.Add(new Answer { Content = "новый ответ", Score = 0 });
          
+            _db.SaveChanges();
+            return Partial("_PartialEditableAnswersList", test.Questions.First(q => q.Id == questionId).Answers);
+        }
+        public IActionResult OnPostDeleteAnswer(int testId, int questionId, int answerId)
+        {
+            var test = _db.Tests.Where(t => t.Id == testId).Include(t => t.Questions).ThenInclude(q => q.Answers).AsNoTracking().First();
+            _db.ChangeTracker.Clear();
+            _db.Answers.Remove(new Answer { Id = answerId });
+
+
+            _db.SaveChanges();
+            return Partial("_PartialEditableAnswersList", test.Questions.First(q => q.Id == questionId).Answers);
+        }
+        public IActionResult OnPostDeleteQuestion(int testId, int questionId)
+        {
+            var test = _db.Tests.Where(t => t.Id == testId).Include(t => t.Questions).ThenInclude(q => q.Answers).AsNoTracking().First();
+            _db.ChangeTracker.Clear();
+            _db.Questions.Remove(new Question { Id = questionId });
+
+
             _db.SaveChanges();
             return Partial("_PartialEditableAnswersList", test.Questions.First(q => q.Id == questionId).Answers);
         }
@@ -52,6 +73,15 @@ namespace SkillCoacher.Pages
                         new Answer { Content = "ответ  2", Score = 0 }
                     }
                 });
+            _db.SaveChanges();
+            return Redirect($"/EditTest?id={CurrentTest.Id}");
+        }
+
+        public IActionResult OnPostSaveChanges()
+        {
+            var oldTest =_db.Tests.Where(p => p.Id == CurrentTest.Id).Include(p => p.Questions).ThenInclude(p => p.Answers).First();
+            oldTest.Name = CurrentTest.Name;
+            oldTest.Questions = CurrentTest.Questions;
             _db.SaveChanges();
             return Redirect($"/EditTest?id={CurrentTest.Id}");
         }
