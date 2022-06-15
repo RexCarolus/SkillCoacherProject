@@ -17,7 +17,7 @@
         $("#sortable").disableSelection();
     });
 </script>
-<div class="col-md-8 blog-main">
+<div class="col-md-8 blog-main shadow">
     <form method="post">
         <h2 class="blog-post-title">Опубликовать курс</h2>
         <hr />
@@ -36,10 +36,10 @@
                 if (item.Discriminator == "Test")
                 {
                     <div id='@Model.CurrentCourse.Components[i].Id' class="list-item" data-id="@item.Sort" data-item-sortable-id="@item.Sort" draggable="true" role="option" aria-grabbed="false" style="">
-                        <input class="form-control" asp-for="CurrentCourse.Components[i].Id" type="hidden" />
-                        <input class="form-control" asp-for="CurrentCourse.Components[i].Discriminator" type="hidden" />
+                        <input asp-for="CurrentCourse.Components[i].Id" class="form-control form-control-sm" type="hidden" />
+                        <input asp-for="CurrentCourse.Components[i].Discriminator" class="form-control form-control-sm" type="hidden" />
                         <div class="flex">
-                            <input id="Name" asp-for="CurrentCourse.Components[i].Name" style="color : red; background-color: black" placeholder="@item.Name" />
+                            <input id="Name" asp-for="CurrentCourse.Components[i].Name" class="form-control form-control-sm w-50" placeholder="@item.Name" />
                         </div>
                         <div class="no-wrap">
                         </div>
@@ -63,10 +63,10 @@
                 else
                 {
                     <div id='@Model.CurrentCourse.Components[i].Id' class="list-item" data-id="@item.Sort" data-item-sortable-id="@item.Sort" draggable="true" role="option" aria-grabbed="false" style="">
-                        <input class="form-control" asp-for="CurrentCourse.Components[i].Id" type="hidden" />
-                        <input class="form-control" asp-for="CurrentCourse.Components[i].Discriminator" type="hidden" />
+                        <input class="form-control form-control-sm" asp-for="CurrentCourse.Components[i].Id" type="hidden" />
+                        <input class="form-control form-control-sm" asp-for="CurrentCourse.Components[i].Discriminator" type="hidden" />
                         <div class="flex">
-                            <input id="Name" asp-for="CurrentCourse.Components[i].Name" placeholder="@item.Name" />
+                            <input class="form-control form-control-sm w-50" id="Name" asp-for="CurrentCourse.Components[i].Name" placeholder="@item.Name" />
                         </div>
                         <div class="no-wrap">
                         </div>
@@ -89,24 +89,32 @@
                 }
 
             }
-        <button type="submit" class="btn btn-primary pt-lg-2" id="addComp" style="width: 120px;padding-left: 12px;border-left-width: 1px;margin-left: 18px;margin-bottom: 14px;" asp-page-handler="AddComponent" ;">Добавить</button>
-        <button type="submit" class="btn btn-primary pt-lg-2" id="addTest" asp-page-handler="AddTest" ;" style="width: 120px;padding-left: 12px;border-left-width: 1px;margin-left: 18px;margin-bottom: 14px;">Добавить тест</button>
+            <hr />
+
+            <div class="row">
+                <div class="col col-sm-2 ml-lg-1">
+                    <button type="submit" class="btn btn-success" id="addComp" style="width: 160px;padding-left: 6px;border-left-width: 1px;margin-left: 18px;margin-bottom: 14px;" asp-page-handler="AddComponent" ;">Добавить раздел</button>
+                </div>
+                <div class="col col-sm-2 ml-lg-1">
+                    <button type="submit" class="btn btn-success" id="addTest" asp-page-handler="AddTest" ;" style="width: 160px;padding-left: 6px;border-left-width: 1px;margin-left: 18px;margin-bottom: 14px;">Добавить тест</button>
+                </div>
+            </div>
 
         </div>
         <h4 class="pt-lg-5">Добавьте теги</h4>
         <input id="TagsInput" type="text" data-role="tagsinput" />
-
-        <div class="row mx-md-n5">
-            <div class="col col-sm-3 ml-lg-4 pt-lg-2">
+        <hr />
+        <div class="row mx-md-n5 pb-lg-4 pt-lg-4">
+            <div class="col col-sm-3 ml-lg-5">
                 <button type="button" class="btn btn-primary" onclick="SaveChanges();">Сохранить</button>
             </div>
-            <div class="col col-sm-3 ml-lg-1 pt-lg-2">
+            <div class="col col-sm-3 ml-lg-1">
                 <button type="submit" class="btn btn-danger" id='deleteButton' asp-page-handler="DeleteCourse">Удалить</button>
             </div>
         </div>
     </form>
 </div>
-<hr />
+
 
 <script type="text/javascript">
     $(document).ready(function () {

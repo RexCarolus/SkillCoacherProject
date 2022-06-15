@@ -26,63 +26,61 @@
     <link href="~/lib/dashboard.css" rel="stylesheet">
     <link href="~/lib/blog.css" rel="stylesheet">
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="z-index: 1">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" asp-area="" asp-page="/Index">SkillCoacher</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="z-index: 1;">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" asp-area="" asp-page="/Index">SkillCoacher</a>
 
-        <div class="wrapper">
-            <div class="search-input">
-                <a href="" target="_blank" hidden></a>
-                <input id="searchInput" class="form-control form-control-dark w-50" type="text" placeholder="Поиск по SkillCoacher" aria-label="Search">
-                <div id="searchBarSuggestions" class="autocom-box"></div>
-                <div class="icon"><i class="fas fa-search"></i></div>
-            </div>
-        </div>
+    @*<input class="form-control form-control-dark w-50" id="searchInput" type="text" placeholder="Поиск по SkillCoacher" aria-label="Search">*@
 
-
-
-
-        <ul class="navbar-nav px-3">
-            <li class="dropdown show">
-                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Профиль
-                </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="/LogIn">Войти</a>
-                    <a class="dropdown-item" asp-page="Index" asp-page-handler="LogOut">Выйти</a>
-                    <a class="dropdown-item" asp-area="" asp-page="/SignUp">Регистрация</a>
-                </div>
-            </li>
-        </ul>
-    </nav>
-    <div class="container-fluid">
-        <div class="row flex-xl-nowrap">
-            <div class="col-md-3 col-xl-2 bd-sidebar shadow" style="padding-bottom: 100%;">
-                <div class="sticky-top">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="text-dark pl-xl-3" href="/Index">Главная</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="text-dark pl-xl-3" href="/OwnedCourses">Мои курсы</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="text-dark pl-xl-3" href="/Favorites">Подписки на курсы</a>
-                        </li>
-                        <hr>
-                        <li class="list-group" id="list-tab" role="tablist">
-                            <a class="list-group-item text-secondary" href="/SubmitCourse" role="tab">Опубликовать курс</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <main role="main" class="col-md-10 py-md-3 bd-content">
-                <div class="pl-xl-1">
-                    @RenderBody()
-                </div>
-            </main>
+    <div class="wrapper">
+        <div class="search-input">
+            <a href="" target="_blank" hidden></a>
+            <input id="searchInput" class="form-control form-control-dark" type="text" placeholder="Поиск по SkillCoacher" aria-label="Search">
+            <div id="searchBarSuggestions" class="autocom-box"></div>
         </div>
     </div>
+
+
+    <ul class="navbar-nav px-3 offset-lg-3">
+        <li class="dropdown show">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">
+                Профиль
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" asp-page="Index" asp-page-handler="LogOut">Выйти</a>
+            </div>
+        </li>
+    </ul>
+</nav>
+<div class="container-fluid">
+    <div class="row flex-xl-nowrap">
+        <div class="col-md-3 col-xl-2 bd-sidebar shadow" style="padding-bottom: 100%;">
+            <div class="sticky-top">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="text-dark pl-xl-3" href="/Index">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="text-dark pl-xl-3" href="/OwnedCourses">Мои курсы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="text-dark pl-xl-3" href="/Favorites">Подписки на курсы</a>
+                    </li>
+                    <hr>
+                    <li class="list-group" id="list-tab" role="tablist">
+                        <a class="list-group-item text-secondary" href="/SubmitCourse" role="tab">Опубликовать курс</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <main role="main" class="col-md-10 py-md-3 bd-content">
+            <div class="pl-xl-1">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+</div>
+
+<body>
     <script>
         $(document).ready(() => {
             $("#searchInput").keyup((event) => {
@@ -93,7 +91,6 @@
                     $.ajax({
                         type: "POST",
                         url: 'Index?handler=UpdateQuery',
-
                         data: {
                             query: $("#searchInput").val()
                         },
@@ -123,7 +120,6 @@
                 $.ajax({
                     type: "POST",
                     url: 'Index?handler=ShowSuggestions',
-
                     data: {
                         query: $("#searchInput").val()
                     },
@@ -133,18 +129,14 @@
                     },
                     success(result) {
                         console.log("success");
-
                         if (result == "") {
                             $(".search-input").removeClass("active");
                         }
                         else
                             $(".search-input").addClass("active");
-
                         $("#searchBarSuggestions").html(result);
-
                         $("#searchBarSuggestions > li").click(function (e) {
                             console.log($(this).text());
-
                             $("#searchInput").val($(this).text());
                             console.log($(this).text());
                             const urlParams = new URLSearchParams(window.location.search);
@@ -155,10 +147,7 @@
                     dataType: "html"
                 })
             });
-
-
         });
     </script>
 </body>
 </html>
-

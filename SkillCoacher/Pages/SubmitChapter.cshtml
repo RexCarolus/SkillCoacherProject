@@ -8,7 +8,7 @@
     }
 </style>
 <script src="https://cdn.ckeditor.com/ckeditor5/30.0.0/classic/ckeditor.js"></script>
-<div class="col-md-8 blog-main">
+<div class="col-md-8 blog-main shadow">
     <form method="post">
         <h2 class="blog-post-title">Изменить раздел</h2>
         <hr />
@@ -31,12 +31,10 @@
                 });
         </script>
     </form>
+    <div class="col-md-3 offset-md-9 pt-lg-4 pb-lg-4">
+        <button type="button" class="btn btn-success" onclick="ajaxTest();">Сохранить изменения</button>
+    </div>
 </div>
-
-<div class="col-md-2 offset-md-6 pt-lg-4" >
-    <button type="button" class="btn btn-success" onclick="ajaxTest();">Сохранить изменения</button>
-</div>
-
 
 <script type="text/javascript">
 
