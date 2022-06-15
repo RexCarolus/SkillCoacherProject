@@ -1,5 +1,8 @@
 ﻿@using Model.Models;
 @model ChapterListModel
+@{ 
+    Model.SelectedCourse.Components.SortByParameter();
+}
 @if (Model.LastChapterId != null && Model.LastChapterId !=0)
 {
     var Chapter = Model.SelectedCourse.Components.First(p=> p.Id == (int)Model.LastChapterId);

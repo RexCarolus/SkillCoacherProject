@@ -28,7 +28,7 @@ namespace SkillCoacher
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<SkillCoacherContext>(options =>  options.UseSqlServer(connection)
-            .EnableSensitiveDataLogging(true));
+            .EnableSensitiveDataLogging(true), ServiceLifetime.Scoped);
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => //CookieAuthenticationOptions
                 {

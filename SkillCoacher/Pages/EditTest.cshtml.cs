@@ -38,8 +38,6 @@ namespace SkillCoacher.Pages
          
             _db.SaveChanges();
             return Partial("_PartialEditableAnswersList", test.Questions.First(q => q.Id == questionId).Answers);
-            return Redirect($"/EditTest?id={CurrentTest.Id}");
-            
         }
         public IActionResult OnPostAddQuestion()
         {

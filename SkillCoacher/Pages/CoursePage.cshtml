@@ -1,7 +1,9 @@
 ﻿@page "{id}"
+@using Model.Models
 @model CourseModel
 @{
     ViewData["Title"] = "Course page";
+    Model.SelectedCourse.Components.SortByParameter();
 }
 
 <form method="post">

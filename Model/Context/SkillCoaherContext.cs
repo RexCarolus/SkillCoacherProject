@@ -86,6 +86,32 @@ namespace Model.Context
                    j.HasKey(t => new { t.UserId, t.FavoriteCourseId });
                    j.ToTable("CommonUsersFavoriteCourses");
                });
+            modelBuilder.Entity<Course>().HasMany(p => p.Components).WithOne(p => p.OwnerCourse).HasForeignKey(p => p.OwnerCourseId);
+            modelBuilder.Entity<Test>().HasMany(p => p.Questions).WithOne(p => p.OwnerTest)
+                .HasForeignKey(k => k.OwnerTestId).OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Question>().HasMany(p => p.Answers).WithOne(p => p.OwnerQuestion)
+                .HasForeignKey(k => k.OwnerQuestionId).OnDelete(DeleteBehavior.Cascade);
+              
+
+            modelBuilder
+                .Entity<Course>()
+                .HasMany(p => p.Tags)
+                .WithMany(p => p.Courses)
+                 .UsingEntity<CoursesTags>(
+               j => j
+                   .HasOne(pt => pt.Tag)
+                   .WithMany(p => p.CoursesTags)
+                   .HasForeignKey(pt => pt.TagId),
+                  j => j
+                   .HasOne(pt => pt.Course)
+                   .WithMany(t => t.CoursesTags)
+                   .HasForeignKey(pt => pt.CourseId),
+               j =>
+               {
+                   j.HasKey(t => new { t.CourseId, t.TagId });
+                   j.ToTable("CoursesTags");
+               });
             modelBuilder
               .Entity<Course>()
               .HasMany(c => c.GradeUsers)

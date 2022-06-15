@@ -1,8 +1,11 @@
 ﻿@page
+@using Model;
+@using Model.Models;
 @using System.Text
 @using System.Web
 @model SkillCoacher.Pages.SubmitCourseModel
 @{
+    Model.CurrentCourse.Components.SortByParameter();
 }
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

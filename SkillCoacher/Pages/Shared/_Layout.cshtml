@@ -27,7 +27,7 @@
     <link href="~/lib/blog.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-dark fixed-top bg-dark navbar-expand-lg flex-md-nowrap p-0 shadow">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="z-index: 1">
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" asp-area="" asp-page="/Index">SkillCoacher</a>
 
         <div class="wrapper">
@@ -49,6 +49,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item" href="/LogIn">Войти</a>
+                    <a class="dropdown-item" asp-page="Index" asp-page-handler="LogOut">Выйти</a>
                     <a class="dropdown-item" asp-area="" asp-page="/SignUp">Регистрация</a>
                 </div>
             </li>

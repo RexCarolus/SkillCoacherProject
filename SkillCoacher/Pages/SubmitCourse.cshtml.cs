@@ -12,6 +12,7 @@ using System.Runtime.Serialization.Json;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Text;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace SkillCoacher.Pages
 {
@@ -43,6 +44,7 @@ namespace SkillCoacher.Pages
             else
             {
                 CurrentCourse = _db.Courses.Where(c => c.Id == id).Include(c=>c.Components).Include(t => t.Tags).ToList().First();
+                CurrentCourse.Components.SortByParameter();
                 ModelState.Clear();
             }
         }
@@ -131,21 +133,20 @@ namespace SkillCoacher.Pages
             }
             else
             {
-                
                 var updatedCourse = _db.Courses.Where(c => c.Id == CurrentCourse.Id).Include(ch => ch.Components).
-                    Include(ch=>ch.Tags).First(c => c.Id == CurrentCourse.Id); ;
+                Include(ch => ch.Tags).First(c => c.Id == CurrentCourse.Id);
                 updatedCourse.Name = CurrentCourse.Name;
                 updatedCourse.Description = CurrentCourse.Description;
-                for (int i = 0; i < CurrentCourse.Components.Count; i++)
-                {
-                    updatedCourse.Components[i].Name = CurrentCourse.Components[i].Name;
-                    updatedCourse.Components[i].Sort = i;
-                }
+                int i = 0;
+                CurrentCourse.Components.ForEach(el => el.Sort = i++);
+                updatedCourse.Components = CurrentCourse.Components;
+
+               
                 updatedCourse.Tags.Clear();
                 updatedCourse.Tags.AddRange(addTags);
-                
+          
                 _db.SaveChanges();
-                return new JsonResult(new {IsNew = false });
+                return new JsonResult(new { IsNew = false });
             }
         }
 

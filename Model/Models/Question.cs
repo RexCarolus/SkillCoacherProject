@@ -8,6 +8,8 @@ namespace Model.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public Test OwnerTest { get; set; }
+        public int OwnerTestId { get; set; }
         public List<Answer> Answers { get; set; }
     }
 }
