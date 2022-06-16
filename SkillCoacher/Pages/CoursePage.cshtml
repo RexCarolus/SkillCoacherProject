@@ -9,15 +9,15 @@
 <form method="post">
 
 </form>
-<div class="col-md-8 blog-main">
+<div class="col-md-8 blog-main shadow">
     <div class="blog-post">
         <input type="hidden" asp-for="@Model.SelectedCourse.Id" />
         <h2 class="blog-post-title">@Model.SelectedCourse.Name</h2>
         <p class="blog-post-meta">@Model.SelectedCourse.DateOfPublication.ToShortDateString() автор: <a href="#">@Model.SelectedCourse.OwnerCoacher.Login</a></p>
         <hr>
-       
+
         <div id="partialChapterList">
-        <partial itemid="patialChapterList" name="_PartialChapterList", model="Model.PartialChapterList"/>
+            <partial itemid="patialChapterList" name="_PartialChapterList" , model="Model.PartialChapterList" />
         </div>
         <hr>
     </div>
@@ -45,19 +45,24 @@
     {
         <p id="visibleRating">Рейтинг курса @Model.Rating</p>
     }
-
+<div class="row">
     @if (Model.CurrentUser != null)
     {
         if (Model.CurrentUser.FavoriteCourses.Count(c => c.Id == Model.SelectedCourse.Id) > 0)
         {
-            <button id="subscribeButton" onclick="AddToFavorite(@Model.SelectedCourse.Id);" class="btn btn-primary">Отписаться</button>
+            <div class="col col-md-2 ml-lg-3 mb-lg-3">
+                <button id="subscribeButton" onclick="AddToFavorite(@Model.SelectedCourse.Id);" class="btn btn-primary">Отписаться</button>
+            </div>
+
         }
         else
         {
-            <button id="subscribeButton" onclick="AddToFavorite(@Model.SelectedCourse.Id);" class="btn btn-primary">Начать курс</button>
+            <div class="col col-md-2 ml-lg-3 mb-lg-3">
+                <button id="subscribeButton" onclick="AddToFavorite(@Model.SelectedCourse.Id);" class="btn btn-primary">Начать курс</button>
+            </div>
         }
     }
-
+</div>
 </div>
 
 <script>

@@ -6,21 +6,33 @@
 @if (Model.LastChapterId != null && Model.LastChapterId !=0)
 {
     var Chapter = Model.SelectedCourse.Components.First(p=> p.Id == (int)Model.LastChapterId);
-    <h3>Вы закончили на главе:</h3>
-    <a asp-page="/ChapterPage" asp-route-Id="@Model.LastChapterId">@Chapter.Name</a>;
+    <div class="mb-lg-4">
+        <h3>Вы закончили на главе:</h3>
+        <a asp-page="/ChapterPage" asp-route-Id="@Model.LastChapterId">@Chapter.Name</a>;
+    </div>
 }
-@if (Model.SelectedCourse.Components != null && Model.SelectedCourse.Components.Count > 0)
-    if (Model.SelectedUser.FavoriteCourses.Count(c => c.Id == Model.SelectedCourse.Id) > 0)
-        foreach (var item in Model.SelectedCourse.Components)
+<div class="list-group">
+    @if (Model.SelectedCourse.Components != null && Model.SelectedCourse.Components.Count > 0)
+        if (Model.SelectedUser.FavoriteCourses.Count(c => c.Id == Model.SelectedCourse.Id) > 0)
+            foreach (var item in Model.SelectedCourse.Components)
+            {
+                <a class="list-group-item list-group-item-action" asp-page="/ChapterPage" asp-route-Id="@item.Id">
+                    <div class="ml-lg-4 my-lg-4">
+                        <h4>@item.Name</h4>
+                        <p class="mb-1">Читать далее</p>
+                    </div>
+                </a>
+            }
+        else
         {
-            <h2>@item.Name</h2>
-            <a asp-page="/ChapterPage" asp-route-Id="@item.Id">Читать далее</a>
+            foreach (var item in Model.SelectedCourse.Components)
+            {
+                <a href="#" class="list-group-item list-group-item-action" style="cursor: not-allowed;">
+                    <div class="mb-lg-4 my-lg-4">
+                        <h4>@item.Name</h4>
+                        <p class="mb-1">Читать далее</p>
+                    </div>
+                </a>
+            }
         }
-    else
-    {
-        foreach (var item in Model.SelectedCourse.Components)
-        {
-            <h2>@item.Name</h2>
-            <a style="cursor: not-allowed;" href="#">Читать далее</a>
-        }
-    }
+</div>

@@ -4,24 +4,26 @@
     ViewData["Title"] = "Chapter page";
 }
 
-<div class="col-md-8 blog-main">
+<div class="col-md-8 blog-main shadow">
     <div class="blog-post">
         <h2 class="blog-post-title">@Model.SelectedChapter.Name</h2>
         <hr>
         <div>@Html.Raw(Model.SelectedChapter.HtmlContent)</div>
         <hr>
-        @if (Model.LeftChapterId >= 0)
-        {
-            <a asp-page="/ChapterPage" asp-route-Id="@Model.LeftChapterId">
-            <button>Назад</button>
-            </a>
-        }
-        @if (Model.RightChapterId >= 0)
-        {
-            <a asp-page="/ChapterPage" asp-route-Id="@Model.RightChapterId">
-            <button>Далее</button>
-            </a>
-        }
+        <div class="row">
+            @if (Model.LeftChapterId >= 0)
+            {
+                <div class="col col-md-2 ml-lg-3 mb-lg-3">
+                    <a class="btn btn-primary" asp-page="/ChapterPage" asp-route-Id="@Model.LeftChapterId">Назад</a>
+                </div>
+            }
+            @if (Model.RightChapterId >= 0)
+            {
+                <div class="col col-md-2 mb-lg-3 offset-lg-10">
+                    <a class="btn btn-primary" asp-page="/ChapterPage" asp-route-Id="@Model.RightChapterId">Далее</a>
+                </div>
+            }
+        </div>
     </div>
 </div>
 
