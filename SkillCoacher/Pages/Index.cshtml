@@ -21,6 +21,9 @@
                     <h3 class="mb-0">@item.Name</h3>
                     <div class="mb-1 text-muted">@item.DateOfPublication.ToShortDateString()</div>
                     <p class="mb-auto">@item.Description.<a asp-page="/CoursePage" asp-route-Id="@item.Id"> Читать далее.</a></p>
+                    <div class="col">
+                        <img class="img-thumbnail" width="200" height="250" src="images/@item.TitleImagePath" />
+                    </div>
                     <div class="col pt-lg-2">
                         @foreach (var tag in item?.Tags)
                         {
@@ -38,9 +41,6 @@
                             }
                         }
                     </div>
-                </div>
-                <div class="col-auto d-none d-lg-block">
-                    <img class="img-thumbnail" width="200" height="250" src="images/@item.TitleImagePath" />
                 </div>
             </div>
         </div>
